@@ -79,6 +79,125 @@ sumAsync(2,3,function callback(err,rs){
 console.log("first run !");
 //我们定义一个 sumAsync 异步函数，运行后，会先执行 console.log("first run !");  ，根据这个实例，应对异步函数、回调概念已理解。在Node.js 的实际开发中，I/O操作都应该调用异步函数，这样才能发挥更好的性能，但回调函数的嵌套很丑，为了解决这个问题，之后的几节中，会介绍 Promises 的Q库 和 ES6 generator 及 co 库，通过这几个工具即能发挥Node.js高性能，又可让代码更好维护、更可控和更好的可读性。
 
+/**
+ * Promise 模式的Q库
+ * Promise是一种让异步代码书写起来更舒服、更可控、优雅的模式，能够让异步操作代码像同步代码那样书写并且阅读。
+ * Q库可运行中node.js环境下，它是Promise模式的实现，下面我们来介绍它。
+ * 通过 npm i q 安装Q库
+ */
+//采用回调函数方式编写：
+var fs = require("fs");
+fs.readdir(".",function(err,rs){
+    fs.readFile(rs[0],function(err,f1){
+        console.log(f1);
+        fs.readFile(rs[1],function(err,f2){
+            console.log(f2);
+            fs.readFile(rs[2],function(err,f3){
+                console.log(f3);
+            })
+        })
+    })
+})
+//这段代码的意思是，查看当前目录下有多少文件，然后逐个读取，把读取的数据打印到终端，可笑的是，你还必须要知道到底有几个文件，如果我知道有3个，就调用三次 readFile异步函数，如果1000个，那就要...... 
+
+//通过Q库改善
+// 导入q库
+var Q = require("q"),fs = require("fs");
+
+Q.nfcall(fs.readdir, ".").then(function(ns){
+
+    var promises = [];
+
+    ns.forEach(function(filename){
+        promises.push(Q.nfcall(fs.readFile, filename,"utf8"));
+    })
+
+    Q.all(promises).then(function(results){
+        console.log(results);
+    })
+
+})
+//通过Q.nfcall 方法调用异步函数，返回一个 promise对象，promise对象具有一个方法 then ，可以得到运行结果。
+//这里的 var promises = []; 变量用于储存promise数组，把这个参数加入Q.all 方法里，会得到一个promise对象，调用then方法会得到一个数组，这个数组就是所有promises的运行结果。
+//一切都围绕promise对象，它有一个then方法用于返回回调函数结果，还有一个 fail  函数，用于返回异常对象，then 和 fail 不会同时被调用，就好比一个普通函数，如果抛出异常就不会有返回值一样。
+//修改之前代码
+var Q = require("q"),fs = require("fs");
+Q.nfcall(fs.readdir, "no path")
+.then(function(ns){
+    var promises = [];
+    ns.forEach(function(filename){
+        promises.push(Q.nfcall(fs.readFile, filename,"utf8"));
+    })
+    Q.all(promises).then(function(results){
+        console.log(results);
+    })
+})
+.fail(function(err){
+    console.log(err);
+})
+//说明调用的是 fail函数，而不是then，说明 then 代表无异常情况下的返回值，fail表示抛出的异常，如果过程中有任何异常，promise.then 的函数都不会被调用，而是会调用fail，表示抛出异常。
+
+/**
+ * generator
+ * 运行generator代码需要Node.js version > 0.11.3，在运行时，使用 node --harmony xx.js  方式运行。*
+ * 在 ES6 规范中，定义一个生成器函数，在 function 后跟上
+ * 调用生成器函数会产生一个生成器（generator）对象。生成器拥有的最重要的方法是 next()，用来迭代：
+ */
+function* gf() { };
+function *gf() { };
+function * gf() { };
+
+/**
+ * go库用于优化异步函数调用方式，支持promise和thunks方式。
+ * 安装 npm i co thunkify
+ * thunkify 库是对异步函数的再次封装，符合co规范。
+ * 
+ */
+
+/**
+ * 下面用co库实现任意文件数：
+ */
+var fs = require("fs");
+var co = require("co");
+var thunkify = require("thunkify");
+
+
+// 包装异步函数，让其符合co规范。
+var readdir = thunkify(fs.readdir);
+var readFile = thunkify(fs.readFile);
+
+co(function *(){
+
+    // 得到当前目录下的文件名列表
+    var fns = yield readdir(".");
+
+
+    for(var i=0,len = fns.length;i&lt;len;i++){
+        var rs= yield readFile(fns[i]);
+        console.log(rs);
+    }
+
+})();
+//我们会发现，co使用很简单， 只要用thunkify转换普通的异步函数，之后和同步调用基本一致。
+//下面我们自己编写一个，模拟异步的函数，并用co执行。
+var co = require("co");
+var thunkify = require("thunkify");
+
+function fun(time,callback){
+    setTimeout(function(){
+        callback(null,"setTimeout time is - "+time);
+    },time)
+}
+
+var func = thunkify(fun);
+
+co(function* (){
+
+    console.log(yield func(2000));
+    console.log(yield func(1000));
+    console.log(yield func(500));
+
+})()
 
 
 
