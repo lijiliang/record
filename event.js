@@ -1,5 +1,5 @@
 /**
- * Created by jiliang on 15/5/4.
+ * 事件操作
  */
 var EventUtil = {
     //增加事件绑定
