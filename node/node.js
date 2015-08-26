@@ -200,6 +200,44 @@ co(function* (){
 })()
 
 
+/**
+ * 流
+ * 这部分的内容并不实用，这是真的，我们不太可能去自己实现流子类，而是去使用流的子类，比如 fs 、net、http等IO相关的模块就是流的子类，这部分内容又很重要。通过对流理解，在使用具体子类时才能得心应手。
+ * 在Node.js中，通过.pipe() 方法连接上下游，把上游数据导入下游。
+ * 什么时候应该使用流？
+ * 	下面的例子，是当客户请求服务器资源，服务器会读取data.txt文件到内存，然后把数据再推倒客户端，如果文件很大，就会占用很多内存。更糟的是，如果高并发，性能会更差。
+ * 	pipe方法，内部通过监听 stream 的data和end时间，把接收到的文件块第一时间到客户端，节省内存。
+ * 	流的类别
+ * 		在Node.js中，流分4种类别： readable可读流, writable可写流, transform转换流, duplex双工流。
+ * 	pipe管道方法：
+ * 		无论哪种流，都可通过pipe方法进行连接。pipe只是个函数，它接受一个可读的流作为输入源，和一个输出源的写入流。
+ * 		src.pipe(target)
+ * 		.pipe(target)返回target，所以可以多次调用pipe方法
+ * 		如：a.pipe(b).pipe(c).pipe(d)
+ * 		
+ */
+var http = require('http');
+var fs = require('fs');
+
+var server = http.createServer(function (req, res) {
+    fs.readFile(__dirname + '/data.txt', function (err, data) {
+        res.end(data);
+    });
+});
+server.listen(3000);
+
+/*
+流可以解决这个问题，把文件流和响应流通过pipe连起来，这样上游的数据就会“缓缓的”流道客户端，不会出现大量内存被消耗的情况。在这里，用fs.createReadStream方法代替fs.readFile方法。
+ */
+var http = require('http');
+var fs = require('fs');
+
+var server = http.createServer(function (req, res) {
+    var stream = fs.createReadStream(__dirname + '/data.txt');
+    stream.pipe(res);
+});
+server.listen(3000);
+
 
 
 
