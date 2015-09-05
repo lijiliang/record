@@ -22,10 +22,17 @@ arr instanceof Array  //变量arr是Array吗？
 
 
 /*
-创建Object实例的方法
-第一种方法：使用new操作符后跟Object构造函数
-第二种方法：使用对象字面量表示法
-所有对象都具有toLocalString(),toString(),valueOf()等方法
+object
+	创建Object实例的方法
+		第一种方法：使用new操作符后跟Object构造函数
+		第二种方法：使用对象字面量表示法
+		所有对象都具有toLocalString(),toString(),valueOf()等方法
+		上下文对象就是this指针，即被调用函数所处的环境。上下文对象的作用是在一个函数内部引用调用它的对象本身，javascript的任何函数都是被某个对象调用的，包括全局对象，所以this指针是一个非常重要的东西。
+	call和apply
+		两者的功能是以不同的对象作为上下文来调用某个函数，就是允许一个对象去调用另一个对象的成员函数，即可可以改变this指向
+	bind方法
+		bind方法永久地绑定函数的上下文
+
 */
 var person = new Object();
 person.name = 'li';
@@ -479,6 +486,42 @@ function incrementNumber(){
 }
 intervalId = setInterval(incrementNumber, 1000)
 
+/*
+闭包：
+	闭包是函数式编程中的概念，由函数（环境）及其封闭的自由变量组成的集合体
+	闭包的特性：当一个函数返回它内部定义的一个函数时，就产生了一个闭包，闭包不但包括被返回的函数，还包括这个函数的定义环境。
+	闭包的用途：一个是实现嵌套的回调函数，二是隐藏对象的细节
+ */
+
+//例1
+var gen = function(){
+   var count = 0;
+   var get = function(){
+       count ++;
+       return count; 
+   };
+    return get;
+}
+var genter = gen();
+console.log(genter()); //1
+console.log(genter()); //2
+
+//例2 下面生成了两个闭包的实例，它们内部引用的count变量分别属于各自的运行环境
+var gen = function(){
+   var count = 0;
+   var get = function(){
+       count ++;
+       return count; 
+   };
+    return get;
+}
+var genter1 = gen();
+var genter2 = gen();
+console.log(genter1()); //1
+console.log(genter2()); //1
+console.log(genter1()); //2
+console.log(genter1()); //3
+console.log(genter2()); //2
 
 
 

@@ -75,3 +75,23 @@ console.log(buf.toString());  //你好
  var buf3 = new Buffer("世界你好"); 
  var buf4 = buf3.slice(3,9);
  console.log(buf4.toString())  // 打印“界你”，截取了全部buf3 3~9 的字节。
+
+
+
+
+ var fs = require('fs');
+ var files = ['a.txt','b.txt','c.txt'];
+ for(var i=0;i<files.length;i++){
+ 	(function(i){
+ 		fs.readFile(files[i], 'utf-8', function(err, contents){
+ 			console.log(files[i] + ":" + contents);
+ 		})
+ 	})(i);
+ }
+
+ //推荐写法：
+ files.forEach(function(filename){
+ 	fs.readFile(filename, 'utf-8', function(err, contents){
+ 		console.log(filename + ":" + contents);
+ 	});
+ });
