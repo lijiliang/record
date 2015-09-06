@@ -238,7 +238,57 @@ var server = http.createServer(function (req, res) {
 });
 server.listen(3000);
 
+/**
+ * 什么是流Stream
+ * 流，通俗来说是可读、可写或可读写的对象。比如打开一个文件流，就可以对文件流对象进行读写操作，比如一个request http请求，也是一个流对象，流对象继承了EventEmitter（参看“事件机制”一章）。
+ * 流stream这个模块本身提供了抽象类作为扩展基础，之后章节介绍的文件系统、网络系统、加密解密、压缩解压模块中都使用了流，根据自身系统的需要扩展了stream模块的抽象类。
+ * node.js 提供了流的抽象类。
+ * stream.Readable 可读抽象类
+ * stream.Writable 可写抽象类
+ * 读取流
+ * 通过这种方式我们可以创建一个Readable实例
+ * 
+ * 写入流
+ * Readable相对应的是写入流Writable。
+ * 构建Writable实例
+ */
 
+// 这样创建不会抛出任何异常
+var reader = new Readable();
+// 打印一下这个对象有什么吧
+console.log(reader);
+
+//构建Writable实例
+var Writable = require("stream").Writable;
+var writer = new Writable();
+
+
+/**
+ * fs文件系统
+ * 文件系统，通俗的理解是对文件和文件夹的操作。
+ * 文件系统内部读取与写入部分都实现了Readable和Writable（参看“流”的一章）
+ * 文件的操作的方法分为同步和异步，同步方法有sync字样。
+ * 本章会详细讲解，但有几个部分不会讲，原因是这部分API不是很好用，也几乎不会用到，还有就是它们并不是跨平台的，每个平台的参数和可用程度都不尽相同。比如fs.chmod（更改权限）、fs.symlink和fs.chown（更改所有者），不会在本书讲解，有兴趣的可以研究一下。
+ * 
+ * 文件描述符-fd：
+ * 内核（kernel）利用文件描述符（file descriptor）来访问文件。文件描述符是非负整数。打开现存文件或新建文件时，内核会返回一个文件描述符。读写文件也需要使用文件描述符来指定待读写的文件。
+ * 
+ * 文件链接-link
+ * 文件链接的是在文件之间创建链接。这种操作实际上是给系统中已有的某个文件指定另外一个可用于访问它的名称。对于这个新的文件名，我们可以为之指定不同的访问权限，以控制对信息的共享和安全性的问题。
+ */
+
+/**
+ * fs文件夹操作
+ * NodeJS通过fs内置模块提供对文件的操作。fs模块提供的API基本上可以分为以下三类：
+	文件属性读写。
+	其中常用的有fs.stat、fs.chmod、fs.chown等等。
+
+	文件内容读写。
+	其中常用的有fs.readFile、fs.readdir、fs.writeFile、fs.mkdir等等。
+
+	底层文件操作。
+	其中常用的有fs.open、fs.read、fs.write、fs.close等等。
+ */
 
 
 
