@@ -332,6 +332,41 @@ function strIntercept(str, len, hasDot){
     return newStr; 
 }
 
+/**
+ * [contextmenuCopy 禁用某一个区块的右键及复制功能]
+ * @param  {[type]} obj [传一个区块对象]
+ * contextmenuCopy($("content"))
+ */
+function contextmenuCopy(obj){
+	var container = document.getElementById(obj);
+	function iEsc(){ return false; }
+	function iRec(){ return true; }
+	function DisableKeys() {
+	    if(event.ctrlKey || event.altKey) {
+	        window.event.returnValue=false;
+	        iEsc();}
+	}
+	container.ondragstart=iEsc;
+	container.onkeydown=DisableKeys;
+	container.oncontextmenu=iEsc;
+	if (typeof container.onselectstart !="undefined")
+	    container.onselectstart=iEsc;
+	else{
+	    container.onmousedown=iEsc;
+	    container.onmouseup=iRec;
+	}
+	function DisableRightClick(qsyzDOTnet){
+	    if (window.Event){
+	        if (qsyzDOTnet.which == 2 || qsyzDOTnet.which == 3)
+	            iEsc();}
+	    else
+	    if (event.button == 2 || event.button == 3){
+	        event.cancelBubble = true
+	        event.returnValue = false;
+	        iEsc();}
+	}
+}
+
 
 
 

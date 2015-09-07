@@ -290,5 +290,226 @@ var writer = new Writable();
 	其中常用的有fs.open、fs.read、fs.write、fs.close等等。
  */
 
+/**
+ * 监听文件夹
+ * 这个功能很有趣，就是当文件夹内有变化时，会触发事件，比如文件夹内，增加文件、修改文件都会触发事件。
+ * 通过fs.watch方法可以监听一个文件或文件夹，这里监听了当前文件夹。这里有几种情况，当创建一个文件夹或文件时，eventname是rename，filename是新创建的文件夹或文件的名称。当删除一个文件夹或文件时，eventname是rename，filename是null。当更改一个文件内容或文件（文件夹）名时，eventname是change，filename是被更改的那个文件的文件名。
+ * 
+ */
+//监听当前目录的代码实现
+var fs = require("fs");
+fs.watch(".", function(eventname, filename){
+	console.log(eventname);
+	console.log(filename);
+})
+
+/**
+ * fs文件操作
+ * 写文件
+ * 写文件的意思感觉是写一个文件，准确来说，这里的写文件是把数据写入到一个文件中，当文件不存在时会创建一个文件。那么细化来看，过程应该是先打开一个文件，如果文件不存在就创建一个新的文件，然后把数据写入这个文件。
+ * 打开文件使用fs.open方法，写入数据使用fs.write方法，先做个例子。
+ *
+ * fs.open(path, flags, callback)
+ * fs.openSync(path,flags) 是同步方法，return fd,如果有错误直接throw抛出错误。
+ * fs.open 打开了文件，当然使用后应该关闭close文件，通过fs.close(fd, callback)和fs.closeSync(fd)方法可以关闭打开的文件
+ *
+ * 其它写入的方法：
+ * fs.writeFile(filename, data, [options], callback)
+ * fs.writeFileSync(filename, data, [options]) 同步方式
+ * filename String类型， 文件名称
+ * data String | Buffer类型，要写入的数据
+ * options[可选] Objectl 类型，默认值 {encoding:"utf8",flag:"w"}
+ * callback(err) 回调函数
+ * 
+ * fs.appendFile(filename, data, [options], callback)
+ * fs.appendFileSync(filename, data, [options]) 同步方式
+ * 参看 fs.writeFile 方法，差别就是 [options]的flag默认值是"a"，所以它以追加方式写入数据
+ */
+
+//写文件
+var fs = require("fs");
+fs.open("new.txt","w",function(err,fd){
+    var buf = new Buffer("你好啊");
+    fs.write(fd,buf,0,buf.length,0,function(err,written,buffer){});
+})
+
+var fs = require("fs");
+fs.writeFile("myfile.txt","Javascript很赞",function(err){
+    if(!err)
+    console.log("写入成功！")
+})
+
+/**
+ * fs 读文件
+ * fs.read(fd, buffer, offset, length, position, callback)
+ * fs.read(fd, buffer, offset, length, position) 方法是同步写入，它返回读取了多少bytes数量。
+ * fd参数，文件描述符，通过fs.open得到。
+ * buffer参数，是把读取的数据写入这个对象，是个Buffer对象。
+ * offset参数，写入buffer的起始位置。
+ * length参数，写入buffer的长度。
+ * position参数，文件的什么位置开始读。
+ * callback(err,bytesRead, buffer)回调方法，当出现异常会抛出err，bytesRead是读取了多少bytes，buffer读取到的数据。
+ * 
+ * 除了fs.read方式读取文件外，还有一个读取文件的方式。
+ * fs.readFile(filename, [options], callback)
+ * fs.readFileSync(filename,[options]) 同步方式，retur读取到的数据。
+ * filename String类型，表示要读取的文件名
+ * options[可选] Object类型，默认值是 {encoding:null,flag:"r"}
+ * callback(err,data) 回调函数，data表示读取的数据。
+ *
+ * 读取和写入都有两种不同方式，一个是先open，然后操作读写，但需要手工调用fs.close关闭文件，这种方式适合于多次写入或读取。还有一次性服务的，writeFile/appendFile/readFile方法只是写入或读取一次，内部自动调用了fs.close方法。
+ */
+
+//判断这个文件是png图片
+var fs = require("fs");
+fs.open("1.png","r",function(err,fd){
+    // PNG头部 8 bytes是固定的，来判断文件前8bytes。
+    var header = new Buffer([137,80,78,71,13,10,26,10]);
+    var buf = new Buffer(8);
+    fs.read(fd,buf,0,buf.length,0,function(err,bytesRead,buffer){
+        if(header.toString() === buffer.toString()){
+            console.log("是PNG格式图片文件");
+        }
+    })        
+})
+
+var fs = require("fs");
+var data = fs.readFileSync("myfile.txt");
+console.log(data.toString());
+
+
+/**
+ * node.js网络模块
+ * 通过网络可以让电脑相互连接，从而相互传递信息。这个过程，就需要知道彼此的地址，这个地址就是IP。数据传输的方式，分为TCP和UDP，TCP可以理解为可靠性交流，确保数据完整性的方式，UDP就比较随意，不和对方打招呼，直接把数据通过IP地址丢给对方。socket是建立在TCP和IP之上的，可以理解为一个空洞和管道，通过它发送数据和接收数据。HTTP协议中的数据是利用TCP协议传输的，所以支持HTTP也就一定支持TCP。好了，不讲太多，下面看一下node.js中对应这些概念的模块有哪些。
+ * net模块
+ *   通过 var net = require("net"); 方式导入net模块。
+ *   net模块可以建立TCP的服务器端和Socket客户端。
+ *
+ * http模块
+ *   通过这个模块是建立http的服务器端和客户端，http模块建立在net模块之上。
+ *
+ * https模块
+ * 	 通过这个模块可以建立https的服务器端和客户端，https模块建立在http模块和tls模块之上（tls模块在“加密解密”一章有详解）
+ *
+ * gdram模块
+ * 	 这个模块对应的就是UDP协议的操作。
+ *
+ * Socket是什么
+ * 	 所谓socket通常也称作"套接字"，应用程序通常通过"套接字"向网络发出请求或者应答网络请求。
+ * 	 形象的描述是，socket是一个管道两端的口，当客户端和服务器建立连接后，这个管道就形成了，那么两端可以通过socket（口）写入和读取数据到另一端。
+ */
+var net = require('net');
+var server = net.createServer(function(socket) {
+  console.log('有客户进入');
+
+  // 和客户端打招呼
+  socket.write('你好啊！');
+
+  // 打印客户端发送来的信息
+  socket.on("data",function(data){
+    console.log(data.toString());
+
+  })
+
+  // 监听 error 或 end事件
+  socket.on("error",function(){
+    console.log("客户已断开")
+  })
+  socket.on("end",function(){
+    console.log("客户已断开")
+  })
+
+});
+// 服务器监听8124端口，等待客户访问
+server.listen(8124, function() {
+  console.log('服务器已启动！');
+});
+
+
+/**
+ * Socket对象
+ * net模块有两个类，一个是Socket和Server，下面先讲解Socket。
+ * net.Socket实现了stream.Duplex双工接口，具有了读写的能力。
+ * 创建Socket实例
+ * 第一种方法 new net.Socket()
+ * 创建之后也不能做什么，因为没有连接到服务器端，所以需要socket.connect方法建立个连接。
+ * socket.connect(port, [host], [connectListener]) 方法是连接服务器的方法，port表示连接到服务器的端口号；host[可选]参数是服务器地址，默认是localhost；connectListener[可选]参数是个'connect'事件监听器，当连接建立后会触发'connect'事件，但当连接建立失败时，会触发‘error’事件。
+ *
+ * 第二种方法 net.connect / net.createConnection
+ * net.connect(port, [host], [connectListener])#
+ * net.createConnection(port, [host], [connectListener])
+ *
+ * 第三种方法 被动创建
+ * 其实就是服务器端有一个客户端连进来时，会在服务器端创建一个对应的socket（口）。
+ * net.createServer([connectionListener])方法在例子中见过，下面详细讲解。
+ * connectionListener(socket)是“connection”事件监听器，当有客户端连接进来时，会触发“connection”事件，而这个监听器的socket参数就是被动创建的，是对应连接进来的客户端，当然这是可选参数。
+ * connectionListener是可选参数，如果省略了又如何得到socket呢？答案很简单，看下面代码：
+ */
+
+//第一种方法 new net.Socket()
+var net = require("net");
+var socket = new net.Socket();
+socket.connect(8124,function(){
+    console.log(socket.address())
+})
+
+//第三种方法 被动创建
+var server = net.createServer();
+server.on("connection",function(socket){
+    // 这个的作用和 [connectionListener]的作用一样。
+})
+
+/**
+ * Socket对象的属性
+ * socket.remoteAddress 属性是远程socket的地址。
+ * socket.remotePort 远程socket的端口号。
+ * socket.localAddress 本地socket地址。
+ * socket.localPort 本地socket端口号。
+ * socket.bytesRead 接收到的字节数。
+ * socket.bytesWritten  发送出去的字节数。
+ * socket.setEncoding 流
+ * socket.write(data, [encoding], [callback])
+ *    data参数，要发送出去的数据，data可以是字符串类型或Buffer类型。
+ *    encoding[可选]参数，编码方式，默认utf8，当data是字符串类型时有效。
+ *    callback[可选]参数，写入成功后被调用。
+ * socket.end([data], [encoding]);
+ * 	  socket.end()就是发出FIN，至于FIN信号，可以理解为告诉另一端socket结束了，然后自己也会结束生命周期，而另一端会触发"end"事件。
+ * 
+ * 
+ */
+var net = require('net');
+var server = net.createServer();
+server.on("connection",function(socket) {
+    console.log("远程socket端口：" + socket.remotePort);
+    console.log("远程socket地址：" + socket.remoteAddress);
+    console.log("本地socket端口：" + socket.localPort);
+    console.log("本地socket地址：" + socket.localAddress);
+    socket.on("data",function(data){
+        console.log(data.toString());
+        console.log("接受到字节量：" + socket.bytesRead);
+        socket.write("send byte ... ")
+        console.log("发送的字节量："+ socket.bytesWritten);
+    })
+})
+
+server.listen(8124, function() {
+  console.log('服务器已启动！');
+});
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
