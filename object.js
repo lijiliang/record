@@ -16,3 +16,11 @@ for(var i in foo){
 		console.log(i);   //moo
 	}
 }
+
+/**
+ * in运算符: in运算符用于确定某个属性是否包含在对象中。如果某个属性值是undefined，in运算符也返回true。
+ */
+var o = {P:1}
+'p' in o  //true
+var o = {p:undefined}
+'p' in o

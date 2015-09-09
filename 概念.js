@@ -46,7 +46,7 @@ var person = {
 Array
 	join()方法： 合并数组为字符串  arr.join('|')
 	杙方法：后进先出   push()向数组后面添加一项； pop()取得数组最后一项，移除
-	队列方法：先进先出  shift()取得第一项，删除； unshfit()向数组最前面添加项
+	队列方法：先进先出  shift()用于删除数组的第一个元素，并返回该元素； unshfit()数组的第一个位置添加元素，并返回添加新元素后的数组长度
 	重排序方法：reverse()反转数组  sort()排序数组
 	操作方法：concat() 连接两个或多个数组
 			 slice()接受一个或者两个参数，即要返回项的起始和结束位置。一个参数，slice()方法将返回从该参数指定位置开始到当前数组未尾的所有项
@@ -55,7 +55,8 @@ Array
 			 	删除：可以删除数量的项，只需指定2个参数：要删除的第一项的位置和要删除的项数, splice(0,2)会删除数组中的两项
 			 	插入：可以向指定位置插入任意数量的项，只需要提供3个参数：起始位置、0(要删除的项数)和要插入的项。如果要插入多个项，可以再传入第四，第五或多个做任意的项 如：splice(2,0,'red','green')
 			 	替换：可以向指定位置插入任意的项，且同时删除任意数组的项，只需指定3个参数：起始位置、要删除的项数和要插入的任意数量的项。插入的项不必与删除的项数相等。如：arr.splice(2,2,'liang','li')  
- 	位置方法： indexOf()从头开始查找,lastIndexOf()从未尾开始查找 两个方法都接收两个参数：要查找的项和（可选的）表示查找起点位置的索引 注：IE9及以上支持
+ 	位置方法： indexOf()从头开始查找,lastIndexOf()从未尾开始查找,如果找不到该元素，就返回-1
+ 	两个方法都接收两个参数：要查找的项和（可选的）表示查找起点位置的索引 注：IE9及以上支持
  	迭代方法：every(),filter(),forEach(),map(),some()
 
  */
@@ -95,7 +96,7 @@ Date
 
 /*
 RegExp
-	创建一个正则 var re = /pattern/flags;   =>  /[bc]at/i
+	创建一个正则,字面量形式 var re = /pattern/flags;   =>  /[bc]at/i
 	或者用构造函数来定义： var re = new RegExp("patter","flags")   =>  new RegExp("[bc]at","i")
 	模式(pattern)部分可以是任何或复？的正则表达式，可以包含字符类、限定类、分组、向前查找以及反向引用，每个正则表达式都可带有一个或多个标志(flags),用以标明正则表达式的行为
 	标志：g表示全局，i表示不区分大小写，m表示多行
@@ -283,6 +284,8 @@ function callNum(num1, num2){
 	Number
 		toFixed() 按照指定的小数位返回数值的字符串，如num.toFixed(2)  //10.00
 		toExponential() 返回以指数表示法(e表示法）
+		toPrecision() 将一个数转为指定位数的有效数字
+		(12.34).toPrecision(3) // "12.3"
 	String
 		继承valueOf(),toLocaleString(),toString()方法，返回对象所表示的基本字符串值
 		String的每个实例都有一个length属性
@@ -339,6 +342,36 @@ function htmlEscape(text){
 		}
 	}
 }
+
+/**
+ * JSON
+ * JSON.stringigy() json转字符串
+ * JSON.parse()   json转对象
+ * json字符串转json对象：jQuery.parseJSON(jsonStr);
+ * json对象转json字符串：JSON.stringify(jsonObj);
+ */
+// 1. 格式正确的JSON定义
+ ["one", "two", "three"]
+ { "one": 1, "two": 2, "three": 3 }
+ {"names": ["张三", "李四"] }
+ [ { "name": "张三"}, {"name": "李四"} ]
+
+JSON.stringify({ name: "张三" });  //{"name":"张三"}
+JSON.parse('true'); // true 
+
+// 该方法可以接受一个过滤函数，用法与JSON.stringify类似。
+ function f(key, value) {
+     if ( key === ""){
+         return value;
+     }
+     if ( key === "a" ) {
+         return value + 10;
+     }
+ }
+
+ var o = JSON.parse('{"a":1,"b":2}', f);
+ o.a  // 11
+ o.b  // undefined
 
 /*
 单体内置对象
