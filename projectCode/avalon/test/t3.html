@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<script src="../avalon.js"></script>
+</head>
+<body>
+	<div ms-controller="test">
+		<h1>{{aaa}}</h1>
+		<a ms-attr-href="bbb +'.html'">xxx</a>
+		 <ul>
+            <li ms-repeat="array" ms-if-loop="el">{{ el }} </li>
+            <li>它总是在最后</li>
+        </ul>
+	</div>
+	<script>
+	avalon.define('test', function(vm){
+		vm.aaa = "array不存在啊"
+		vm.bbb = "www.sucaiweb.com/index"
+		vm.array = ["aaa","bbb","ccc"]
+	})
+	</script>
+</body>
+</html>

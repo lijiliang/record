@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<script src="../avalon.js"></script>
+	<script>
+	avalon.ready(function(){
+		avalon.define({
+			$id: "attr",
+			textModel: "star",
+			t1: true,
+			age: 20,
+			r1: true,
+			sex: "男"
+		})
+		avalon.scan();
+	})
+	</script>
+</head>
+<body>
+	<form action="" ms-controller="attr">
+		<h2></h2>
+		<label for="">姓名</label>
+		<input ms-duplex="textModel" ms-attr-disabled="t1">
+		<label for="">年龄</label>
+		<input ms-duplex="age" ms-attr-readonly="r1">
+		<label for="">性别</label>
+			<label for=""><input type="radio" ms-duplex-string="sex" vlaue="男">男</label>
+			<label for=""><input type="radio" ms-duplex-string="sex" vlaue="女">女</label>
+	</form>
+</body>
+</html>

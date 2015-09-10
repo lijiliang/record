@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<script src="../avalon.js"></script>
+	<style>
+            .outer{
+                width:200px;
+                height: 200px;
+                position: absolute;
+                top:1px;
+                left:1px;
+                background: red;
+                z-index:1;
+            }
+            .inner{
+                width:100px;
+                height: 100px;
+                position: relative;
+                top:20px;
+                left:20px;
+                background: green;
+            }
+        </style>
+</head>
+<body>
+	 <h3>在旧式IE下，如果父元素是定位元素,但没有设置它的top, left, z-index，那么为它设置透明时,
+            它的所有被定位的后代都没有透明</h3>
+ 	<div ms-controller="box">
+        <div class="outer" ms-css-opacity="o" ms-css-background-color="bg" >
+            <div class="inner"></div>
+        </div>
+    </div>
+    <script>
+    avalon.define({
+    	$id: "box",
+    	o : "0.5",
+    	bg: "#f60"
+    })
+    </script>
+</body>
+</html>

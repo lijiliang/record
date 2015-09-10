@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+ 
+<html>
+    <head>
+        <title>TODO supply a title</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width">
+        <script src="../avalon.js"></script>
+        <script>
+        avalon.ready(function(){
+            avalon.define({
+                $id: "duplx",
+                username: "liang",
+                password: "abc123",
+                profile: "test string",
+                isRadio: false
+ 
+            })
+            avalon.scan();
+        })
+        </script>
+    </head>
+    <body>
+ 
+        <div ms-controller="duplx">
+            <input type="text" ms-duplex="username" ms-data-duplex-observe="false">
+            <input type="password" ms-duplex="password">
+            <textarea name="" id="" cols="30" rows="10" ms-duplex="profile"></textarea>
+            <ul>
+                <li>{{username}}</li>
+                <li>{{password}}</li>
+                <li>{{profile}}</li>
+            </ul>
+            <input type="radio" ms-duplex="{{isRodio}}">
+            {{isRadio}}
+        </div>
+    </body>
+</html>

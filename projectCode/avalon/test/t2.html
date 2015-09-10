@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<script src="../avalon.js"></script>
+</head>
+<body>
+	<fieldset ms-controller="on">
+        <legend>有关事件回调传参</legend>
+        <div ms-mouseenter="callback" ms-mouseleave="callback">{{status}}<br/>
+            <input ms-on-input="check"/>{{field}}
+        </div>
+        <div ms-click="argsClick($event, 100, firstName)">点我</div>
+        <div ms-each-el="array" >
+            <p ms-click="loopClick(el, $event)">{{el}}</p>
+        </div>
+        <button ms-click="submit">点我</button>
+    </fieldset>
+
+
+	<script>
+	var model = avalon.define("on", function(vm){
+		vm.firstName = "liang"
+		vm.array = ["aaa","bbb","ccc"]
+		vm.argsClick = function(e, a, b){
+			alert([].slice.call(arguments).join(" "))
+		}
+		vm.loopClick = function(a, e){
+			alert(a + "  " + e.type)
+		}
+		vm.status = ""
+		vm.callback = function(e){
+			vm.status = e.type
+		}
+		vm.field = ""
+		vm.check = function(e){
+			vm.field = this.value + "  " + e.type
+		}
+		vm.submit = function(){
+			var data = model.$model
+            if (window.JSON) {
+                setTimeout(function() {
+                    alert(JSON.stringify(data))
+                })
+            }
+
+		}
+	})
+	</script>
+</body>
+</html>

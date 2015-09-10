@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>TODO supply a title</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width">
+        <script src="../avalon.js"></script>
+        <script>
+        var index = 0;
+        var model = avalon.define({
+            $id: "test",
+            array: ["111","222","333"],
+            data: {
+                aaa: 111,
+                bbb: 222,
+                ccc: 333
+            },
+            changeArray: function(status){
+                console.log(this);
+                console.log(status);
+            },
+            changeData: function(status){
+                console.log(this);
+                console.log(status);
+            }
+        })
+        setTimeout(function(){
+            model.array.push("444")
+        }, 2000)
+        </script>
+    </head>
+    <body ms-controller="test" >
+       <ul ms-each="array" data-each-rendered="changeArray">
+           <li>{{el}}</li>
+       </ul>
+       <ul ms-with="data" data-with-rendered="changeData" data-with-sorted="keys">
+           <li>{{$key}}:{{$val}}</li>
+       </ul>
+    </body>
+</html>
