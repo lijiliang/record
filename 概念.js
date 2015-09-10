@@ -82,6 +82,17 @@ function compare(value1,value2){
 
 /*
 Date
+	Date对象的生成，直接调用Date对象，会返回当前时间的字符串
+	Date静态方法：now方法、parse方法、UTC方法
+		now方法: now方法返回当前距离1970年1月1日 00:00:00 UTC的毫秒数
+				Date.now()
+		parse方法：parse方法解析日期字符串，返回距离1970年1月1日 00:00:00 UTC的毫秒数。
+				Date.parse("2011-10-10")
+		UTC方法: UTC方法接受年、月、日等变量独立作为参数，返回当前距离1970年1月1日 00:00:00 UTC的毫秒数。
+				Date.UTC(year, month[, date[, hrs[, min[, sec[, ms]]]]])
+		Date实例方法：toString，toDateString、toTimeString、toISOString方法
+		valueOf，getTime: valueOf方法和getTime方法都返回实例对象距离1970年1月1日00:00:00 UTC对应的毫秒数。
+
 	getTime()  返回日期的毫秒数
 	getFullYear()  取得4位数的年份
 	getMonth()   月份
@@ -92,7 +103,41 @@ Date
 	getSeconds() 日期中的秒数
 	getMilliseconds() 日期中的毫秒数
 */
+var today = new Date();
+today.toString();  //"Wed Sep 09 2015 10:53:22 GMT+0800 (CST)"
+today.toISOString(); //2015-09-09T02:53:22.742Z
 
+var today = new Date();
+today.valueOf()
+// 1362790014817
+today.getTime()
+// 1362790014817
+// getDate：返回实例对象对应每个月的几号（从1开始）。
+// getDay：返回星期，星期日为0，星期一为1，以此类推。
+// getFullYear：返回四位的年份。
+// getMonth：返回月份（0-11）。
+// getHours：返回小时（0-23）。
+// getMilliseconds：返回毫秒（0-999）。
+// getMinutes：返回分钟（0-59）。
+// getSeconds：返回秒（0-59）。
+// getTimezoneOffset：返回时区差异。
+
+// set系列方法:
+// setDate：设置实例对象对应的每个月的几号（1-31），返回改变后毫秒时间戳。
+// setFullYear：设置四位年份。
+// setHours：设置小时（0-23）。
+// setMilliseconds：设置毫秒（0-999）。
+// setMinutes：设置分钟（0-59）。
+// setMonth：设置月份（0-11）。
+// setSeconds：设置秒（0-59）。
+// setTime：设置毫秒时间戳。
+var date1 = new Date ( "January 6, 2013" );
+date1
+// Sun Jan 06 2013 00:00:00 GMT+0800 (CST)
+date1.setDate(9)
+// 1357660800000
+date1
+// Wed Jan 09 2013 00:00:00 GMT+0800 (CST)
 
 /*
 RegExp
@@ -399,12 +444,26 @@ Math对象
 	Math对象，数学公式
 	min()和max()方法 用于确定一组数值中的最小值和最大值  //var min = Math.min(10,20,1,20)
 	Math.PI  Math.E
+	Math.abs(1) //1  绝对值
+	Math.pow(2,3) //8  幂的指数值
+	Math.sqrt(4) //2   返回参数的平方根
 	舍入方法：
 		Math.ceil()  向上舍入（向上取整）   Math.ceil(25.9)  26
 		Math.floor() 向下舍入（向下取整）
 		Math.round() 四舍五入
 	random()方法  随机数
 */
+
+//random方法：该方法返回0到1之间的一个伪随机数，可能等于0，但是一定小于1。
+Math.random() // 0.7151307314634323
+// 返回给定范围内的随机数
+function getRandomArbitrary(min, max) {
+    return Math.random() * (max - min) + min;
+}
+// 返回给定范围内的随机整数
+function getRandomInt(min, max) {
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+}
 
 /*
 BOM 浏览器对象模型
@@ -555,6 +614,7 @@ console.log(genter2()); //1
 console.log(genter1()); //2
 console.log(genter1()); //3
 console.log(genter2()); //2
+
 
 
 
