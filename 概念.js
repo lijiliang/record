@@ -11,6 +11,43 @@
 		var hasMoreCommands = false;
  */
 
+/**
+ * 数据类型转换
+ * 自动转换:
+ * 		自动转换为字符串：当JavaScript遇到预期为字符串的地方，就会将非字符串的数据自动转为字符串
+ * 强制转换 Number()  String()  Boolean
+ */
+
+//自动转换为布尔值：undefined、null、-0、+0、NaN、''（空字符串）都会转换为false
+if (!undefined && !null && !0 && !NaN && !''){
+    console.log('true');  //true
+}
+//自动转换为字符串：当JavaScript遇到预期为字符串的地方，就会将非字符串的数据自动转为字符串
+'5' + 1 //'51'
+'5' + true //5true
+'5' + false //5false
+'5' + {} //5[object object]
+'5' + [] //5
+'5' + function(){} //5function(){}
+'5' + undefined //5undefined
+'5' + null //5null
+
+//自动转换为数值：当JavaScript遇到预期为数值的地方，就会将参数值自动转换为数值。
+'5' - '2' //3
+'5' * '2' //10
+true - 1  //2
+false - 1 //-1
+'1' - 1   //0
+'5'*[]    //0
+false/'5' //0
+'abc' - 1 //NaN
+3*{value: function(){return 5}} //NaN
+
+//强制转换
+Number("234")
+String(123)
+Boolean(undefined)  //false
+
 /*
 检测类型： typeof -> string,number,boolean,undefined,object(null, function, Array, RegExp)
 instanceof 可以检测object类型的具体类型
@@ -581,11 +618,22 @@ intervalId = setInterval(incrementNumber, 1000)
 /*
 闭包：
 	闭包是函数式编程中的概念，由函数（环境）及其封闭的自由变量组成的集合体
+	有另一种说法认为闭包是由函数和与其相关的引用环境组合而成的实体
 	闭包的特性：当一个函数返回它内部定义的一个函数时，就产生了一个闭包，闭包不但包括被返回的函数，还包括这个函数的定义环境。
 	闭包的用途：一个是实现嵌套的回调函数，二是隐藏对象的细节
  */
 
-//例1
+// 函数访问了其外部的变量，那这个函数就构成了一个闭包。
+function foo(x) {
+    var tmp = 3;
+    return function (y) {
+        alert(x + y + (++tmp));
+    }
+}
+var bar = foo(2); // bar is now a closure.
+bar(10);
+
+//例
 var gen = function(){
    var count = 0;
    var get = function(){
@@ -598,7 +646,7 @@ var genter = gen();
 console.log(genter()); //1
 console.log(genter()); //2
 
-//例2 下面生成了两个闭包的实例，它们内部引用的count变量分别属于各自的运行环境
+//例 下面生成了两个闭包的实例，它们内部引用的count变量分别属于各自的运行环境
 var gen = function(){
    var count = 0;
    var get = function(){
@@ -615,10 +663,91 @@ console.log(genter1()); //2
 console.log(genter1()); //3
 console.log(genter2()); //2
 
+/**
+ * 错误处理
+ *  Error: name：错误名称,message：错误提示信息
+	EvalError：执行代码时发生的错误。
+	RangeError：当一个数值型变量或参数超出有效范围时发生的错误。
+	ReferenceError：引用一个不存在的变量时发生的错误。
+	SyntaxError：解析代码时发生的语法错误。
+	TypeError：变量或参数的类型无效时发生的错误。
+	URIError：向encodeURI() 或者 decodeURI() 传入无效参数时发生的错误。
+ */
+// try...catch
+try {
+    throw new Error('出错了!');
+} catch (e) {
+    console.log(e.name + ": " + e.message);  // Error: 出错了！
+} finally {
+   // todo
+}
 
+try {
+   throw n; // 这里抛出一个整数
+} catch (e) {
+   if (e <= 50) {
+      // 针对1-50的错误的处理
+   } else {
+      // 大于50的错误无法处理，再抛出一个错误
+      throw e;
+   }
+}
+// onerror事件：http://jsfiddle.net/dangjian/ay8k6/
+window.onerror = function(message, url, linenumber){
+    var message = {message: message , line: linenumber, url: url, agent: navigator.userAgent};
+    alert(JSON.stringify(message));
+}
 
+throw new Error('dangjian');
 
+/**
+ * 同源策略
+ * 同源策略阻止从一个源加载的文档或脚本获取或设置另一个源加载的文档的属性。
+ * 如果两个页面的协议、端口（如果指明了的话）和主机名都相同，认为这两个页面拥有相同的源。
+ * 绕过同源策略的几种方式
+ */
+//方式1：在同源策略中有一个例外，脚本可以设置 document.domain 的值为当前域的一个后缀，比如域store.company.com的后缀可以是company.com。如果这样做的话，短的域将作为后续同源检测的依据。例如，假设在 http://store.company.com/dir/other.html 中的一个脚本执行了下列语句：
+document.domain = 'company.com';
+var ifr = document.createElement('iframe');
+ifr.src = 'http://script.company.com/b.html';
+ifr.style.display = 'none';
+document.body.appendChild(ifr);
+ifr.onload = function(){
+	var x = ifr.contentDocument;
+	alert(x.getElementsByTagName("h1")[0].childNodes[0].nodeValue);
+}
+// 页面将会成功地通过对 http://company.com/dir/page.html 的同源检测。而同理，company.com 不能设置 document.domain 为 othercompany.com.
 
+//方式2： 动态创建script，浏览器默认禁止了跨域访问，但并不禁止在页面中引用其他域的JS文件，并可以自由执行引入的JS文件中的function，根据这一点，可以方便地通过创建script节点的方法来实现完全跨域的通信。 主要用于跨域取得数据，JSONP
+
+/**
+ * 方式3：通过iframe和popup，各种第三方登录就是使用这种方式，具体做法： 
+1，通过在http://example1.com/index.php页面中创建指向http://example2.com/getinfo.php的iframe节点跨域提交GET请求。 
+2. 要在example1.com下放置一个跨域文件，比如路径是http://example1.com/crossdomain.html。 
+3. 当http://example2.com/getinfo.php这个请求返回结果的时候，做一个302跳转，跳转到跨域文件http://example1.com/crossdomain.html，同时将返回结果经过URL编码之后作为参数缀在跨域文件URL后面。 
+4. 在跨域文件中，包含一段JavaScript代码，这段代码完成的功能，是从URL中提取结果参数，经过一定处理后调用原来的http://example1.com/index.php页面中的一个预先约定好的callback函数，同时将结果参数传给这个函数。 
+方式4：使用HTML5 postMessage，下一代浏览器都将支持这个功能：Chrome 2.0+、Internet Explorer 8.0+, Firefox 3.0+, Opera 9.6+, 和 Safari 4.0+ 。 Facebook已经使用了这个功能，用postMessage支持基于web的实时消息传递。
+ */
+<iframe id="ifr" src="b.com/index.html"></iframe>
+<script type="text/javascript">
+    window.onload = function () {
+        var ifr = document.getElementById('ifr');
+        var targetOrigin = 'http://b.com';  // 若写成'http://b.com/c/proxy.html'效果一样
+        // 若写成'http://c.com'就不会执行postMessage了
+        ifr.contentWindow.postMessage('I was there!', targetOrigin);
+    };
+</script>
+// b.com/index.html中的代码：
+<script type="text/javascript">
+    window.addEventListener('message', function (event) {
+        // 通过origin属性判断消息来源地址
+        if (event.origin == 'http://a.com') {
+            alert(event.data);    // 弹出"I was there!"
+            alert(event.source);  // 对a.com、index.html中window对象的引用
+            // 但由于同源策略，这里event.source不可以访问window对象
+        }
+    }, false);
+</script>
 
 
 
