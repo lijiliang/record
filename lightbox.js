@@ -98,7 +98,7 @@
 
 		//判断是不是IE6
 		this.isIE6 = /MSIE 6.0/gi.test(window.navigator.userAgent);
-		
+
 		//绑定窗口调整事件
 		var timer = null;
 		this.clear = false;
@@ -372,3 +372,6 @@ $(function(){
 		maxHeight:600
 	})
 })
+
+
+

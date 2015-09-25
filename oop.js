@@ -293,5 +293,113 @@ alert(instance instanceof Object) //true
 alert(SuperType.prototype.isPrototypeOf(instance)); //true
 
 
+//借用构造函数  这种方法很少单独使用
+function SuperType(){
+	this.colors = ["red","blue","green"];
+}
+function SubType(){
+	//继承了SuperType  可通过apply()和call()方法在（将来）新创建的对象上执行构造函数
+	SuperType.call(this);
+}
+var instance1 = new SubType();
+instance1.colors.push("blank");
+alert(instance1.colors) //red,blue,green,blank
+
+//借用构造函数 -> 传递参数
+function SuperType(name){
+	this.name = name;
+}
+function SubType(){
+	//继承了SuperType,同时还传递了参数
+	SuperType.call(this, "Nicholas");
+
+	//实例属性
+	this.age = 29;
+}
+var instance1 = new SubType();
+alert(instance1.name)  //Nicholas
+alert(instance1.age)  //29
+
+
+//组合继承
+function SuperType(name){
+	this.name = name;
+	this.colors = ["red","blue","green"];
+}
+SuperType.prototype.sayName = function(){
+	alert(this.name);
+};
+function subType(name, age){
+	//继承属性
+	SuperType.call(this, name);
+	this.age = age;
+};
+//继承方法
+subType.prototype = new SuperType();
+subType.prototype.sayAge = function(){
+	alert(this.age)
+}
+var instance1 = new subType("liang", 29);
+instance1.colors.push("black");
+alert(instance1.colors); //red,blue,green,black
+instance1.sayName();  //liang
+instance1.sayAge(); //29
+
+//原型式继承
+//这种继承方式要求你必须有一个对象可以作为另一个对象的基础
+function object(o){
+	function F();
+	F.prototype = o;
+	return new F();
+}
+
+var person = {
+	name: "liang",
+	friends: ["li","res"]
+}
+
+var anotherPerson = object(person);
+anotherPerson.name = "Greg";
+
+//ECMAScript5 Object.create() 规范化了原型式继承
+var person = {
+	name: "liang",
+	friends: ["li","res"]
+}
+var anotherPerson = Object.create(person);
+anotherPerson.name = 'greg';
+anotherPerson.friends.push("Rob")
+alert(person.friends)  //li,res,Rob
+
+
+//寄生式继承
+function createAnother(original){
+	var clone = object(original);  //通过调用函数创建一个对象
+	clone.sayHi = function(){      //以某种方式来增强这个对象
+		alert('HI');
+	}
+	return clone;    // 返回这个对象
+}
+
+//寄生组合式继承
+//集寄生式继承和组合继承的优点于一身，是实现基于类型继承的最有效方式
+function SubperType(name){
+	this.name = name;
+	this.colors = ["red","blue","green"];
+}
+SuperType.prototype.sayName = function(){
+	alert(this.name);
+}
+function subType(name, age){
+	SubperType.call(this, name);  //第二次调用SubperType()
+
+	this.age = age;
+}
+
+subType.prototype = new SubperType();  //第一次调用 SubperType()
+subType.prototype.constructor = subType;
+subType.prototype.sayAge = function(){
+	alert(this.age)
+}
 
 

@@ -663,6 +663,91 @@ console.log(genter1()); //2
 console.log(genter1()); //3
 console.log(genter2()); //2
 
+// 下例中函数bar()的作用域能够访问foo()的内部作用域，然后我们将bar()函数本身当作一个值类型进行传递，将bar所引用的函数对象本身当作返回值
+// “拜bar()所声明的位置所赐，它拥有涵盖foo()内部作用域的闭包，使得该”作用域能够一直存活，以供bar()在之后任何时间进行引用
+// bar()依然持有对该作用域的引用，而这个引用就叫作闭包
+function foo(){
+	var a = 2;
+	function bar(){
+		console.log(a);
+	}
+	return bar;
+}
+var baz = foo();
+baz(); //2  这就是闭包的效果
+
+//间接传递闭包
+//“无论通过何种手段将内部函数传递到所在的词法作用域以外，它都会持有对原始定义作用域的引用，无论在何处执行这个函数都会使用闭包”
+
+var fn;
+function foo(){
+	var a = 2;
+	function baz(){
+		console.log(a);
+	}
+	fn = baz;  //将baz分配给全局亦是
+}
+
+function bar(){
+	fn();  //这就是闭包
+}
+foo();
+bar(); //2
+
+//循环与闭包
+for(var i=0;i<10;i++){
+	(function(j){
+		setTimeout(function timer(){
+			console.log(j);
+		}, j*1000)
+	})(i)
+}
+
+//闭包与模块
+//模块模式需具备两个必要条件
+//1，必须有外部的封闭函数，该函数必须至少被调用一次(每次调用都会创建一个新的模块实例)
+//2.封闭函数必须返回至少一个内部函数，这样内部函数才能在私有作用域中形成闭包，并且可以访问或者修改私有的状态
+function CoolModule(){
+	var something = "cool";
+	var another = [1,2,3];
+	function doSomething(){
+		console.log(something);
+	}
+	function doAnother(){
+		console.log(another.join("!"));
+	}
+
+	//模块暴露
+	//模块的公共API
+	return{
+		doSomething: doSomething,
+		doAnother: doAnother
+	}
+}
+var foo = CoolModule();
+ 
+//或者 单例模式
+var foo = (function CoolModule(){
+	var something = "cool";
+	var another = [1,2,3];
+	function doSomething(){
+		console.log(something);
+	}
+	function doAnother(){
+		console.log(another.join("!"));
+	}
+
+	//模块暴露
+	//模块的公共API
+	return{
+		doSomething: doSomething,
+		doAnother: doAnother
+	}
+})()
+
+foo.doSomething(); //cool
+foo.doAnother(); //1,2,3
+
 /**
  * 错误处理
  *  Error: name：错误名称,message：错误提示信息
