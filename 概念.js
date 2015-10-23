@@ -9,6 +9,13 @@
 	boolean 类型的变量使用is或has开头
 		var isReady = false;
 		var hasMoreCommands = false;
+ 
+ javascript 变量要点：
+ 	http://csspod.com/javascript-variable/
+
+ web开发演变过程
+ 	https://github.com/lifesinger/lifesinger.github.io/issues/184
+
  */
 
 /**
@@ -835,8 +842,20 @@ ifr.onload = function(){
 </script>
 
 
+function windowOnload(fun){
+	var oldonload = window.onload;
+	if(typeof window.onload != 'function'){
+		window.onload = fun;
+	}else{
+		window.onload = function(){
+			oldonload();
+			fun();
+		}
+	}
+}
 
-
-
+js作用域 scope
+js是函数级别作用域，在内部的变量，内部都能访问 外部不能访问内部的，内部能访问外部的
+闭包，他就是拿到本不该属于他的东西
 
 

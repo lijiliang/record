@@ -403,3 +403,19 @@ subType.prototype.sayAge = function(){
 }
 
 
+function chinaz(){
+	this.init();
+}
+chinaz.prototype = {
+	constructor: chinaz,
+	init: function(){
+		this._initBackTop();
+	},
+	_initBackTop: function(){
+		var $backTop = this.$backTop = $('.aaa')
+		........
+	}
+}
+var chinab = new chinaz();
+
+
