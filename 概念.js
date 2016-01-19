@@ -858,4 +858,203 @@ js作用域 scope
 js是函数级别作用域，在内部的变量，内部都能访问 外部不能访问内部的，内部能访问外部的
 闭包，他就是拿到本不该属于他的东西
 
+/**
+ * 命名空间基础
+ */
+// 1、单一全局变量
+	// 单一全局变量模式最大的挑战是确保没有其它人像我们一样在页面中使用相同的全局变量名称
+	var myApplication = (function(){
+		function(){
+			// ...
+		},
+		return {
+			// ...
+		}
+	})();
+
+// 2、前缀命名空间
+	var myApplication_propertyA = {}
+	var myApplication_propertyB = {}
+	function myApplication_myMethod() {
+		// ...
+	}
+
+// 3、对象字面量表示法
+	// 优点：不会污染全局命名空间，并在逻辑上协助组织代码和参数
+	var myApplication = {
+		//正如如下代码，我们可以很空间的为此对象字面量定义功能
+		getInfo: function(){
+			// ...
+		},
+		// 但也可以让其支撑进一步的对象命名空间，来包含其它想包含的数据
+		models: {},
+		views: {
+			pages: {}
+		},
+		collections: {}
+	}
+	//我们还可以选择将属性直接添加到命名空间：
+	myApplication.foo = function(){
+		return "bar"
+	}
+	myApplication.utils = {
+		toString: function(){
+			//...
+		},
+		export: function(){
+			// ...
+		}
+	}
+
+	/*
+	检测全局命名是否存在的几种方法：
+	 */
+	var myApplication = myApplication || {};
+
+	if(!myApplication){
+		myApplication = {}
+	};
+
+	window.myApplication || (window.myApplication = {});
+
+	var myApplication = $.fn.myApplication = function(){};  //这种写法对编写jquery插件是非常有用的
+
+	var myApplication = myApplication === undefined ? {};
+
+	//项目中用到的
+	var sbLib = window.sbLib || (window.sbLib={});
+	sbLib.common = sbLib.common || {};
+	function ajaxData(){
+
+	}
+	sbLib.common.ajaxData = ajaxData;
+
+// 4、嵌套命名空间
+	var myApp = myApp || {}
+
+	//定义嵌套子对象时，检测是否存在
+	myApp.routers = myApp.routers || {}
+	myApp.model = myApp.model || {}
+	myApp.model.special = myApp.model.special || {}
+
+// 5、立即调用的函数表达式(IIFE)
+// 
+	//匿名的立即调用的函数表达式
+	(function(){ 
+		/*....*/
+	})()
+
+	//立即调用的有名函数表达式
+	(function foobar(){
+		/*....*/
+	})()
+
+	//自 行函数
+	function foobar(){
+		foobar();
+	}
+
+	//第一个示例的扩展版
+	var namespace = namespace || {}
+	//这里命名空间对象作为函数参数进行传递，然后在此对象上赋值公有方法和属性
+	(function(o){
+		o.foo = "foo";
+		o.bar = function(){
+			return "bar";
+		}
+	})(namespace)
+	console.log(namespace);
+
+	//可伸缩命名空间模式
+	//命名空间（我们的命名和空间名称）和undefined作为参数传递，确保：
+	//1.命名空间可以在局部进行修改，而不重写函数外面的上下文
+	//2.undefined的参数确保是undefined，主要避免ES5规范里定义的可修改的undeined
+	;(function(namespace, undefined){
+		//私有属性
+		var foo = "foo",
+			bar = "bar";
+
+		//公有方法和属性
+		namespace.foobar = "foobar";
+		namespace.sayHello = function(){
+			speck("Hello world")
+		};
+
+
+		//私有方法
+		function speck(msg){
+			console.log('You said: ' + msg);
+		}
+
+		//在全局命名空间内检测namespace是否存在，如果不存在，给window.namespace赋值一个对象字面量
+	})(window.namespace = window.namespace || {});
+
+	//调用：
+	console.log(namespace.foobar)  //foobar
+	console.log(namespace.sayHello()); //Hello world
+	//赋值新属性
+	namespace.foobar2 = "2222"
+
+	//给namespace命名空间扩展更多新功能
+	(function(namespace, undefined){
+		//public mothod
+		//公有方法
+		namespace.sayGoodbye = function(){
+			console.log( namespace.foo );
+			console.log( namespace.bar );
+			speck("goodbye");
+		}
+	})(window.namespace = window.namespace || {});
+
+	namespace.sayGoodbye();
+
+// 6、命名空间注入
+// 命名空间注入是IIFE的另一个变体，我们从函数包装器内部为一个特定的命名空间“注入”方法和属性，使用this命名空间代理
+   var myApp = myApp || {};
+   myApp.utils = {};
+
+   (function(){
+   		var val = 5;
+
+   		this.getValue = function(){
+   			return val;
+   		};
+
+   		this.setValue = function(newVal){
+   			val = newVal
+   		};
+
+   		//也定义一个新的命名空间
+   		this.tools = {};
+   }).apply(myApp.utils)
+
+   //为utils命名空间注册新的行为 
+   
+   //可以通过utilities模块定义
+   (function (){
+   		this.diagnose = function(){
+   			return "diagnosis";
+   		}
+   }).apply(myApp.utils.tools)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 

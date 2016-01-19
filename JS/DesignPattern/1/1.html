@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>动态类型与鸭子类型</title>
+</head>
+<body>
+	<script>
+	var duck = {
+		duckSinging: function(){
+			console.log('1234');
+		}
+	};
+	var chicken = {
+		duckSinging: function(){
+			console.log('2345');
+		}
+	};
+
+	var chori = [];  //合唱团
+	var joinChoir = function(animal){
+		if(animal && typeof animal.duckSinging === 'function'){
+			chori.push( animal )
+			console.log('恭喜加入合唱团');
+			console.log('合唱团成员数量：' + chori.length);
+		}
+	}
+
+	joinChoir(duck)
+	joinChoir(chicken)
+	</script>
+</body>
+</html>

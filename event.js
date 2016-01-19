@@ -206,7 +206,12 @@ var EventUtil = {
 };
 
 
+/*
+ev.stopPropagation() //阻止冒泡   IE: event.cancelBubble=true 
 
+ev.preventDefault()  //阻止默认行为
+ 
+ */
 
 
 
