@@ -915,7 +915,7 @@ js是函数级别作用域，在内部的变量，内部都能访问 外部不�
 		myApplication = {}
 	};
 
-	window.myApplication || (window.myApplication = {});
+	var myApplication = window.myApplication || (window.myApplication = {});
 
 	var myApplication = $.fn.myApplication = function(){};  //这种写法对编写jquery插件是非常有用的
 
