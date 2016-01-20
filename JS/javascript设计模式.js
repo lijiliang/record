@@ -210,8 +210,34 @@
  	myModule.publicMethod()  // Hello world
  	myModule.publicProperty  // Foobar
 
+/**
+ * Revealing Module(揭示)模式
+ * 揭示模式是Module模式的一个改进版本
+ * 优点：该模式可以使脚本语法更加一致。在模块代码底部，它也会很容易指出哪些函数和变量可以被公开访问，从而改善可读性
+ * 缺点：如果一个私有函数引用一个公有函数，在需要打补丁时，公有函数是不能被覆盖的。
+ */
+ 	var myRevealingModule = function(){
+ 		var privateVal = "liang",
+ 			publicVal = "li";
+ 		function privateFun(){
+ 			console.log('Name: ' + privateVal);
+ 		}
+ 		function publicSetName(strName){
+ 			privateName = strName;
+ 		}
+ 		function publicGetName(){
+ 			privateFun();
+ 		}
+ 		//将暴露的公有指针指向到私有函数和属性上
+ 		return {
+ 			setName: publicSetName,
+ 			greeting: publicVal,
+ 			getName: publicGetName
+ 		};
+ 	}();
 
-
+ 	myRevealingModule.setName('liag') 
+ 	myRevealingModule.getName()  // Name: liang
 
 
 
