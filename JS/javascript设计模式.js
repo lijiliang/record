@@ -342,6 +342,38 @@
 
  	console.log(youCar.name);  // "Ford Escort"
 
+ 	// 不使用Object.create
+ 	var vehiclePrototype = {
+ 		init: function(carModel){
+ 			this.model = carModel;
+ 		},
+ 		getModel: function(){
+ 			console.log('The Model' + this.model);
+ 		}
+ 	};
+
+ 	function vehicle(model){
+ 		function F(){};
+ 		F.prototype = vehiclePrototype;
+
+ 		var f = new F();
+ 		f.init(model);
+ 		return f;
+ 	}
+
+ 	var car = vehicle("liang");
+ 	car.getModel();
+
+ 	// 可供选择的Prototype模式
+ 	var beget = (function(){
+
+ 		function F(){}
+ 		return function(proto){
+ 			F.prototype = proto;
+ 			return new F();
+ 		};
+ 		
+ 	})();
 
 
 
