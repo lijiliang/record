@@ -239,6 +239,110 @@
  	myRevealingModule.setName('liag') 
  	myRevealingModule.getName()  // Name: liang
 
+/**
+ * Observer (观察者)模式
+ * 是一种设计模式，一个对象（称为subject）维持一系列依赖于它(观察者)的对象，将有关状态的任何变更自动通知给它们
+ */
+
+ 	function ObserverList(){
+ 		this.observerList = [];
+ 	}
+ 	ObserverList.prototype.Add = function(obj){
+ 		return this.observerList.push(obj);
+ 	};
+ 	ObserverList.prototype.Empty = function(){
+ 		this.observerList = [];
+ 	};
+ 	ObserverList.prototype.Count = function(){
+ 		return this.observerList.length;
+ 	};
+ 	ObserverList.prototype.Get = function(){
+
+ 	}
+ 	// 未完 
+ 	
+
+ 	// 订阅者模式
+ 	
+ 	/**
+ 	 * 非常简单的mail处理程序
+ 	 */
+ 	// 接收到的消息数量
+ 	var mailCounter = 0;
+
+ 	//初始化订阅，名称是inbox/newMessage
+ 	// 呈现消息
+ 	var subscriber1 = subscribe('inbox/newMessage', function(topic, data){
+ 		// 使用从目标subject传递过来的data，一般呈现消息
+ 		$('.messageSender').html(data.sender);
+ 		$('.messagePreview').html(data.body);
+ 	})
+
+/**
+ * Mediator (中介者)模式
+ * 是一种行为设计模式，它允许我们公开一个统一的接口，系统的不同部分可以通过该接口进行通信
+ */
+ 	var mediator = (function(){
+ 		//存储可被广播或监听的topic
+ 		var topics = {};
+ 		// 订阅一个topic，提供一个回调函数，一旦topic被广播？行该回调
+ 		var subscribe = function(topic, fn){
+ 			if(!topics[topic]){
+ 				topics[topic] = [];
+ 			}
+ 			topics[topic].push({
+ 				content: this,
+ 				callback: fn
+ 			});
+ 			return this;
+ 		};
+
+ 		// 发布/广播事件到程序的剩余部分
+ 		var publish = function(topic){
+ 			var args;
+ 			if(!topic[topic]){
+ 				return false;
+ 			}
+ 			args = Array.prototype.slice.call(arguments, 1);
+ 			for(var i=0;l=topics[topic].length;i<l; i++){
+ 				var subscription = topics[topic][i];
+ 				subscription.callback.apply(subscription.context, args);
+ 			}
+ 			return this;
+ 		};
+
+ 		return {
+ 			Publish: publish,
+ 			Subscribe: subscribe,
+ 			installTo: function(obj){
+ 				obj.subscribe = subscribe;
+ 				obj.publish = publish;
+ 			}
+ 		};
+ 	})();
+
+/**
+ * Prototype (原型)模式
+ * prototype模式为一种基于现有对象模板，通过克隆方式创建对象的模式
+ * 基于原型继承的模式，可以在其中创建对象，作为其它对象的原型
+ */
+ 	// Object.create
+ 	var myCar = {
+ 		name: "Ford Escort",
+ 		drive: function(){
+ 			console.log("Weee, I'm driving!");
+ 		},
+ 		panic: function(){
+ 			console.log('Wait. How do you stop this thing?');
+ 		}
+ 	};
+
+ 	// 使用Object.create实例化一个新的car
+ 	var youCar = Object.create(myCar);
+
+ 	console.log(youCar.name);  // "Ford Escort"
+
+
 
 
 
