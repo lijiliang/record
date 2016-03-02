@@ -372,12 +372,19 @@
  			F.prototype = proto;
  			return new F();
  		};
- 		
+
  	})();
 
 
 
-
+var jQuery = this.jQuery || 'jQuery',
+	$ = this.$ || '$',
+	originaljQuery = jQuery,
+	original$ = $;
+define(["jQuery"], function($){
+	$(".items").css("background", "green");
+	return function() {};
+})
 
 
     //webpack
