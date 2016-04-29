@@ -14,11 +14,11 @@
     var randomItem = arr[Math.floor(Math.random()*arr.length)];
     ```
 - 获取某一范围内的任一数值
-  ```javascript
+    ```javascript
     var x = Math.floor(Math.random()*(max - min + 1)) + min;
   ```
 - 生成0~max的数组([0,1,2,...max])
-  ```javascript
+    ```javascript
     var a = [],max = 10;
     for(var i=0;a.push(i++) <= max;);
   ```
@@ -36,13 +36,13 @@
     numbers = numbers.sort(function(){ return Math.random() - 0.5});
     ```
 - 在一个数组后附加一个数组
-  ```javascript
+    ```javascript
     var array1 = [12 , "foo" , {name "Joe"} , -2458];
     var array2 = ["Doe" , 555 , 100];
     Array.prototype.push.apply(array1, array2);
   ```
 - 把伪数组转为数组
-```javascript
+    ```javascript
     var argArray = Array.prototype.slice.call(arguments);
 ```
 - 判断数字
