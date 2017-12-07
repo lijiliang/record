@@ -4,6 +4,10 @@ import Home from '@/components/Home'
 import About from '@/components/About'
 import Document from '@/components/Document'
 import NoFound from '@/components/404'
+import Study from '@/views/study'
+import Work from '@/views/work'
+import Hobby from '@/views/hobby'
+import Slider from '@/views/slider'
 
 Vue.use(Router)
 
@@ -12,6 +16,10 @@ export default new Router({
   linkActiveClass: 'is-active',  // 设置激活名字class名
   routes: [
     {
+      path: '/',
+      component: Home
+    },
+    {
       path: '/home',
       name: 'Home',
       component: Home,
@@ -19,13 +27,32 @@ export default new Router({
     },
     {
       path: '/about',
-      name: 'About',
-      component: About
+      component: About,
+      children: [  // 设置子路由
+        {
+          path: '',  // 默认的子路由  /about
+          name: 'About',
+          component: Study
+        },
+        {
+          path: '/work',   // /work
+          name: 'Work',
+          component: Work
+        },
+        {
+          path: '/hobby',
+          name: 'Hobby',
+          component: Hobby
+        }
+      ]
     },
     {
       path: '/document',
       name: 'Document',
-      component: Document
+      components: {
+        default: Document,
+        slider: Slider
+      }
     },
     {
       path: '*',
