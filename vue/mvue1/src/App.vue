@@ -1,23 +1,28 @@
 <template>
   <div id="app">
-    <img src="./assets/logo.png">
-    <router-view/>
+    <div class="nav-box">
+      <ul class="nav">
+        <router-link :to="index" tag="li" event="mouseover">
+          <i class="fa fa-home"></i>
+          <span>home</span>
+        </router-link>
+        <li>
+          <router-link :to="{path: '/document'}" active-class="activeClass">document</router-link>
+        </li>
+        <li><router-link to="about">about</router-link></li>
+      </ul>
+    </div>
+    <router-view class="center"/>
   </div>
 </template>
 
 <script>
 export default {
-  name: 'app'
+  name: 'app',
+  data () {
+    return {
+      index: '/home'
+    }
+  }
 }
 </script>
-
-<style>
-#app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
-</style>
