@@ -41,7 +41,7 @@ export default new Router({
       component: Home
     },
     {
-      path: '/user/:userId?',   // ? 问号，即是可以出现一次，也可以出现多次，不加？号，访问/user是访问不到的  /user /user/2 /user/3
+      path: '/user/:tip?/:userId?',   // ? 问号，即是可以出现一次，也可以出现多次，不加？号，访问/user是访问不到的  /user /user/tip/2 /user/3
       name: 'User',
       component: User
     },
