@@ -40,7 +40,8 @@ export default new Router({
       path: '/',
       component: Home,
       meta: {   // meta设置元信息，这里的index是自定义的导航下标
-        index: 0
+        index: 0,
+        title: 'home'
       }
     },
     {
@@ -48,7 +49,9 @@ export default new Router({
       name: 'User',
       component: User,
       meta: {
-        index: 3
+        index: 3,
+        title: 'user',
+        login: false
       }
     },
     {
@@ -66,7 +69,8 @@ export default new Router({
           name: 'About',
           component: Study,
           meta: {
-            index: 2
+            index: 2,
+            title: 'about'
           }
         },
         {
@@ -90,6 +94,11 @@ export default new Router({
       },
       meta: {
         index: 1
+      },
+      // 单个路由钩子函数
+      beforeEnter (to, from, next) {
+        console.log('Document beforeEnter')
+        next()
       }
     },
     {
