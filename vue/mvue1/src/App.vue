@@ -14,7 +14,12 @@
         <li><router-link to="/user">user</router-link></li>
       </ul>
     </div>
-    {{$route.meta.index}}
+    <input type="button" value="后退" @click="backHandle()">
+    <input type="button" value="前进" @click="forwardHandle()">
+    <input type="button" value="控制前进后退的步娄" @click="goHandle()">
+    <input type="button" value="控制指定的导航push" @click="pushHandle()">
+    <input type="button" value="控制指定的导航replace" @click="replaceHandle()">
+    <!-- {{$route.meta.index}} -->
     <!-- <router-view name="slider" class="center"/> -->
     <!-- <router-view class="center"/> -->
     <transition :name="names">
@@ -41,6 +46,24 @@ export default {
       } else {
         this.names = 'left'
       }
+    }
+  },
+  methods: {
+    backHandle () {
+      this.$router.back()
+    },
+    forwardHandle () {
+      this.$router.forward()
+    },
+    goHandle () {
+      this.$router.go(-1)
+    },
+    pushHandle () {
+      // this.$router.push('/user')
+      this.$router.push({path: '/user'})
+    },
+    replaceHandle () {
+      this.$router.replace({path: '/user'})
     }
   }
 }
