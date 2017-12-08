@@ -38,12 +38,18 @@ export default new Router({
   routes: [
     {
       path: '/',
-      component: Home
+      component: Home,
+      meta: {   // meta设置元信息，这里的index是自定义的导航下标
+        index: 0
+      }
     },
     {
       path: '/user/:tip?/:userId?',   // ? 问号，即是可以出现一次，也可以出现多次，不加？号，访问/user是访问不到的  /user /user/tip/2 /user/3
       name: 'User',
-      component: User
+      component: User,
+      meta: {
+        index: 3
+      }
     },
     {
       path: '/home',
@@ -58,7 +64,10 @@ export default new Router({
         {
           path: '',  // 默认的子路由  /about
           name: 'About',
-          component: Study
+          component: Study,
+          meta: {
+            index: 2
+          }
         },
         {
           path: '/work',   // /work
@@ -78,6 +87,9 @@ export default new Router({
       components: {   // 命名视图，一个页面多个视图
         default: Document,
         slider: Slider
+      },
+      meta: {
+        index: 1
       }
     },
     {
