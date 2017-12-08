@@ -3,6 +3,7 @@ import Router from 'vue-router'
 import Home from '@/components/Home'
 import About from '@/components/About'
 import Document from '@/components/Document'
+import User from '@/components/User'
 import NoFound from '@/components/404'
 import Study from '@/views/study'
 import Work from '@/views/work'
@@ -14,10 +15,35 @@ Vue.use(Router)
 export default new Router({
   mode: 'history',   // 设置为history模式
   linkActiveClass: 'is-active',  // 设置激活名字class名
+  /**
+   * 滚动行为  点击浏览器前进后退或者切换导航触发
+   * @param {*} to 要进入的目标路由对象  要去向哪里
+   * @param {*} from  离开的路由对象  从哪里来
+   * @param {*} savePosition 记录滚动条的坐标 点击前进后退时记录
+   */
+  scrollBehavior (to, from, savePosition) {
+    if (savePosition) {
+      return savePosition
+    } else {
+      return {x: 0, y: 0}
+    }
+
+    // 跳到hash的定位
+    // if (to.hash) {
+    //   return {
+    //     selector: to.hash
+    //   }
+    // }
+  },
   routes: [
     {
       path: '/',
       component: Home
+    },
+    {
+      path: '/user/:userId?',   // ? 问号，即是可以出现一次，也可以出现多次，不加？号，访问/user是访问不到的  /user /user/2 /user/3
+      name: 'User',
+      component: User
     },
     {
       path: '/home',
@@ -49,7 +75,7 @@ export default new Router({
     {
       path: '/document',
       name: 'Document',
-      components: {
+      components: {   // 命名视图，一个页面多个视图
         default: Document,
         slider: Slider
       }

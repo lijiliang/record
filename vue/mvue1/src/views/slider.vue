@@ -1,5 +1,5 @@
 <template>
   <div class="slider">
-    我是slider
+    slider
   </div>
 </template>

@@ -10,6 +10,7 @@
           <router-link :to="{path: '/document'}" active-class="activeClass">document</router-link>
         </li>
         <li><router-link to="about">about</router-link></li>
+        <li><router-link to="user">user</router-link></li>
       </ul>
     </div>
     <router-view name="slider" class="center"/>
