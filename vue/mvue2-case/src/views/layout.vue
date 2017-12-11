@@ -27,16 +27,16 @@
         flag: ''
       }
     },
-    // watch: {
-    //   $route () {
-    //     this.flag = flags[this.$route.path.slice(1)]
-    //   }
-    // },
-    // beforeRouteEnter (to, from, next) {
-    //   next((vm) => {
-    //     vm.flag = flags[to.path.slice(1)]
-    //   })
-    // },
+    watch: {
+      $route () {
+        this.flag = flags[this.$route.path.slice(1)]
+      }
+    },
+    beforeRouteEnter (to, from, next) {
+      next((vm) => {
+        vm.flag = flags[to.path.slice(1)]
+      })
+    },
     components: {
       headerNav: Header
     }

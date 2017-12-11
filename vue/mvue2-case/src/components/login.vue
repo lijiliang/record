@@ -22,24 +22,22 @@
     },
     methods: {
       sendLogin () {
-        console.log(this.$custom)
-        console.log(this.$local)
           // 登录
-        // let userName = this.$refs.userInput.value;
-        // this.$local.save("miaov", {
-        //     login: true,
-        //     userName: userName
-        // })
+        let userName = this.$refs.userInput.value
+        this.$local.save('miaov', {
+          login: true,
+          userName: userName
+        })
 
-        // let redirect = this.$route.query.redirect
+        let redirect = this.$route.query.redirect
+  
+        if (!redirect) {
+          redirect = 'project'
+        }
 
-        // if(!redirect){
-        //   redirect = 'project'
-        // }
-
-        // this.$router.push({
-        //   path: '/'+redirect
-        // })
+        this.$router.push({
+          path: '/' + redirect
+        })
       }
     }
   }

@@ -32,17 +32,26 @@ export default new Router({
         {
           path: '/project',
           name: 'Project',
-          component: Project
+          component: Project,
+          meta: {
+            login: true
+          }
         },
         {
           path: '/workbench',
           name: 'Workbench',
-          component: Workbench
+          component: Workbench,
+          meta: {
+            login: true
+          }
         },
         {
           path: '/doc',
           name: 'Doc',
-          component: Doc
+          component: Doc,
+          meta: {
+            login: false
+          }
         }
       ]
     },

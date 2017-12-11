@@ -37,14 +37,14 @@
     data () {
       return {
         userName: '',
-        isLogin: true
+        isLogin: false
       }
     },
-    // created () {
-    //   let info = this.$local.fetch('miaov')
-    //   this.isLogin = info.login
-    //   this.userName = info.userName
-    // },
+    created () {
+      let info = this.$local.fetch('miaov')
+      this.isLogin = info.login
+      this.userName = info.userName
+    },
     methods: {
       loginOut () {
         this.$local.save('miaov', null)

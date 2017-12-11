@@ -3,7 +3,7 @@
     <div class="home-header">
       <img src="../assets/miaov.png" alt="">
       <div class="portrait" :class={portraitLogin:isLogin}>
-        <router-link  v-if="!isLogin" to="/login" tag="span">登录</router-link>
+        <router-link  v-if='!isLogin' to="/login" tag="span">登录</router-link>
         <img  v-if="isLogin" src="../assets/portrait.png" alt="">
       </div>
 
@@ -25,13 +25,13 @@
       return {
         isLogin: false
       }
-    }
-    // created () {
-    //     // 拿到登录信息
-    //   let info = this.$local.fetch('miaov')
+    },
+    created () {
+      // 拿到登录信息
+      let info = this.$local.fetch('miaov')
 
-    //   this.isLogin = info.login
-    // }
+      this.isLogin = info.login
+    }
   }
 </script>
 <style>
