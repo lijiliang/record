@@ -1,0 +1,54 @@
+import Vue from 'vue'
+import Router from 'vue-router'
+
+import Home from '@/components/home'
+import Login from '@/components/login'
+import Layout from '@/views/layout'
+import Project from '@/views/backend/project'
+import Workbench from '@/views/backend/workbench'
+import Doc from '@/views/backend/doc'
+
+Vue.use(Router)
+
+export default new Router({
+  mode: 'history',
+  linkActiveClass: 'is-active',
+  routes: [
+    {
+      path: '/',
+      name: 'Home',
+      component: Home
+    },
+    {
+      path: '/login',
+      name: 'Login',
+      component: Login
+    },
+    {
+      path: '/managment',
+      name: 'Management',
+      component: Layout,
+      children: [
+        {
+          path: '/project',
+          name: 'Project',
+          component: Project
+        },
+        {
+          path: '/workbench',
+          name: 'Workbench',
+          component: Workbench
+        },
+        {
+          path: '/doc',
+          name: 'Doc',
+          component: Doc
+        }
+      ]
+    },
+    {
+      path: '*',
+      redirect: '/'    // 不存在的路径，重定向到根目录
+    }
+  ]
+})

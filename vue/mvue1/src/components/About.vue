@@ -45,7 +45,7 @@ export default {
   beforeRouteLeave (to, from, next) {
     next()
   },
-  beforeCreate () { 
+  beforeCreate () {
     console.log('创建组件前beforeCreate')
   }
 }
