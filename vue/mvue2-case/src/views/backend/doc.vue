@@ -44,6 +44,46 @@
   export default {
     components: {
       DocView
+    },
+    // 路由开始进来
+    beforeRouteEnter (to, from, next) {
+      next((vm) => {
+        vm.animate(to)
+      })
+    },
+    // 路由更新钩子函数
+    beforeRouteUpdate (to, from, next) {
+      console.log(to.hash)
+      this.animate(to)
+      next()
+    },
+    methods: {
+      animate (to) {
+        function animateFunc (time) {
+          requestAnimationFrame(animateFunc)
+          TWEEN.update(time)
+        }
+  
+        if (to.hash) {
+          var el = document.getElementById(to.hash.slice(1))
+          var doc = document.getElementsByClassName('doc')[0]
+
+          if (el) {
+            animateFunc()
+            /* eslint-disable no-new */
+            new TWEEN.Tween({
+              number: doc.scrollTop
+            })
+            .to({
+              number: el.offsetTop
+            }, 500)
+            .onUpdate(function () {
+              doc.scrollTop = this.number.toFixed(0)
+            })
+            .start()
+          }
+        }
+      }
     }
   }
 </script>

@@ -39,6 +39,11 @@
     },
     components: {
       headerNav: Header
+      // headerNav: (resolve) => {   // 组件延迟加载
+      //   setTimeout(() => {
+      //     resolve(require('@/components/header'))
+      //   }, 2000)
+      // }
     }
   }
 </script>

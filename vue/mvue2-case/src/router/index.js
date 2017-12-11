@@ -3,10 +3,31 @@ import Router from 'vue-router'
 
 import Home from '@/components/home'
 import Login from '@/components/login'
-import Layout from '@/views/layout'
-import Project from '@/views/backend/project'
-import Workbench from '@/views/backend/workbench'
-import Doc from '@/views/backend/doc'
+// import Layout from '@/views/layout'
+// import Project from '@/views/backend/project'
+// import Workbench from '@/views/backend/workbench'
+// import Doc from '@/views/backend/doc'
+
+let Layout = (resolve) => {
+  return require.ensure([], () => {
+    resolve(require('@/views/layout'))
+  })
+}
+let Project = (resolve) => {
+  return require.ensure([], () => {
+    resolve(require('@/views/backend/project'))
+  })
+}
+let Workbench = (resolve) => {
+  return require.ensure([], () => {
+    resolve(require('@/views/backend/workbench'))
+  })
+}
+let Doc = (resolve) => {
+  return require.ensure([], () => {
+    resolve(require('@/views/backend/doc'))
+  })
+}
 
 Vue.use(Router)
 
