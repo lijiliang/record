@@ -18,15 +18,17 @@ let Project = (resolve) => {
     resolve(require('@/views/backend/project'))
   })
 }
+
+// 代码分割，按功能 下面两个打包成一个js文件
 let Workbench = (resolve) => {
   return require.ensure([], () => {
     resolve(require('@/views/backend/workbench'))
-  })
+  }, 'abc')
 }
 let Doc = (resolve) => {
   return require.ensure([], () => {
     resolve(require('@/views/backend/doc'))
-  })
+  }, 'abc')
 }
 
 Vue.use(Router)
