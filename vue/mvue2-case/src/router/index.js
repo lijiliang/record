@@ -25,10 +25,14 @@ let Workbench = (resolve) => {
     resolve(require('@/views/backend/workbench'))
   }, 'abc')
 }
+// let Doc = (resolve) => {
+//   return require.ensure([], () => {
+//     resolve(require('@/views/backend/doc'))
+//   }, 'abc')
+// }
+
 let Doc = (resolve) => {
-  return require.ensure([], () => {
-    resolve(require('@/views/backend/doc'))
-  }, 'abc')
+  return import('@/views/backend/doc')
 }
 
 Vue.use(Router)

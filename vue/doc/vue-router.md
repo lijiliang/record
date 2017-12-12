@@ -97,3 +97,46 @@
   - to: 要进入的目标路由对象，到哪里去
   - from: 正要离开的目标路由对象，从哪里来
   - next: 用来决定跳转取消导航
+
+## 懒加载
+把不同路由对应的组件分割成不同的代码块，然后当路由被访问的时候才加载组件
+
+  - Vue 异步组件
+  ```js
+  {
+    componenbts: {
+      custom: (resolve, reject) => {}
+    }
+  }
+
+  // 例如
+  headerNav: (resolve) => {   // 组件延迟加载
+    setTimeout(() => {
+      resolve(require('@/components/header'))
+    }, 2000)
+  }
+  ```
+
+  - webpack代码分割功能
+  ```
+  require.ensure代码分块
+    require.ensure(依赖，回调函数，[chunk名字])
+  
+  import 函数
+  ```
+  ```js
+  let Workbench = (resolve) => {
+    return require.ensure([], () => {
+      resolve(require('@/views/backend/workbench'))
+    }, 'abc')   // abc可不写
+  }
+  ```
+
+## 服务器配置
+ - Nginx配置
+ ```
+ location / {
+   root /home/我的应用跟目录
+   try_files $uri $uri/ /index.html = 404
+ }
+ ```
