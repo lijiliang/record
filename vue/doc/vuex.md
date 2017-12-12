@@ -11,3 +11,20 @@
   - 什么情况下使用vuex
     . 多个视窗依赖于同一状态
     . 来自不同视图的行为需要变更同一状态
+
+
+## mutation 提交方式
+```js
+  this.$store.commit('deIncrement' {de: 5}) // 第一种提交方式
+
+  this.$store.commit({ // 第二种提交方式
+    type: 'deIncrement',
+    de: 5
+  })
+```
+
+## vuex辅助函数
+ - mapState
+ - mapGetters
+ - mapMutations
+ - mapActions
