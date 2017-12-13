@@ -6,10 +6,20 @@
 
 <script>
 export default {
-  props: ['data'],
+  computed: {
+    data () {
+      return this.$store.state.list
+    }
+  },
+  created () {
+    // 获取数据
+    this.$store.dispatch('getListAction')
+  },
   methods: {
     getTitleHandle (title) {
-      this.$emit('changeTitle', title)
+      // this.$emit('changeTitle', title)
+      // 改变vuex中状态
+      this.$store.commit('changeTitle', {title})
     }
   }
 }

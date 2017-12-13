@@ -13,10 +13,13 @@
 
 <script>
 export default {
-  props: ['isShow', 'title'],
+  props: ['isShow'],
   computed: {  // 计算属性
     initShow () {
       return this.isShow
+    },
+    title () {
+      return this.$store.state.title
     }
   },
   methods: {
