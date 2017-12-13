@@ -43,9 +43,80 @@ import axios from 'axios'
     headers: {},
     responseType: 'json',
     params: {},
-    transformRequest: [],  // 只适合PUT, POST和PATCH
-    transformResponse: [],
+    transformRequest: [],  // 只适合PUT, POST和PATCH  转换数据
+    transformResponse: [], // 对请求回来的数据进行进一步处理
     validateStatus: function(){},
-    cancelToken
+    cancelToken: 
   }
   ```
+
+  知识点：  'content-type': 'application/x-www-from-urlencoded' 
+
+## 取消请求
+ - 创建取消请求令牌
+ ```js
+  var CancelToken = axios.CancelToken
+  var source = CancelToken.source()
+ ```
+
+ - 配置：
+ ```js
+ cancelToken: source.token
+ ```
+
+ - 捕获取消错误
+ ```js
+  if (axios.isCancel(error)){
+    console.log(error.message)
+  }
+ ```
+
+ - 调用取消
+ ```
+ source.cancel('操作被用户取消')
+ ```
+
+## 并发请求
+  - 请求
+  ```
+  axios.all(iterable)
+  axios.spread(callback)
+  ```
+
+## 拦截器
+ - 全局拦截器
+  . 拦截请求
+  ```js
+  axios.interceptors.request.use(function (config) {
+    // 在发送请求之前做些事
+    return config
+  }, function (error) {
+    // 请求错误时做些事
+    return Promise.reject(error)
+  })
+  ```
+  . 拦截响应
+  ```js
+  axios.interceptors.response.use()
+  ```
+
+- 取消拦截
+```js
+  axios.interceptors.request.eject(myInterceptor)
+```
+
+## 在vue中使用
+ - 安装 
+  ```
+  npm install axios vue-axios --save
+  ```
+
+ - 作为插件
+  ```
+  Vue.use(VueAxios, Axios)
+  ```
+
+ - 在组件中使用
+ ```js
+  this.$http[method]()
+ ```

@@ -66,13 +66,6 @@ export default {
     })).catch((error) => {
       console.log(error)
     })
-
-    // 通过插件的方式
-    this.$http.get('https://easy-mock.com/mock/5a309f57a7b8a1251272f96e/example/user').then((response) => {
-      console.log('$http', response)
-    }).catch((error) => {
-      console.log(error)
-    })
   }
 }
 </script>
