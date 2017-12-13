@@ -8,7 +8,7 @@
 export default {
   computed: {
     data () {
-      return this.$store.state.list
+      return this.$store.state.selectModule.list
     }
   },
   created () {

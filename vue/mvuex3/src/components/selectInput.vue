@@ -19,7 +19,7 @@ export default {
       return this.isShow
     },
     title () {
-      return this.$store.state.title
+      return this.$store.state.selectModule.title
     }
   },
   methods: {
