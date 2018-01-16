@@ -1,0 +1,334 @@
+@charset "utf-8";
+
+body {
+    font-family: "Helvetica Neue", "Luxi Sans", "DejaVu Sans", Tahoma, "Hiragino Sans GB", STHeiti, "Microsoft YaHei";
+}
+
+html {
+    font-family: sans-serif;
+    -webkit-text-size-adjust: 100%;
+    -ms-text-size-adjust: 100%
+}
+
+body {
+    margin: 0
+}
+
+article,aside,details,figcaption,figure,footer,header,hgroup,main,menu,nav,section,summary {
+    display: block
+}
+
+audio,canvas,progress,video {
+    display: inline-block;
+    vertical-align: baseline
+}
+
+audio:not([controls]) {
+    display: none;
+    height: 0
+}
+
+[hidden],template {
+    display: none
+}
+
+a {
+    background-color: transparent
+}
+
+a:active,a:hover {
+    outline: 0
+}
+
+abbr[title] {
+    border-bottom: 1px dotted
+}
+
+b,strong {
+    font-weight: 700
+}
+
+dfn {
+    font-style: italic
+}
+
+h1 {
+    margin: .67em 0;
+    font-size: 2em
+}
+
+mark {
+    color: #000;
+    background: #ff0
+}
+
+small {
+    font-size: 80%
+}
+
+sub,sup {
+    position: relative;
+    font-size: 75%;
+    line-height: 0;
+    vertical-align: baseline
+}
+
+sup {
+    top: -.5em
+}
+
+sub {
+    bottom: -.25em
+}
+
+img {
+    border: 0
+}
+
+svg:not(:root) {
+    overflow: hidden
+}
+
+figure {
+    margin: 1em 40px
+}
+
+hr {
+    height: 0;
+    -webkit-box-sizing: content-box;
+    -moz-box-sizing: content-box;
+    box-sizing: content-box
+}
+
+pre {
+    overflow: auto
+}
+
+code,kbd,pre,samp {
+    font-family: monospace,monospace;
+    font-size: 1em
+}
+
+/*左侧导航栏*/
+.down-min {
+    position: absolute;
+    width: 100%;
+    top: 0px;
+    bottom: 0px;
+    z-index: 100;
+}
+
+.left-full {
+    width: 160px;
+    display: block;
+}
+
+.right-full {
+    left: 160px;
+}
+
+.left-off {
+    width: 48px;
+    display: block;
+}
+
+.right-off {
+    left: 48px;
+}
+
+.right-product {
+    position: absolute;
+    top: 0px;
+    bottom: 0px;
+    right: 0px;
+    background: #FFF;
+}
+
+.sidebar-fold {
+    height: 30px;
+    width: 100%;
+    background: #394555;
+    color: #aeb9c2;
+    text-align: center;
+    height: 30px;
+    font-size: 12px;
+    cursor: pointer;
+}
+
+.sidebar-fold span {
+    line-height: 30px;
+}
+/*.left-main{ bottom: 0px; top:0px; position:absolute; background-color:#293038;}*/
+.left-main {
+    bottom: 0px;
+    top: 0px;
+    z-index: 100;
+    position: fixed;
+    background-color: #293038;
+}
+
+.sBox ul li {
+    list-style-type: none;
+    position: relative;
+}
+
+.sBox ul {
+    padding: 0px;
+    position: relative;
+    margin: 0px;
+}
+
+.sBox ul li a {
+    display: block;
+    width: 100%;
+    height: 40px;
+    line-height: 40px;
+    overflow: hidden;
+    text-decoration: none;
+    color: #FFF;
+    font-size: 12px;
+}
+
+.sBox .sublist-icon {
+    width: 48px;
+    text-align: center;
+}
+
+.subNavBox .subNav {
+    position: relative;
+    height: 40px;
+    line-height: 40px;
+    color: #fff;
+    transition: all .2s;
+}
+
+.subNavBox .subNav .title-icon {
+    width: 48px;
+    text-align: center;
+}
+
+.sBox .sublist-down {
+    background-color: #22282e;
+}
+
+.sBox .sublist-up {
+    background-color: #37424f;
+}
+
+.sBox .sublist-up ul {
+    display: none;
+}
+
+.sBox .sublist-title {
+    cursor: pointer;
+    font-size: 12px;
+}
+
+.sBox .subNav:hover,.sBox ul li:hover {
+    background-color: #42515f;
+}
+
+.sBox span {
+    line-height: 36px;
+}
+
+.showtitle {
+    text-align: center;
+    line-height: 40px;
+    position: absolute;
+    z-index: 100;
+    background-color: #545f71;
+    left: 55px;
+    padding: 0px 10px 0px 10px;
+    color: #FFF;
+    min-width: 100px;
+    transition: all .2s;
+    display: none;
+}
+.tiptitlt{
+  position: relative;
+}
+.tiptitlt .tip-icon{
+  position: absolute;
+  top: 8px;
+  left: -15px;
+  font-size: 22px;
+  color: #545f71
+}
+
+.left-off .sBox ul li .sub-title {
+    display: none;
+}
+
+.left-off .sBox .sublist-title {
+    display: none;
+}
+
+/*============后台模板==============*/
+.navbar-mystyle {
+    background-color: #09C;
+    color: #FFF;
+}
+
+.mystyle-brand {
+    background-color: #0087b4;
+    display: block;
+}
+
+/*导航栏样式变更*/
+.navbar-mystyle .navbar-nav li .mystyle-color:hover {
+    background-color: #0087b4;
+    color: #FFF;
+}
+
+.navbar-default .navbar-nav>li>a,.navbar-default .navbar-nav>li>a:focus {
+    color: #FFF;
+}
+
+.navbar-default .navbar-brand {
+    color: #FFF;
+}
+
+.navbar-default .navbar-nav>.open>a, .navbar-default .navbar-nav>.open>a:focus, .navbar-default .navbar-nav>.open>a:hover {
+    background-color: #FFF;
+    color: #000;
+}
+
+.navbar-default .navbar-brand:hover {
+    color: #FFF;
+}
+
+.navbar-default .dropdown-menu {
+    width: 100%;
+    min-width: 1px;
+    border: 0px;
+    border-top: 1px solid #e5e5e5;
+}
+/*隐藏按钮*/
+.navbar-default .navbar-toggle {
+    border-color: #FFF;
+}
+
+.navbar-default .navbar-toggle .icon-bar {
+    background-color: #FFF;
+}
+
+.topbar-num {
+    font-size: 12px;
+    color: #fff;
+    background: #f90;
+    border-radius: 5px;
+    padding: 2px 5px;
+    display: inline-block;
+    line-height: 16px;
+    vertical-align: top;
+    text-align: center;
+}
+
+.li-border {
+    border-right: 1px solid #008fbf;
+}
+/*左侧导航选中样式*/
+.sBox ul .active {
+    background-color: #09C;
+}
