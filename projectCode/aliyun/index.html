@@ -12,25 +12,25 @@
 </head>
 
 <body>
-  <div class="left-main left-full">
+  <div class="sidebar-left left-full">
     <div class="sidebar-fold">
       <span class="fa fa-bars"></span>
     </div>
-    <div class="subNavBox">
-      <div class="sBox">
-        <div class="subNav sublist-down">
-          <div class="showtitle" style="width:100px;">
-              <div class="tiptitlt"> 
+    <div class="sidebar-title-box">
+      <div class="sidebar-nav">
+        <div class="sidebar-title sublist-down">
+          <div class="tip-show" style="width:100px;">
+              <div class="tip-titlt"> 
                 <i class="tip-icon fa fa-caret-left"></i>会员1
               </div>
           </div>
           <span class="title-icon fa fa-caret-down"></span>
           <span class="sublist-title">会员1</span>
         </div>
-        <ul class="navContent" style="display:block">
+        <ul class="m-nav-list" style="display:block">
           <li class="active">
-            <div class="showtitle" style="width:100px;">
-                <div class="tiptitlt"> 
+            <div class="tip-show" style="width:100px;">
+                <div class="tip-titlt"> 
                   <i class="tip-icon fa fa-caret-left"></i>所有会员
                 </div>
             </div>
@@ -40,8 +40,8 @@
             </a>
           </li>
           <li>
-            <div class="showtitle" style="width:100px;">
-                <div class="tiptitlt"> 
+            <div class="tip-show" style="width:100px;">
+                <div class="tip-titlt"> 
                   <i class="tip-icon fa fa-caret-left"></i>所有会员
                 </div>
             </div>
@@ -51,8 +51,8 @@
             </a>
           </li>
           <li>
-            <div class="showtitle" style="width:100px;">
-                <div class="tiptitlt"> 
+            <div class="tip-show" style="width:100px;">
+                <div class="tip-titlt"> 
                   <i class="tip-icon fa fa-caret-left"></i>所有会员
                 </div>
             </div>
@@ -63,20 +63,20 @@
           </li>
         </ul>
       </div>
-      <div class="sBox">
-          <div class="subNav sublist-down">
-            <div class="showtitle" style="width:100px;">
-                <div class="tiptitlt"> 
+      <div class="sidebar-nav">
+          <div class="sidebar-title sublist-down">
+            <div class="tip-show" style="width:100px;">
+                <div class="tip-titlt"> 
                   <i class="tip-icon fa fa-caret-left"></i>会员2
                 </div>
             </div>
             <span class="title-icon fa fa-caret-right"></span>
             <span class="sublist-title">会员2</span>
           </div>
-          <ul class="navContent" style="display:none">
+          <ul class="m-nav-list" style="display:none">
             <li>
-              <div class="showtitle" style="width:100px;">
-                  <div class="tiptitlt"> 
+              <div class="tip-show" style="width:100px;">
+                  <div class="tip-titlt"> 
                     <i class="tip-icon fa fa-caret-left"></i>所有会员
                   </div>
               </div>
@@ -86,8 +86,8 @@
               </a>
             </li>
             <li>
-              <div class="showtitle" style="width:100px;">
-                  <div class="tiptitlt"> 
+              <div class="tip-show" style="width:100px;">
+                  <div class="tip-titlt"> 
                     <i class="tip-icon fa fa-caret-left"></i>所有会员
                   </div>
               </div>
@@ -97,8 +97,8 @@
               </a>
             </li>
             <li>
-              <div class="showtitle" style="width:100px;">
-                  <div class="tiptitlt"> 
+              <div class="tip-show" style="width:100px;">
+                  <div class="tip-titlt"> 
                     <i class="tip-icon fa fa-caret-left"></i>所有会员
                   </div>
               </div>
@@ -112,13 +112,32 @@
     </div>
 <script>
 $(function(){
+
+    /*左侧导航栏缩进功能*/
+    $(".sidebar-left .sidebar-fold").click(function(){
+    if($(this).parent().attr('class')=="sidebar-left left-full"){
+      $(this).parent().removeClass("left-full");
+      $(this).parent().addClass("left-off");
+      
+      $(this).parent().parent().find(".right-product").removeClass("right-full");
+      $(this).parent().parent().find(".right-product").addClass("right-off");
+      
+      }else{
+        $(this).parent().removeClass("left-off");
+        $(this).parent().addClass("left-full");
+        
+        $(this).parent().parent().find(".right-product").removeClass("right-off");
+        $(this).parent().parent().find(".right-product").addClass("right-full");
+      }
+    })	
+
   /*左侧导航栏显示隐藏功能*/
-  $(".subNav").click(function(){				
+  $(".sidebar-nav > .sidebar-title").on('click', function(){				
       /*显示*/
       if($(this).find("span.title-icon").attr('class')=="title-icon fa fa-caret-down"){
         $(this).find("span.title-icon").removeClass("fa-caret-down");
-          $(this).find("span.title-icon").addClass("fa-caret-right");
-          $(this).removeClass("sublist-down");
+        $(this).find("span.title-icon").addClass("fa-caret-right");
+        $(this).removeClass("sublist-down");
         $(this).addClass("sublist-up");
       }else{  /*隐藏*/
         $(this).find("span.title-icon").removeClass("fa-caret-right");
@@ -127,41 +146,24 @@ $(function(){
         $(this).addClass("sublist-down");
       }	
       // 修改数字控制速度， slideUp(500)控制卷起速度
-      $(this).next(".navContent").slideToggle(300).siblings(".navContent").slideUp(300);
+      $(this).next(".m-nav-list").slideToggle(300).siblings(".m-nav-list").slideUp(300);
+      // $(this).parent('.sidebar-nav').addClass('nav-show').siblings('.sidebar-nav').removeClass('nav-show');
     })
-  /*左侧导航栏缩进功能*/
-  $(".left-main .sidebar-fold").click(function(){
-
-	if($(this).parent().attr('class')=="left-main left-full"){
-		$(this).parent().removeClass("left-full");
-		$(this).parent().addClass("left-off");
-		
-		$(this).parent().parent().find(".right-product").removeClass("right-full");
-		$(this).parent().parent().find(".right-product").addClass("right-off");
-		
-		}else{
-      $(this).parent().removeClass("left-off");
-      $(this).parent().addClass("left-full");
-      
-      $(this).parent().parent().find(".right-product").removeClass("right-off");
-      $(this).parent().parent().find(".right-product").addClass("right-full");
-		}
-	})	
  
   /*左侧鼠标移入提示功能*/
-  $(".sBox ul li").mouseenter(function(){
+  $(".sidebar-nav ul li").mouseenter(function(){
     if($(this).find("span:last-child").css("display")=="none"){
-      $(this).find(".showtitle").show();
+      $(this).find(".tip-show").show();
     }
   }).mouseleave(function(){
-      $(this).find(".showtitle").hide();
+      $(this).find(".tip-show").hide();
   })	
-  $(".sBox .subNav").mouseenter(function(){
-    if($('.left-main').hasClass('left-off')){
-      $(this).find(".showtitle").show();
+  $(".sidebar-nav .sidebar-title").mouseenter(function(){
+    if($('.sidebar-left').hasClass('left-off')){
+      $(this).find(".tip-show").show();
     }
   }).mouseleave(function(){
-      $(this).find(".showtitle").hide();
+      $(this).find(".tip-show").hide();
   })
 
 })

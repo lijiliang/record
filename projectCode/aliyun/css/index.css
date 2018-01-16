@@ -158,8 +158,9 @@ code,kbd,pre,samp {
 .sidebar-fold span {
     line-height: 30px;
 }
-/*.left-main{ bottom: 0px; top:0px; position:absolute; background-color:#293038;}*/
-.left-main {
+
+
+.sidebar-left {
     bottom: 0px;
     top: 0px;
     z-index: 100;
@@ -167,18 +168,18 @@ code,kbd,pre,samp {
     background-color: #293038;
 }
 
-.sBox ul li {
+.sidebar-nav ul li {
     list-style-type: none;
     position: relative;
 }
 
-.sBox ul {
+.sidebar-nav ul {
     padding: 0px;
     position: relative;
     margin: 0px;
 }
 
-.sBox ul li a {
+.sidebar-nav ul li a {
     display: block;
     width: 100%;
     height: 40px;
@@ -189,12 +190,12 @@ code,kbd,pre,samp {
     font-size: 12px;
 }
 
-.sBox .sublist-icon {
+.sidebar-nav .sublist-icon {
     width: 48px;
     text-align: center;
 }
 
-.subNavBox .subNav {
+.sidebar-nav .sidebar-title {
     position: relative;
     height: 40px;
     line-height: 40px;
@@ -202,37 +203,38 @@ code,kbd,pre,samp {
     transition: all .2s;
 }
 
-.subNavBox .subNav .title-icon {
+.sidebar-nav .sidebar-title .title-icon {
     width: 48px;
     text-align: center;
 }
 
-.sBox .sublist-down {
+.sidebar-nav .sublist-down {
     background-color: #22282e;
 }
 
-.sBox .sublist-up {
+.sidebar-nav .sublist-up {
     background-color: #37424f;
 }
 
-.sBox .sublist-up ul {
+.sidebar-nav .sublist-up ul {
     display: none;
 }
 
-.sBox .sublist-title {
+.sidebar-nav .sublist-title {
     cursor: pointer;
     font-size: 12px;
 }
 
-.sBox .subNav:hover,.sBox ul li:hover {
+.sidebar-nav .sidebar-title:hover,.sidebar-nav ul li:hover {
     background-color: #42515f;
 }
 
-.sBox span {
+.sidebar-nav span {
     line-height: 36px;
 }
 
-.showtitle {
+/* tips 提示 */
+.tip-show {
     text-align: center;
     line-height: 40px;
     position: absolute;
@@ -245,10 +247,10 @@ code,kbd,pre,samp {
     transition: all .2s;
     display: none;
 }
-.tiptitlt{
+.tip-titlt{
   position: relative;
 }
-.tiptitlt .tip-icon{
+.tip-titlt .tip-icon{
   position: absolute;
   top: 8px;
   left: -15px;
@@ -256,79 +258,15 @@ code,kbd,pre,samp {
   color: #545f71
 }
 
-.left-off .sBox ul li .sub-title {
+.left-off .sidebar-nav ul li .sub-title {
     display: none;
 }
 
-.left-off .sBox .sublist-title {
+.left-off .sidebar-nav .sublist-title {
     display: none;
 }
 
-/*============后台模板==============*/
-.navbar-mystyle {
-    background-color: #09C;
-    color: #FFF;
-}
-
-.mystyle-brand {
-    background-color: #0087b4;
-    display: block;
-}
-
-/*导航栏样式变更*/
-.navbar-mystyle .navbar-nav li .mystyle-color:hover {
-    background-color: #0087b4;
-    color: #FFF;
-}
-
-.navbar-default .navbar-nav>li>a,.navbar-default .navbar-nav>li>a:focus {
-    color: #FFF;
-}
-
-.navbar-default .navbar-brand {
-    color: #FFF;
-}
-
-.navbar-default .navbar-nav>.open>a, .navbar-default .navbar-nav>.open>a:focus, .navbar-default .navbar-nav>.open>a:hover {
-    background-color: #FFF;
-    color: #000;
-}
-
-.navbar-default .navbar-brand:hover {
-    color: #FFF;
-}
-
-.navbar-default .dropdown-menu {
-    width: 100%;
-    min-width: 1px;
-    border: 0px;
-    border-top: 1px solid #e5e5e5;
-}
-/*隐藏按钮*/
-.navbar-default .navbar-toggle {
-    border-color: #FFF;
-}
-
-.navbar-default .navbar-toggle .icon-bar {
-    background-color: #FFF;
-}
-
-.topbar-num {
-    font-size: 12px;
-    color: #fff;
-    background: #f90;
-    border-radius: 5px;
-    padding: 2px 5px;
-    display: inline-block;
-    line-height: 16px;
-    vertical-align: top;
-    text-align: center;
-}
-
-.li-border {
-    border-right: 1px solid #008fbf;
-}
 /*左侧导航选中样式*/
-.sBox ul .active {
+.sidebar-nav ul .active {
     background-color: #09C;
 }
