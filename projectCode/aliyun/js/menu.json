@@ -1,0 +1,520 @@
+{
+  "success": true,
+  "message": "",
+  "data": [
+    {
+      "id": 24,
+      "path": "#customer",
+      "parentId": 0,
+      "type": "01",
+      "description": "会员",
+      "status": "0",
+      "children": [
+        {
+          "id": 32,
+          "path": "#report/instance/42",
+          "parentId": 24,
+          "type": "02",
+          "description": "所有会员",
+          "status": "0",
+          "children": [],
+          "leaf": true,
+          "iconCls": "fa-leaf"
+        },
+        {
+          "id": 33,
+          "path": "#customer/exception",
+          "parentId": 24,
+          "type": "01",
+          "description": "异常会员",
+          "status": "0",
+          "children": [
+            {
+              "id": 34,
+              "path": "#customer/exception/emptyKid",
+              "parentId": 33,
+              "type": "02",
+              "description": "没有KID的会员",
+              "status": "0",
+              "children": [],
+              "leaf": true,
+              "iconCls": "fa-leaf"
+            }
+          ],
+          "leaf": false,
+          "iconCls": "fa-pagelines"
+        },
+        {
+          "id": 152,
+          "path": "#report/instance/24",
+          "parentId": 24,
+          "type": "02",
+          "description": "推荐人是KID的列表",
+          "status": "0",
+          "children": [],
+          "leaf": true,
+          "iconCls": "fa-leaf"
+        },
+        {
+          "id": 155,
+          "path": "#report/instance/27",
+          "parentId": 24,
+          "type": "02",
+          "description": "无KID会员",
+          "status": "0",
+          "children": [],
+          "leaf": true,
+          "iconCls": "fa-leaf"
+        },
+        {
+          "id": 166,
+          "path": "#customer/report",
+          "parentId": 24,
+          "type": "01",
+          "description": "报表",
+          "status": "0",
+          "children": [
+            {
+              "id": 167,
+              "path": "#report/instance/33",
+              "parentId": 166,
+              "type": "02",
+              "description": "REventReport",
+              "status": "0",
+              "children": [],
+              "leaf": true,
+              "iconCls": "fa-leaf"
+            }
+          ],
+          "leaf": false,
+          "iconCls": "fa-pagelines"
+        }
+      ],
+      "leaf": false,
+      "iconCls": "fa-pagelines"
+    },
+    {
+      "id": 37,
+      "path": "#sys",
+      "parentId": 0,
+      "type": "01",
+      "description": "系统",
+      "status": "0",
+      "children": [
+        {
+          "id": 38,
+          "path": "#sys/permission",
+          "parentId": 37,
+          "type": "01",
+          "description": "权限管理",
+          "status": "0",
+          "children": [
+            {
+              "id": 39,
+              "path": "#sys/permission/account",
+              "parentId": 38,
+              "type": "02",
+              "description": "账号管理",
+              "status": "0",
+              "children": [],
+              "leaf": true,
+              "iconCls": "fa-leaf"
+            },
+            {
+              "id": 40,
+              "path": "#sys/permission/role",
+              "parentId": 38,
+              "type": "02",
+              "description": "角色\u0026权限",
+              "status": "0",
+              "children": [],
+              "leaf": true,
+              "iconCls": "fa-leaf"
+            },
+            {
+              "id": 41,
+              "path": "#sys/permission/resource",
+              "parentId": 38,
+              "type": "02",
+              "description": "资源管理",
+              "status": "0",
+              "children": [],
+              "leaf": true,
+              "iconCls": "fa-leaf"
+            }
+          ],
+          "leaf": false,
+          "iconCls": "fa-pagelines"
+        },
+        {
+          "id": 74,
+          "path": "#sys/report",
+          "parentId": 37,
+          "type": "02",
+          "description": "报表设置",
+          "status": "0",
+          "children": [],
+          "leaf": true,
+          "iconCls": "fa-leaf"
+        },
+        {
+          "id": 75,
+          "path": "#sys/dict",
+          "parentId": 37,
+          "type": "02",
+          "description": "数据词典",
+          "status": "0",
+          "children": [],
+          "leaf": true,
+          "iconCls": "fa-leaf"
+        },
+        {
+          "id": 306,
+          "path": "#sys/payment",
+          "parentId": 37,
+          "type": "01",
+          "description": "支付管理",
+          "status": "0",
+          "children": [
+            {
+              "id": 308,
+              "path": "#sys/payment/instrument",
+              "parentId": 306,
+              "type": "02",
+              "description": "支付工具",
+              "status": "0",
+              "children": [],
+              "leaf": true,
+              "iconCls": "fa-leaf"
+            },
+            {
+              "id": 312,
+              "path": "#sys/payment/supplier",
+              "parentId": 306,
+              "type": "02",
+              "description": "供应商",
+              "status": "0",
+              "children": [],
+              "leaf": true,
+              "iconCls": "fa-leaf"
+            },
+            {
+              "id": 313,
+              "path": "#sys/payment/sinstrument",
+              "parentId": 306,
+              "type": "02",
+              "description": "供应商支付工具",
+              "status": "0",
+              "children": [],
+              "leaf": true,
+              "iconCls": "fa-leaf"
+            }
+          ],
+          "leaf": false,
+          "iconCls": "fa-pagelines"
+        },
+        {
+          "id": 309,
+          "path": "#sys/site",
+          "parentId": 37,
+          "type": "01",
+          "description": "站点管理",
+          "status": "0",
+          "children": [
+            {
+              "id": 310,
+              "path": "#sys/site/navSetting",
+              "parentId": 309,
+              "type": "02",
+              "description": "导航设置",
+              "status": "0",
+              "children": [],
+              "leaf": true,
+              "iconCls": "fa-leaf"
+            }
+          ],
+          "leaf": false,
+          "iconCls": "fa-pagelines"
+        }
+      ],
+      "leaf": false,
+      "iconCls": "fa-pagelines"
+    },
+    {
+      "id": 47,
+      "path": "#order",
+      "parentId": 0,
+      "type": "01",
+      "description": "订单",
+      "status": "0",
+      "children": [
+        {
+          "id": 48,
+          "path": "#order/exception",
+          "parentId": 47,
+          "type": "01",
+          "description": "异常订单",
+          "status": "0",
+          "children": [
+            {
+              "id": 49,
+              "path": "#order/execption/status",
+              "parentId": 48,
+              "type": "02",
+              "description": "修改订单状态",
+              "status": "0",
+              "children": [
+                {
+                  "id": 72,
+                  "path": "/starspower/admin/service/v1/order",
+                  "parentId": 49,
+                  "type": "03",
+                  "description": "修改状态",
+                  "status": "0",
+                  "children": [],
+                  "leaf": true,
+                  "iconCls": "fa-leaf"
+                }
+              ],
+              "leaf": false,
+              "iconCls": "fa-pagelines"
+            },
+            {
+              "id": 240,
+              "path": "#order/pushCes",
+              "parentId": 48,
+              "type": "02",
+              "description": "订单推送",
+              "status": "0",
+              "children": [
+                {
+                  "id": 243,
+                  "path": "/starspower/admin/service/v1/order/pushCes",
+                  "parentId": 240,
+                  "type": "03",
+                  "description": "推送确认",
+                  "status": "0",
+                  "children": [],
+                  "leaf": true,
+                  "iconCls": "fa-leaf"
+                }
+              ],
+              "leaf": false,
+              "iconCls": "fa-pagelines"
+            },
+            {
+              "id": 241,
+              "path": "#order/refundGoods",
+              "parentId": 48,
+              "type": "02",
+              "description": "退货申请",
+              "status": "0",
+              "children": [
+                {
+                  "id": 244,
+                  "path": "/starspower/admin/service/v1/order/refundGoods",
+                  "parentId": 241,
+                  "type": "03",
+                  "description": "保存",
+                  "status": "0",
+                  "children": [],
+                  "leaf": true,
+                  "iconCls": "fa-leaf"
+                }
+              ],
+              "leaf": false,
+              "iconCls": "fa-pagelines"
+            },
+            {
+              "id": 242,
+              "path": "#order/refundMoney",
+              "parentId": 48,
+              "type": "02",
+              "description": "退款申请",
+              "status": "0",
+              "children": [
+                {
+                  "id": 245,
+                  "path": "/starspower/admin/service/v1/order/refundMoney",
+                  "parentId": 242,
+                  "type": "03",
+                  "description": "保存",
+                  "status": "0",
+                  "children": [],
+                  "leaf": true,
+                  "iconCls": "fa-leaf"
+                }
+              ],
+              "leaf": false,
+              "iconCls": "fa-pagelines"
+            }
+          ],
+          "leaf": false,
+          "iconCls": "fa-pagelines"
+        },
+        {
+          "id": 77,
+          "path": "#order/report",
+          "parentId": 47,
+          "type": "01",
+          "description": "报表",
+          "status": "0",
+          "children": [
+            {
+              "id": 148,
+              "path": "#report/instance/22",
+              "parentId": 77,
+              "type": "02",
+              "description": "会员信息表",
+              "status": "0",
+              "children": [],
+              "leaf": true,
+              "iconCls": "fa-leaf"
+            },
+            {
+              "id": 151,
+              "path": "#report/instance/23",
+              "parentId": 77,
+              "type": "02",
+              "description": "已退货订单",
+              "status": "0",
+              "children": [],
+              "leaf": true,
+              "iconCls": "fa-leaf"
+            },
+            {
+              "id": 162,
+              "path": "#report/instance/36",
+              "parentId": 77,
+              "type": "02",
+              "description": "优惠券订单",
+              "status": "0",
+              "children": [],
+              "leaf": true,
+              "iconCls": "fa-leaf"
+            }
+          ],
+          "leaf": false,
+          "iconCls": "fa-pagelines"
+        },
+        {
+          "id": 147,
+          "path": "#order/create",
+          "parentId": 47,
+          "type": "02",
+          "description": "创建订单",
+          "status": "0",
+          "children": [],
+          "leaf": true,
+          "iconCls": "fa-leaf"
+        },
+        {
+          "id": 170,
+          "path": "#report/instance/37",
+          "parentId": 47,
+          "type": "02",
+          "description": "所有订单",
+          "status": "0",
+          "children": [],
+          "leaf": true,
+          "iconCls": "fa-leaf"
+        },
+        {
+          "id": 173,
+          "path": "#report/instance/38",
+          "parentId": 47,
+          "type": "02",
+          "description": "商品销售全览",
+          "status": "0",
+          "children": [],
+          "leaf": true,
+          "iconCls": "fa-leaf"
+        }
+      ],
+      "leaf": false,
+      "iconCls": "fa-pagelines"
+    },
+    {
+      "id": 159,
+      "path": "#marketing",
+      "parentId": 0,
+      "type": "01",
+      "description": "营销",
+      "status": "0",
+      "children": [
+        {
+          "id": 160,
+          "path": "#marketing/coupon",
+          "parentId": 159,
+          "type": "01",
+          "description": "优惠券",
+          "status": "0",
+          "children": [
+            {
+              "id": 161,
+              "path": "#marketing/coupon/instance/list",
+              "parentId": 160,
+              "type": "02",
+              "description": "优惠券列表",
+              "status": "0",
+              "children": [],
+              "leaf": true,
+              "iconCls": "fa-leaf"
+            }
+          ],
+          "leaf": false,
+          "iconCls": "fa-pagelines"
+        }
+      ],
+      "leaf": false,
+      "iconCls": "fa-pagelines"
+    },
+    {
+      "id": 176,
+      "path": "#Logistics",
+      "parentId": 0,
+      "type": "01",
+      "description": "物流",
+      "status": "0",
+      "children": [
+        {
+          "id": 177,
+          "path": "#Logistics/report",
+          "parentId": 176,
+          "type": "01",
+          "description": "报表",
+          "status": "0",
+          "children": [
+            {
+              "id": 178,
+              "path": "#report/instance/40",
+              "parentId": 177,
+              "type": "02",
+              "description": "主单",
+              "status": "0",
+              "children": [],
+              "leaf": true,
+              "iconCls": "fa-leaf"
+            },
+            {
+              "id": 181,
+              "path": "#report/instance/41",
+              "parentId": 177,
+              "type": "02",
+              "description": "子单",
+              "status": "0",
+              "children": [],
+              "leaf": true,
+              "iconCls": "fa-leaf"
+            }
+          ],
+          "leaf": false,
+          "iconCls": "fa-pagelines"
+        }
+      ],
+      "leaf": false,
+      "iconCls": "fa-pagelines"
+    }
+  ],
+  "statusCode": ""
+}
