@@ -12,75 +12,31 @@
 </head>
 
 <body>
-  <div class="sidebar-left left-full">
-    <div class="sidebar-fold">
-      <span class="fa fa-bars"></span>
-    </div>
-    <div class="sidebar-title-box">
-      <div class="sidebar-nav nav-show">
-        <div class="sidebar-title">
-          <div class="tip-show" >
-              <div class="tip-titlt"> 
-                <i class="tip-icon fa fa-caret-left"></i>会员1-消息中心消息中心
-              </div>
-          </div>
-          <span class="title-icon fa fa-caret-right"></span>
-          <span class="sublist-title">会员1</span>
-        </div>
-        <ul class="m-nav-list" style="display:block">
-          <li class="active">
-            <div class="tip-show" >
-                <div class="tip-titlt"> 
-                  <i class="tip-icon fa fa-caret-left"></i>所有会员
-                </div>
-            </div>
-            <a href="userInfo.html">
-              <span class="sublist-icon fa fa-user"></span>
-              <span class="sub-title">所有会员</span>
-            </a>
-          </li>
-          <li>
-            <div class="tip-show" >
-                <div class="tip-titlt"> 
-                  <i class="tip-icon fa fa-caret-left"></i>所有会员
-                </div>
-            </div>
-            <a href="message.html">
-              <span class="sublist-icon fa fa-user"></span>
-              <span class="sub-title">消息中心</span>
-            </a>
-          </li>
-          <li>
-            <div class="tip-show" >
-                <div class="tip-titlt"> 
-                  <i class="tip-icon fa fa-caret-left"></i>所有会员
-                </div>
-            </div>
-            <a href="message.html">
-              <span class="sublist-icon fa fa-user"></span>
-              <span class="sub-title">消息中心</span>
-            </a>
-          </li>
-        </ul>
+  <div class="m-sidebar-left">
+    <!-- sidebar-left start -->
+    <div class="sidebar-left left-full">
+      <div class="sidebar-fold">
+        <span class="fa fa-bars"></span>
       </div>
-      <div class="sidebar-nav">
+      <div class="sidebar-title-box">
+        <div class="sidebar-nav nav-show">
           <div class="sidebar-title">
             <div class="tip-show" >
                 <div class="tip-titlt"> 
-                  <i class="tip-icon fa fa-caret-left"></i>会员2
+                  <i class="tip-icon fa fa-caret-left"></i>会员1-消息中心消息中心
                 </div>
             </div>
             <span class="title-icon fa fa-caret-right"></span>
-            <span class="sublist-title">会员2</span>
+            <span class="sublist-title">会员1</span>
           </div>
-          <ul class="m-nav-list" style="display:none">
-            <li>
+          <ul class="m-nav-list" style="display:block">
+            <li class="active">
               <div class="tip-show" >
                   <div class="tip-titlt"> 
                     <i class="tip-icon fa fa-caret-left"></i>所有会员
                   </div>
               </div>
-              <a href="userInfo.html">
+              <a href="#home">
                 <span class="sublist-icon fa fa-user"></span>
                 <span class="sub-title">所有会员</span>
               </a>
@@ -91,7 +47,7 @@
                     <i class="tip-icon fa fa-caret-left"></i>所有会员
                   </div>
               </div>
-              <a href="message.html">
+              <a href="#test">
                 <span class="sublist-icon fa fa-user"></span>
                 <span class="sub-title">消息中心</span>
               </a>
@@ -155,55 +111,87 @@
               </li>
             </ul>
           </div>
+      </div>
     </div>
-<script>
-$(function(){
+    <!-- sidebar-left end -->
 
-    /*左侧导航栏缩进功能*/
-    $(".sidebar-left .sidebar-fold").click(function(){
-      if($(this).parent().attr('class')=="sidebar-left left-full"){
-        $(this).parent().removeClass("left-full");
-        $(this).parent().addClass("left-off");
-        // $(this).parent().parent().find(".right-product").removeClass("right-full").addClass("right-off");
-      }else{
-        $(this).parent().removeClass("left-off");
-        $(this).parent().addClass("left-full");
-        
-        // $(this).parent().parent().find(".right-product").removeClass("right-off").addClass("right-full");
-      }
-    })	
-
-  /*左侧导航栏显示隐藏功能*/
-  $(".sidebar-nav > .sidebar-title").on('click', function(){				
-      /*显示*/
-      if ($(this).next().css('display') == "none") {
-        $('.sidebar-nav').children('ul').slideUp(200)
-        $(this).next('ul').slideDown(200)
-        $(this).parent('.sidebar-nav').addClass('nav-show').siblings('.sidebar-nav').removeClass('nav-show')
-      }else{  /*隐藏*/
-        $(this).next('ul').slideUp(200)
-        $('.sidebar-nav.nav-show').removeClass('nav-show')
-      }
-    })
- 
-  /*左侧鼠标移入提示功能*/
-  // $(".sidebar-nav ul li").mouseenter(function(){
-  //   if($(this).find("span:last-child").css("display")=="none"){
-  //     $(this).find(".tip-show").show();
-  //   }
-  // }).mouseleave(function(){
-  //     $(this).find(".tip-show").hide();
-  // })	
-  // $(".sidebar-nav .sidebar-title").mouseenter(function(){
-  //   if($('.sidebar-left').hasClass('left-off')){
-  //     $(this).find(".tip-show").show();
-  //   }
-  // }).mouseleave(function(){
-  //     $(this).find(".tip-show").hide();
-  // })
-
-})
-</script>
+    <!-- sidebar-option start -->
+    <div class="sidebar-option sidebar-option-open">
+      <div class="option-nav-title">所有会员</div>
+      <div class="option-nav-list">
+        <ul>
+          <li><a href="">所有会员</a></li>
+          <li class="active"><a href="">所有会员</a></li>
+          <li><a href="">所有会员</a></li>
+          <li><a href="">所有会员</a></li>
+          <li><a href="">所有会员</a></li>
+        </ul>
+      </div>
+      <div class="navbar-collapse">
+        <div class="navbar-collapse-inner">
+          <div class="navbar-collapse-bg"></div>
+          <div class="navbar-collapse-icon">
+            <span class="fa fa-angle-double-right"></span>
+            <span class="fa fa-angle-double-left"></span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- sidebar-option end -->
+  </div>
 </body>
+<script>
+    $(function(){
+    
+        /*左侧导航栏缩进功能*/
+        $(".sidebar-left .sidebar-fold").click(function(){
+          if($(this).parent().attr('class')=="sidebar-left left-full"){
+            $(this).parent().removeClass("left-full").addClass("left-off");
+            // $(this).parent().parent().find(".right-product").removeClass("right-full").addClass("right-off");
+          }else{
+            $(this).parent().removeClass("left-off").addClass("left-full");
+            
+            // $(this).parent().parent().find(".right-product").removeClass("right-off").addClass("right-full");
+          }
+        })	
+    
+      /*左侧导航栏显示隐藏功能*/
+      $(".sidebar-nav > .sidebar-title").on('click', function(){				
+          /*显示*/
+          if ($(this).next().css('display') == "none") {
+            $('.sidebar-nav').children('ul').slideUp(200)
+            $(this).next('ul').slideDown(200)
+            $(this).parent('.sidebar-nav').addClass('nav-show').siblings('.sidebar-nav').removeClass('nav-show')
+          }else{  /*隐藏*/
+            $(this).next('ul').slideUp(200)
+            $('.sidebar-nav.nav-show').removeClass('nav-show')
+          }
+        })
 
+      // 右侧菜单展开收缩
+      $('.navbar-collapse').on('click', function(){
+        if ($(this).parent().attr('class') == "sidebar-option sidebar-option-open"){
+          $(this).parent().removeClass('sidebar-option-open')
+        } else {
+          $(this).parent().addClass('sidebar-option-open')
+        }
+      })
+      /*左侧鼠标移入提示功能*/
+      // $(".sidebar-nav ul li").mouseenter(function(){
+      //   if($(this).find("span:last-child").css("display")=="none"){
+      //     $(this).find(".tip-show").show();
+      //   }
+      // }).mouseleave(function(){
+      //     $(this).find(".tip-show").hide();
+      // })	
+      // $(".sidebar-nav .sidebar-title").mouseenter(function(){
+      //   if($('.sidebar-left').hasClass('left-off')){
+      //     $(this).find(".tip-show").show();
+      //   }
+      // }).mouseleave(function(){
+      //     $(this).find(".tip-show").hide();
+      // })
+    
+    })
+    </script>
 </html>
