@@ -17,19 +17,19 @@
       <span class="fa fa-bars"></span>
     </div>
     <div class="sidebar-title-box">
-      <div class="sidebar-nav">
-        <div class="sidebar-title sublist-down">
-          <div class="tip-show" style="width:100px;">
+      <div class="sidebar-nav nav-show">
+        <div class="sidebar-title">
+          <div class="tip-show" >
               <div class="tip-titlt"> 
                 <i class="tip-icon fa fa-caret-left"></i>会员1
               </div>
           </div>
-          <span class="title-icon fa fa-caret-down"></span>
+          <span class="title-icon fa fa-caret-right"></span>
           <span class="sublist-title">会员1</span>
         </div>
         <ul class="m-nav-list" style="display:block">
           <li class="active">
-            <div class="tip-show" style="width:100px;">
+            <div class="tip-show" >
                 <div class="tip-titlt"> 
                   <i class="tip-icon fa fa-caret-left"></i>所有会员
                 </div>
@@ -40,7 +40,7 @@
             </a>
           </li>
           <li>
-            <div class="tip-show" style="width:100px;">
+            <div class="tip-show" >
                 <div class="tip-titlt"> 
                   <i class="tip-icon fa fa-caret-left"></i>所有会员
                 </div>
@@ -51,7 +51,7 @@
             </a>
           </li>
           <li>
-            <div class="tip-show" style="width:100px;">
+            <div class="tip-show" >
                 <div class="tip-titlt"> 
                   <i class="tip-icon fa fa-caret-left"></i>所有会员
                 </div>
@@ -64,8 +64,8 @@
         </ul>
       </div>
       <div class="sidebar-nav">
-          <div class="sidebar-title sublist-down">
-            <div class="tip-show" style="width:100px;">
+          <div class="sidebar-title">
+            <div class="tip-show" >
                 <div class="tip-titlt"> 
                   <i class="tip-icon fa fa-caret-left"></i>会员2
                 </div>
@@ -75,7 +75,7 @@
           </div>
           <ul class="m-nav-list" style="display:none">
             <li>
-              <div class="tip-show" style="width:100px;">
+              <div class="tip-show" >
                   <div class="tip-titlt"> 
                     <i class="tip-icon fa fa-caret-left"></i>所有会员
                   </div>
@@ -86,7 +86,7 @@
               </a>
             </li>
             <li>
-              <div class="tip-show" style="width:100px;">
+              <div class="tip-show" >
                   <div class="tip-titlt"> 
                     <i class="tip-icon fa fa-caret-left"></i>所有会员
                   </div>
@@ -97,7 +97,7 @@
               </a>
             </li>
             <li>
-              <div class="tip-show" style="width:100px;">
+              <div class="tip-show" >
                   <div class="tip-titlt"> 
                     <i class="tip-icon fa fa-caret-left"></i>所有会员
                   </div>
@@ -115,39 +115,29 @@ $(function(){
 
     /*左侧导航栏缩进功能*/
     $(".sidebar-left .sidebar-fold").click(function(){
-    if($(this).parent().attr('class')=="sidebar-left left-full"){
-      $(this).parent().removeClass("left-full");
-      $(this).parent().addClass("left-off");
-      
-      $(this).parent().parent().find(".right-product").removeClass("right-full");
-      $(this).parent().parent().find(".right-product").addClass("right-off");
-      
+      if($(this).parent().attr('class')=="sidebar-left left-full"){
+        $(this).parent().removeClass("left-full");
+        $(this).parent().addClass("left-off");
+        // $(this).parent().parent().find(".right-product").removeClass("right-full").addClass("right-off");
       }else{
         $(this).parent().removeClass("left-off");
         $(this).parent().addClass("left-full");
         
-        $(this).parent().parent().find(".right-product").removeClass("right-off");
-        $(this).parent().parent().find(".right-product").addClass("right-full");
+        // $(this).parent().parent().find(".right-product").removeClass("right-off").addClass("right-full");
       }
     })	
 
   /*左侧导航栏显示隐藏功能*/
   $(".sidebar-nav > .sidebar-title").on('click', function(){				
       /*显示*/
-      if($(this).find("span.title-icon").attr('class')=="title-icon fa fa-caret-down"){
-        $(this).find("span.title-icon").removeClass("fa-caret-down");
-        $(this).find("span.title-icon").addClass("fa-caret-right");
-        $(this).removeClass("sublist-down");
-        $(this).addClass("sublist-up");
+      if ($(this).next().css('display') == "none") {
+        $('.sidebar-nav').children('ul').slideUp(200)
+        $(this).next('ul').slideDown(200)
+        $(this).parent('.sidebar-nav').addClass('nav-show').siblings('.sidebar-nav').removeClass('nav-show')
       }else{  /*隐藏*/
-        $(this).find("span.title-icon").removeClass("fa-caret-right");
-        $(this).find("span.title-icon").addClass("fa-caret-down");
-        $(this).removeClass("sublist-up");
-        $(this).addClass("sublist-down");
-      }	
-      // 修改数字控制速度， slideUp(500)控制卷起速度
-      $(this).next(".m-nav-list").slideToggle(300).siblings(".m-nav-list").slideUp(300);
-      // $(this).parent('.sidebar-nav').addClass('nav-show').siblings('.sidebar-nav').removeClass('nav-show');
+        $(this).next('ul').slideUp(200)
+        $('.sidebar-nav.nav-show').removeClass('nav-show')
+      }
     })
  
   /*左侧鼠标移入提示功能*/

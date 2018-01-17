@@ -206,18 +206,24 @@ code,kbd,pre,samp {
 .sidebar-nav .sidebar-title .title-icon {
     width: 48px;
     text-align: center;
+    transition: transform .3s;
 }
 
-.sidebar-nav .sublist-down {
-    background-color: #22282e;
+.sidebar-nav.nav-show .title-icon{
+  transform: rotate(90deg);
+}
+.sidebar-nav .sidebar-title{
+  background-color: #37424f;
+}
+.sidebar-nav.nav-show .sidebar-title{
+  background-color: #22282e;
 }
 
-.sidebar-nav .sublist-up {
-    background-color: #37424f;
-}
-
-.sidebar-nav .sublist-up ul {
+.sidebar-nav ul.m-nav-list {
     display: none;
+}
+.sidebar-nav.nav-show ul.m-nav-list {
+  display: block;
 }
 
 .sidebar-nav .sublist-title {
