@@ -249,7 +249,9 @@ code,kbd,pre,samp {
     left: 55px;
     padding: 0px 10px 0px 10px;
     color: #FFF;
-    min-width: 100px;
+    min-width: 50px;
+    /* width: 100%; */
+    white-space: nowrap;
     transition: all .2s;
     display: none;
 }
@@ -275,4 +277,10 @@ code,kbd,pre,samp {
 /*左侧导航选中样式*/
 .sidebar-nav ul .active {
     background-color: #09C;
+}
+
+/* 显示tips */
+.sidebar-left.left-off .sidebar-title:hover .tip-show,
+.sidebar-left.left-off .sidebar-nav ul li:hover .tip-show{
+  display: block;
 }

@@ -21,7 +21,7 @@
         <div class="sidebar-title">
           <div class="tip-show" >
               <div class="tip-titlt"> 
-                <i class="tip-icon fa fa-caret-left"></i>会员1
+                <i class="tip-icon fa fa-caret-left"></i>会员1-消息中心消息中心
               </div>
           </div>
           <span class="title-icon fa fa-caret-right"></span>
@@ -109,6 +109,52 @@
             </li>
           </ul>
         </div>
+        <div class="sidebar-nav">
+            <div class="sidebar-title">
+              <div class="tip-show" >
+                  <div class="tip-titlt"> 
+                    <i class="tip-icon fa fa-caret-left"></i>会员2
+                  </div>
+              </div>
+              <span class="title-icon fa fa-caret-right"></span>
+              <span class="sublist-title">会员2</span>
+            </div>
+            <ul class="m-nav-list" style="display:none">
+              <li>
+                <div class="tip-show" >
+                    <div class="tip-titlt"> 
+                      <i class="tip-icon fa fa-caret-left"></i>所有会员
+                    </div>
+                </div>
+                <a href="userInfo.html">
+                  <span class="sublist-icon fa fa-user"></span>
+                  <span class="sub-title">所有会员</span>
+                </a>
+              </li>
+              <li>
+                <div class="tip-show" >
+                    <div class="tip-titlt"> 
+                      <i class="tip-icon fa fa-caret-left"></i>所有会员
+                    </div>
+                </div>
+                <a href="message.html">
+                  <span class="sublist-icon fa fa-user"></span>
+                  <span class="sub-title">消息中心</span>
+                </a>
+              </li>
+              <li>
+                <div class="tip-show" >
+                    <div class="tip-titlt"> 
+                      <i class="tip-icon fa fa-caret-left"></i>所有会员
+                    </div>
+                </div>
+                <a href="message.html">
+                  <span class="sublist-icon fa fa-user"></span>
+                  <span class="sub-title">消息中心</span>
+                </a>
+              </li>
+            </ul>
+          </div>
     </div>
 <script>
 $(function(){
@@ -141,20 +187,20 @@ $(function(){
     })
  
   /*左侧鼠标移入提示功能*/
-  $(".sidebar-nav ul li").mouseenter(function(){
-    if($(this).find("span:last-child").css("display")=="none"){
-      $(this).find(".tip-show").show();
-    }
-  }).mouseleave(function(){
-      $(this).find(".tip-show").hide();
-  })	
-  $(".sidebar-nav .sidebar-title").mouseenter(function(){
-    if($('.sidebar-left').hasClass('left-off')){
-      $(this).find(".tip-show").show();
-    }
-  }).mouseleave(function(){
-      $(this).find(".tip-show").hide();
-  })
+  // $(".sidebar-nav ul li").mouseenter(function(){
+  //   if($(this).find("span:last-child").css("display")=="none"){
+  //     $(this).find(".tip-show").show();
+  //   }
+  // }).mouseleave(function(){
+  //     $(this).find(".tip-show").hide();
+  // })	
+  // $(".sidebar-nav .sidebar-title").mouseenter(function(){
+  //   if($('.sidebar-left').hasClass('left-off')){
+  //     $(this).find(".tip-show").show();
+  //   }
+  // }).mouseleave(function(){
+  //     $(this).find(".tip-show").hide();
+  // })
 
 })
 </script>
