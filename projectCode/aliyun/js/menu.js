@@ -1,5 +1,6 @@
 /**
  * https://segmentfault.com/a/1190000008800382  手把手教你JQuery插件的写法和规范
+ * http://www.cnblogs.com/maitian-lf/p/3610556.html  javascript中用闭包递归遍历树状数组
  * 
  */
 ;(function ($, window){
@@ -182,6 +183,44 @@
         }
       }
       
+      console.log(getMenuName(opts.dataList, _hash))
+
+      function getMenuName(menus, path) {
+        var name = ''
+        var id = ''
+        var parentId = ''
+        var leni = ''
+        var lenj = ''
+        for(var i=0;i<menus.length;i++){
+          if (menus[i].path == path) {
+            name = menus[i].description
+            id = menus[i].id
+            leni = i
+          }else if (menus[i].children != null && menus[i].children.length > 0){
+            (function(){
+              var m = arguments[0]
+              var menupath = arguments[1]
+              for(var j=0; j< m.length; j++) {
+                if (m[j].path == menupath) {
+                  name = m[j].description
+                  parentId = m[j].parentId
+                  lenj = j
+                } else if (m[j].children != null && m[j].children.length > 0) {
+                  arguments.callee(m[j].children, path)
+                }
+              }
+            })(menus[i].children, path)
+          }
+        }
+        var obj = {
+          name: name,
+          id: id,
+          parentId: parentId,
+          leni: leni,
+          lenj: lenj
+        }
+        return obj
+      }
 
     })
 
