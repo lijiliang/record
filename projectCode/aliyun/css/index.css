@@ -284,6 +284,10 @@ code,kbd,pre,samp {
     background-color: #09C;
 }
 
+.sidebar-nav ul .active:hover {
+  background-color: #09C;
+}
+
 /* 显示tips */
 .sidebar-left.left-off .sidebar-title:hover .tip-show,
 .sidebar-left.left-off .sidebar-nav ul li:hover .tip-show{

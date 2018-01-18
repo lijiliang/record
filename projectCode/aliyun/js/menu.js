@@ -14,6 +14,13 @@
 
       console.log(opts)
       var _sidebarNavHtml = ''  // 一二级列表
+      var _sidebarOptionHtml = ''  // 三级列表
+      var _sidebarOptionTitle = ''
+      var _sidebarOptionDate = []  // 三级列表数据
+
+      // function sidebarLeftHtml () {
+        
+      // }
       $.each(opts.dataList, function(index, value){
 
         var _itemHtml = ''  // 二级列表li
@@ -25,7 +32,7 @@
           '            <i class="tip-icon fa fa-caret-left"></i>'+ _value.description +
           '          </div>'+
           '      </div>'+
-          '      <a href='+_value.path+' data-path='+_value.path+' data-children='+_childrenData+'>'+
+          '      <a href='+_value.path+' data-title='+_value.description+' data-path='+_value.path+' data-children='+_childrenData+'>'+
           '        <span class="sublist-icon fa '+_value.iconCls+'"></span>'+
           '        <span class="sub-title">'+ _value.description + '</span>'+
           '      </a>'+
@@ -77,11 +84,72 @@
           $('.sidebar-nav.nav-show').removeClass('nav-show')
         }
       })
-    })
 
-    $('.m-nav-list li a').on('click', function(e){
-      e.preventDefault();
-      console.log('sadf')
+      // 二级菜单选中
+      $('.m-nav-list > li a').on('click', function(e){
+        e.preventDefault();
+        $('.m-nav-list li').removeClass('active')
+        $(this).parent('li').addClass('active')
+        var _path = $(this).attr('data-path')
+        var _title = $(this).attr('data-title')
+        var _children = JSON.parse($(this).attr('data-children'))
+        _sidebarOptionDate = _children
+        _sidebarOptionTitle = _title
+        if(_sidebarOptionDate.length){
+          location.hash = _path
+          sidebarOptionHtmlInit(_sidebarOptionTitle, _sidebarOptionDate)
+        } else {
+          location.hash = _path
+          $('.sidebar-option').remove()  // 清除三级菜单内容
+        }
+        // console.log(_path, _children)
+      })
+
+      // 右侧菜单展开收缩
+      $(document).on('click', '.navbar-collapse', function(){
+        if ($(this).parent().attr('class') == "sidebar-option sidebar-option-open"){
+          $(this).parent().removeClass('sidebar-option-open')
+        } else {
+          $(this).parent().addClass('sidebar-option-open')
+        }
+      })
+
+      // 右侧菜单 单项选中
+      $(document).on('click', '.option-nav-list li a', function(e) {
+        e.preventDefault()
+        $(this).parent('li').addClass('active').siblings().removeClass('active')
+        var _path = $(this).attr('data-path')
+        location.hash = _path
+      })
+
+      // 右侧三级菜单html
+      function sidebarOptionHtmlInit (title, optionDate) {
+        console.log('optionDate', title, optionDate)
+        var _item = ''
+        if (optionDate.length) {
+          $.each(optionDate, function(item, value) {
+            _item += '<li><a href='+value.path+' data-path='+value.path+'>'+value.description+'</a></li>'
+          })
+        }
+        _sidebarOptionHtml = '<div class="sidebar-option sidebar-option-open">'+
+        '  <div class="option-nav-title">'+title+'</div>'+
+        '  <div class="option-nav-list">'+
+        '    <ul>'+ _item +'</ul>'+
+        '  </div>'+
+        '  <div class="navbar-collapse">'+
+        '    <div class="navbar-collapse-inner">'+
+        '      <div class="navbar-collapse-bg"></div>'+
+        '      <div class="navbar-collapse-icon">'+
+        '        <span class="fa fa-angle-double-right"></span>'+
+        '        <span class="fa fa-angle-double-left"></span>'+
+        '      </div>'+
+        '    </div>'+
+        '  </div>'+
+        '</div>';
+        $('.sidebar-option').remove()  // 先清除再插入
+        _this.append(_sidebarOptionHtml)
+      }
+
     })
 
   }
