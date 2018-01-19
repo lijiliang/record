@@ -1,5 +1,5 @@
 /**
- * https://segmentfault.com/a/1190000008800382  手把手教你JQuery插件的写法和规范
+ * menu https://segmentfault.com/a/1190000008800382  手把手教你JQuery插件的写法和规范
  * http://www.cnblogs.com/maitian-lf/p/3610556.html  javascript中用闭包递归遍历树状数组
  * 
  */
@@ -24,11 +24,14 @@
        * 一、二级列表
        */
       function sidebarNavHtmlInit () {
+        var pathinfo = getPathInfo(opts.dataList, _hash) || {}
         $.each(opts.dataList, function(index, value){
           var _itemHtml = ''  // 二级列表li
           $.each(value.children, function(_index, _value){
+            var twoLiActiveCls = ''
+            twoLiActiveCls = pathinfo.twoid == _value.id ? "active" : ""
             var _childrenData = JSON.stringify(_value.children)  // 三级菜单数据
-            _itemHtml += '<li>'+
+            _itemHtml += '<li class="'+twoLiActiveCls+'" data-twoid='+_value.id+'>'+
             '      <div class="tip-show">'+
             '          <div class="tip-titlt"> '+
             '            <i class="tip-icon fa fa-caret-left"></i>'+ _value.description +
@@ -40,9 +43,13 @@
             '      </a>'+
             '    </li>';
           })
-  
+
+          var sidebarNavCls = ''
+          var navListDisplay = ''
+          sidebarNavCls = pathinfo.oneid == value.id ? "sidebar-nav nav-show" : "sidebar-nav"
+          navListDisplay = pathinfo.oneid == value.id ? "display:block" : "display:none"
           // 一级列表
-          _sidebarNavHtml += '<div class="sidebar-nav">'+
+          _sidebarNavHtml += '<div class="'+sidebarNavCls+'" data-oneid='+value.id+'>'+
           '  <div class="sidebar-title">'+
           '    <div class="tip-show" >'+
           '        <div class="tip-titlt"> '+
@@ -51,7 +58,7 @@
           '    <span class="title-icon fa fa-caret-right"></span>'+
           '    <span class="sublist-title">'+ value.description +'</span>'+
           '  </div>'+
-          '  <ul class="m-nav-list" style="display:none">'+ _itemHtml + '</ul>'+
+          '  <ul class="m-nav-list" style="'+navListDisplay+'">'+ _itemHtml + '</ul>'+
           '</div>';
         })
         return _sidebarNavHtml
@@ -69,20 +76,25 @@
  
        $(this).append(sidebarLeftHtml)
 
+      // 如果有三级菜单，直接创建显示出来
+      var _pathinfo = getPathInfo(opts.dataList, _hash) || {}
+      if (_pathinfo.level == 3) {
+        createSidebarOptionOpen(_pathinfo.twoname, _hash, _pathinfo.children)
+      }
 
       // 当前选中二级菜单
-      $.each($('.m-nav-list li a'), function(index, value) {
-        var _path = $(this).attr('data-path')
-        if (_path == _hash) {
-          $(this).parents('.sidebar-nav').addClass('nav-show')
-          $(this).parents('.m-nav-list').css('display', 'block')
-          $(this).parent('li').addClass('active')
-          var _path = $(this).attr('data-path')
-          var _title = $(this).attr('data-title')
-          var _children = JSON.parse($(this).attr('data-children'))
-          createSidebarOptionOpen(_title, _path, _children)
-        }
-      })
+      // $.each($('.m-nav-list li a'), function(index, value) {
+      //   var _path = $(this).attr('data-path')
+      //   if (_path == _hash) {
+      //     $(this).parents('.sidebar-nav').addClass('nav-show')
+      //     $(this).parents('.m-nav-list').css('display', 'block')
+      //     $(this).parent('li').addClass('active')
+      //     var _path = $(this).attr('data-path')
+      //     var _title = $(this).attr('data-title')
+      //     var _children = JSON.parse($(this).attr('data-children'))
+      //     createSidebarOptionOpen(_title, _path, _children)
+      //   }
+      // })
 
       /*左侧导航栏缩进功能*/
       $(".sidebar-left .sidebar-fold").on('click', function(){
@@ -140,10 +152,13 @@
        * @param {array} optionDate  子级内容
        */
       function sidebarOptionHtmlInit (title, optionDate) {
+        var pathinfo = getPathInfo(opts.dataList, _hash) || {}
         var _item = ''
-        if (optionDate.length) {
+        if (optionDate != null && optionDate.length > 0) {
           $.each(optionDate, function(item, value) {
-            _item += '<li><a href='+value.path+' data-path='+value.path+'>'+value.description+'</a></li>'
+            var actvieLiCls = ''
+            actvieLiCls = pathinfo.threeid == value.id ? 'active' : ''
+            _item += '<li class="'+actvieLiCls+'" data-threeid='+value.id+'><a href='+value.path+' data-path='+value.path+'>'+value.description+'</a></li>'
           })
         }
         _sidebarOptionHtml = '<div class="sidebar-option sidebar-option-open">'+
@@ -175,7 +190,7 @@
         _sidebarOptionDate = children
         _sidebarOptionTitle = title
         if(_sidebarOptionDate.length){
-          location.hash = path
+          // location.hash = path
           sidebarOptionHtmlInit(_sidebarOptionTitle, _sidebarOptionDate)
         } else {
           location.hash = path
@@ -183,19 +198,91 @@
         }
       }
       
-      console.log(getMenuName(opts.dataList, _hash))
+      // console.log(getPathInfo(opts.dataList, _hash))
+      /**
+       * 根据path获取信息
+       * @param {array} menus 全部菜单数据
+       * @param {string} path  当前选中的path(hash)
+       */
+      function getPathInfo(menus, path){
+        var allmenu = []   // 所有菜单展开
+        var oneid = ''  // 第一级id
+        var twoid = ''
+        var threeid = ''
+        var twopos = '' // 二级菜单索引
+        var threepos = '' // 三级菜单索引
+        var children = [] // 三级菜单children
+        var level = 1   // 有多少级
+        var name = ''   // 当前菜单名称
+        var twoname = '' // 二级菜单名称
+        for(var i=0;i<menus.length;i++){
+          allmenu.push(menus[i])
+          var twoChildren = menus[i].children  // 第二级菜单
+          if (menus[i].path == path) { 
+            oneid = menus[i].id
+            level = 1
+            name = menus[i].description
+            children = []
+            twoname = ''
+          } else if (twoChildren != null && twoChildren.length > 0){
+            for(var j =0; j<twoChildren.length; j++){
+              allmenu.push(twoChildren[j])
+              var threeChildren = twoChildren[j].children
+              if(twoChildren[j].path == path) {
+                oneid = twoChildren[j].parentId
+                twoid = twoChildren[j].id
+                level = 2
+                name = twoChildren[j].description
+                twopos = j
+                children = []
+                twoname = ''
+              } else if (threeChildren != null && threeChildren.length > 0){
+                for(var k = 0; k<threeChildren.length; k++) {
+                  allmenu.push(threeChildren[k])
+                  if (threeChildren[k].path == path){
+                    oneid = menus[i].id
+                    twoid = threeChildren[k].parentId
+                    threeid = threeChildren[k].id
+                    level = 3
+                    name = threeChildren[k].description
+                    twopos = j
+                    threepos = k
+                    children = threeChildren
+                    twoname = twoChildren[j].description
+                  }
+                }
+              }
+            }
+          }
+        }
+        var obj = {
+          allmenu: allmenu,
+          oneid: oneid,
+          twoid: twoid,
+          threeid: threeid,
+          level: level,
+          name: name,
+          twopos: twopos,
+          threepos: threepos,
+          path: path,
+          children: children,
+          twoname: twoname
+        }
+        return obj
+      }
 
+      /**
+       * 递归获取菜单名称
+       * @param {array} menus 全部菜单数据
+       * @param {string} path  当前选中的path(hash)
+       */
       function getMenuName(menus, path) {
         var name = ''
         var id = ''
-        var parentId = ''
-        var leni = ''
-        var lenj = ''
         for(var i=0;i<menus.length;i++){
           if (menus[i].path == path) {
             name = menus[i].description
             id = menus[i].id
-            leni = i
           }else if (menus[i].children != null && menus[i].children.length > 0){
             (function(){
               var m = arguments[0]
@@ -203,8 +290,7 @@
               for(var j=0; j< m.length; j++) {
                 if (m[j].path == menupath) {
                   name = m[j].description
-                  parentId = m[j].parentId
-                  lenj = j
+                  id = m[j].id
                 } else if (m[j].children != null && m[j].children.length > 0) {
                   arguments.callee(m[j].children, path)
                 }
@@ -214,15 +300,23 @@
         }
         var obj = {
           name: name,
-          id: id,
-          parentId: parentId,
-          leni: leni,
-          lenj: lenj
+          id: id
         }
         return obj
       }
 
-    })
+      function getByMenuId(Data, id) {
+        var Deep, T, F
+        for( F = Data.length; F;){
+          T = Data[--F]
+          if(id === T.path) return T
+          if (T.children) {
+            Deep = getByMenuId(T.children, id)
+            if (Deep) return Deep
+          }
+        }
+      }
 
+    })
   }
 })(jQuery, window)
