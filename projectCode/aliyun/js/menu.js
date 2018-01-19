@@ -1,6 +1,5 @@
 /**
- * menu https://segmentfault.com/a/1190000008800382  手把手教你JQuery插件的写法和规范
- * http://www.cnblogs.com/maitian-lf/p/3610556.html  javascript中用闭包递归遍历树状数组
+ * menu 
  * 
  */
 ;(function ($, window){
@@ -8,16 +7,17 @@
     // 默认参数
     var defaluts = {
       dataList: [],
+      isFoldOpen: true  //  左侧菜单是否默认打开,默认为打开
     }
     var opts = $.extend({}, defaluts, options); //使用jQuery.extend 覆盖插件默认参数
     return this.each(function(){
       var _this = $(this) //获取当前dom的jQuery对象，这里的this是当前循环的dom
 
-      console.log(opts)
       var _sidebarNavHtml = ''  // 一二级列表
       var _sidebarOptionHtml = ''  // 三级列表
       var _sidebarOptionTitle = '' // 显示在三级列表下的二级标题
       var _sidebarOptionDate = []  // 三级列表数据
+      var foldOpen = opts.isFoldOpen ? 'left-full' : 'left-off'
       var _hash = location.hash || ''
       
       /**
@@ -67,7 +67,7 @@
       sidebarNavHtmlInit()
 
        // 左侧菜单
-       var sidebarLeftHtml = '<div class="sidebar-left left-full">'+
+       var sidebarLeftHtml = '<div class="sidebar-left '+foldOpen+'">'+
        '      <div class="sidebar-fold">'+
        '        <span class="fa fa-bars"></span>'+
        '      </div>'+
@@ -81,20 +81,6 @@
       if (_pathinfo.level == 3) {
         createSidebarOptionOpen(_pathinfo.twoname, _hash, _pathinfo.children)
       }
-
-      // 当前选中二级菜单
-      // $.each($('.m-nav-list li a'), function(index, value) {
-      //   var _path = $(this).attr('data-path')
-      //   if (_path == _hash) {
-      //     $(this).parents('.sidebar-nav').addClass('nav-show')
-      //     $(this).parents('.m-nav-list').css('display', 'block')
-      //     $(this).parent('li').addClass('active')
-      //     var _path = $(this).attr('data-path')
-      //     var _title = $(this).attr('data-title')
-      //     var _children = JSON.parse($(this).attr('data-children'))
-      //     createSidebarOptionOpen(_title, _path, _children)
-      //   }
-      // })
 
       /*左侧导航栏缩进功能*/
       $(".sidebar-left .sidebar-fold").on('click', function(){
