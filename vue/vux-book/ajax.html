@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+  <script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+  123456789
+  <button id="button">点击请求数据</button>
+  <div id="content"></div>
+  <script>
+    $('button').click(function(){
+      $.ajax({
+        url: 'http://api.youmeixun.com/bookzw/list/1/2',
+        type: 'GET',  // GET  POST  PUT  DELETE
+        // dataType: 'xml',
+        success: function(res){
+          // console.log(res)
+          var _list = res.data;  // list
+          var _html = ''
+          for(var i=0;i<_list.length;i++){
+            var item = '<li>' + _list[i].name + '</li>'
+            _html += item
+          }
+          console.log(_html)
+          $('#content').html('<ul>'+ _html +'</ul>')
+        },
+        error: function(err){
+          console.log(err)
+        }
+      })
+    })
+
+
+    // 同步
+  </script>
+</body>
+</html>

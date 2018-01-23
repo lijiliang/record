@@ -350,8 +350,11 @@ code,kbd,pre,samp {
   text-decoration: none;
   text-indent: 20px;
 }
-.option-nav-list li.active a{
+.option-nav-list li.active a, .option-nav-list li.active:hover a{
   background-color: #FFF;
+}
+.option-nav-list li:hover a{
+  background-color: #F4F6F8;
 }
 
 /* 右侧 左右控制开关按钮 */
