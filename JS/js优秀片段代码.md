@@ -850,3 +850,165 @@ arr.reduce((acc, val) => acc.concat(Math.pow(val - mean, 2)), [])
 // standardDeviation([10,2,38,23,38,23,21]) -> 13.284434142114991 (sample)
 // standardDeviation([10,2,38,23,38,23,21], true) -> 12.29899614287479 (population)
 ```
+
+## 实用
+### coalesce
+返回第一个非空/未定义参数。
+
+使用Array.find()返回第一个非null/undefined的参数。
+```js
+const coalesce = (...args) => args.find(_ => ![undefined, null].includes(_))
+// coalesce(null,undefined,"",NaN, "Waldo") -> ""
+```
+
+### coalesceFactory
+返回自定义的联合函数, 返回从提供的参数验证函数返回true的第一个参数。
+
+使用Array.find()返回从提供的参数验证函数返回true的第一个参数。
+```js
+const coalesceFactory = valid => (...args) => args.find(valid);
+// const customCoalesce = coalesceFactory(_ => ![null, undefined, "", NaN].includes(_))
+// customCoalesce(undefined, null, NaN, "", "Waldo") //-> "Waldo"
+```
+### extendHex
+将3位色码扩展为6位色码。
+
+使用Array.map()、split()和Array.join()来加入映射数组, 将3位的 RGB notated 十六进制 color-code 转换为6位数字形式。Array.slice()用于从字符串启动中删除#, 因为它添加了一次。
+```js
+const extendHex = shortHex =>
+'#' + shortHex.slice(shortHex.startsWith('#') ? 1 : 0).split('').map(x => x+x).join('')
+// extendHex('#03f') -> '#0033ff'
+// extendHex('05a') -> '#0055aa'
+```
+### gettype
+返回值的本机类型。
+
+如果值未定义或为 null, 则返回小写的构造函数名称、”未定义” 或 “null”
+```js
+const getType = v =>
+v === undefined ? 'undefined' : v === null ? 'null' : v.constructor.name.toLowerCase();
+// getType(new Set([1,2,3])) -> "set"
+```
+
+### hexToRGB
+将 colorcode 转换为rgb()字符串。
+
+使用按位右运算符和掩码位与&(and) 运算符将十六进制颜色代码 (前缀为#) 转换为具有 RGB 值的字符串。如果它是一个3位数的 colorcode, 那么用 extendHex () 函数 (ref.extendHex代码段) 扩展的6位 colorcode 进行相同的处理
+```js
+const hexToRgb = hex => {
+const extendHex = shortHex =>
+'#' + shortHex.slice(shortHex.startsWith('#') ? 1 : 0).split('').map(x => x+x).join('');
+const extendedHex = hex.slice(hex.startsWith('#') ? 1 : 0).length === 3 ? extendHex(hex) : hex;
+return `rgb(${parseInt(extendedHex.slice(1), 16) >> 16}, ${(parseInt(extendedHex.slice(1), 16) & 0x00ff00) >> 8}, ${parseInt(extendedHex.slice(1), 16) & 0x0000ff})`;
+}
+// hexToRgb('#27ae60') -> 'rgb(39, 174, 96)'
+// hexToRgb('#acd') -> 'rgb(170, 204, 221)'
+```
+
+### isArray 检查是否为数组
+使用Array.isArray()检查某个值是否属于数组。
+```js
+const isArray = val => !!val && Array.isArray(val)
+// isBoolean(null) -> false
+// isBoolean(false) -> true
+```
+
+### isFunction 检查给定参数是否为函数
+使用typeof检查某个值是否被归类为函数基元
+```js
+const isFunction = val => val && typeof val === 'function'
+// isFunction('x') -> false
+// isFunction(x => x) -> true
+```
+
+### isNumber 判断是否为数字
+使用typeof检查某个值是否归类为数字基元。
+```js
+const isNumber = val => typeof val === 'number'
+```
+
+### isString
+检查给定参数是否为字符串。
+
+使用typeof检查某个值是否属于字符串基元。
+```js
+const isString = val => typeof val === 'string';
+// isString(10) -> false
+// isString('10') -> true
+```
+
+### isSymbol
+检查给定参数是否为符号。
+
+使用typeof检查某个值是否被归类为符号基元。
+```js
+const isSymbol = val => typeof val === 'symbol';
+// isSymbol('x') -> false
+// isSymbol(Symbol('x')) -> true
+```
+
+### RGBToHex
+将 RGB 组件的值转换为 colorcode。
+
+使用按位左移位运算符 (<<) 和toString(16)将给定的 RGB 参数转换为十六进制字符串, 然后padStart(6,’0′)以获取6位十六进制值。
+```js
+const RGBToHex = (r, g, b) => ((r << 16) + (g << 8) + b).toString(16).padStart(6, '0');
+// RGBToHex(255, 165, 1) -> 'ffa501'
+```
+
+### timeTaken
+测量执行函数所用的时间。
+
+使用console.time()和console.timeEnd()来测量开始和结束时间之间的差异, 以确定回调执行所用的时间。
+```js
+const timeTaken = callback => {
+console.time('timeTaken');  const r = callback();
+console.timeEnd('timeTaken');  return r;
+};
+// timeTaken(() => Math.pow(2, 10)) -> 1024
+// (logged): timeTaken: 0.02099609375ms
+```
+
+### toOrdinalSuffix
+将序号后缀添加到数字。
+
+使用模数运算符 (%) 查找单个和十位数字的值。查找匹配的序号模式数字。如果在青少年模式中发现数字, 请使用青少年序号。
+```js
+const toOrdinalSuffix = num => {
+const int = parseInt(num), digits = [(int % 10), (int % 100)],
+ordinals = ['st', 'nd', 'rd', 'th'], oPattern = [1, 2, 3, 4],
+tPattern = [11, 12, 13, 14, 15, 16, 17, 18, 19];
+return oPattern.includes(digits[0]) && !tPattern.includes(digits[1]) ? int + ordinals[digits[0] - 1] : int + ordinals[3];
+};
+// toOrdinalSuffix("123") -> "123rd"
+```
+
+### UUIDGenerator
+生成 UUID。
+
+使用cryptoAPI 生成 UUID, 符合RFC4122版本4。
+```js
+const UUIDGenerator = () =>
+([1e7] + -1e3 + -4e3 + -8e3 + -1e11).replace(/[018]/g, c =>
+(c ^ crypto.getRandomValues(new Uint8Array(1))[0] & 15 >> c / 4).toString(16)
+);
+// UUIDGenerator() -> '7982fcfe-5721-4632-bede-6000885be57d'
+```
+
+### validateEmail
+如果给定的字符串是有效的电子邮件, 则返回true, 否则为false。
+
+使用正则表达式检查电子邮件是否有效。如果电子邮件有效, 则返回 true, 如果没有, 则返回false。
+```js
+const validateEmail = str =>
+  /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(str);
+// validateEmail(mymail@gmail.com) -> true
+```
+### validateNumber
+如果给定值为数字, 则返回true, 否则为false。
+
+将!isNaN与parseFloat()结合使用, 以检查参数是否为数字。使用isFinite()检查数字是否是有限的。使用Number()检查强制是否保持。
+```js
+const validateNumber = n => !isNaN(parseFloat(n)) && isFinite(n) && Number(n) == n;
+// validateNumber('10') -> true
+```
