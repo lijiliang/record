@@ -297,6 +297,157 @@ return Array.from({length: arrays.length}, (_, k) => arrays[k][i]);
 //zip(['a'], [1, 2], [true, false]); -> [['a', 1, true], [undefined, 2, false]]
 ```
 
+## 字符串
+### anagrams
+生成字符串的所有字谜 (包含重复项)。
+
+使用递归。对于给定字符串中的每个字母, 为其其余字母创建所有部分字谜。使用Array.map()将字母与每个部分变位词组合在一起, 然后将Array.reduce()组合在一个数组中的所有字谜。基本情况为字符串length等于2或1.
+```js
+const anagrams = str => {
+if (str.length <= 2) return str.length === 2 ? [str, str[1] + str[0]] : [str];
+return str.split('').reduce((acc, letter, i) =>
+acc.concat(anagrams(str.slice(0, i) + str.slice(i + 1)).map(val => letter + val)), []);
+};
+// anagrams('abc') -> ['abc','acb','bac','bca','cab','cba']
+```
+
+### Capitalize
+将字符串的第一个字母大写。
+
+使用 destructuring 和toUpperCase()可将第一个字母、…rest用于获取第一个字母之后的字符数组, 然后是Array.join(”)以使其成为字符串。省略lowerRest参数以保持字符串的其余部分不变, 或将其设置为true以转换为小写。
+```js
+const capitalize = ([first,...rest], lowerRest = false) =>
+first.toUpperCase() + (lowerRest ? rest.join('').toLowerCase() : rest.join(''));
+// capitalize('myName') -> 'MyName'
+// capitalize('myName', true) -> 'Myname'
+```
+
+### capitalizeEveryWord
+将字符串中每个单词的首字母大写。
+
+使用replace()匹配每个单词和toUpperCase()的第一个字符以将其大写。
+```js
+const capitalizeEveryWord = str => str.replace(/\b[a-z]/g, char => char.toUpperCase());
+// capitalizeEveryWord('hello world!') -> 'Hello World!'
+```
+
+### escapeRegExp
+转义要在正则表达式中使用的字符串。
+
+使用replace()可转义特殊字符。
+```js
+const escapeRegExp = str => str.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+// escapeRegExp('(test)') -> \\(test\\)
+```
+
+### fromCamelCase
+从匹配转换字符串。
+
+使用replace()可删除下划线、连字符和空格, 并将单词转换为匹配。省略第二个参数以使用默认分隔符_.
+```js
+const fromCamelCase = (str, separator = '_') =>
+str.replace(/([a-z\d])([A-Z])/g, '$1' + separator + '$2')
+.replace(/([A-Z]+)([A-Z][a-z\d]+)/g, '$1' + separator + '$2').toLowerCase();
+// fromCamelCase('someDatabaseFieldName', ' ') -> 'some database field name'
+// fromCamelCase('someLabelThatNeedsToBeCamelized', '-') -> 'some-label-that-needs-to-be-camelized'
+// fromCamelCase('someJavascriptProperty', '_') -> 'some_javascript_property'
+```
+### reverseString 反转字符串
+使用数组destructuring和Array.reverse()可反转字符串字符的顺序，使用join('')组合字符以获取字符串
+```js
+const reverseString = str => [...str].reverse().join('')
+// reverseString('foobar') -> 'raboof'
+```
+
+### sortCharactersInString
+按字母顺序对字符串中的字符进行排序。
+
+使用split(”)、Array.sort()利用localeCompare()重新组合使用join(”).
+```js
+const sortCharactersInString = str =>
+str.split('').sort((a, b) => a.localeCompare(b)).join('');
+// sortCharactersInString('cabbage') -> 'aabbceg'
+```
+
+### toCamelCase
+将字符串转换为匹配。
+
+使用replace()可删除下划线、连字符和空格, 并将单词转换为匹配。
+```js
+const toCamelCase = str =>
+str.replace(/^([A-Z])|[\s-_]+(\w)/g, (match, p1, p2, offset) =>  p2 ? p2.toUpperCase() : p1.toLowerCase());
+// toCamelCase("some_database_field_name") -> 'someDatabaseFieldName'
+// toCamelCase("Some label that needs to be camelized") -> 'someLabelThatNeedsToBeCamelized'
+// toCamelCase("some-javascript-property") -> 'someJavascriptProperty'
+// toCamelCase("some-mixed_string with spaces_underscores-and-hyphens") -> 'someMixedStringWithSpacesUnderscoresAndHyphens'
+```
+
+### truncateString
+将字符串截断为指定长度。
+
+确定字符串的length是否大于num。将截断的字符串返回到所需的长度, 并将…追加到末尾或原始字符串。
+```js
+const truncateString = (str, num) =>
+str.length > num ? str.slice(0, num > 3 ? num - 3 : num) + '...' : str;
+// truncateString('boomerang', 7) -> 'boom...'
+```
+
+## 对象
+### shallowClone 创建对象的浅表克隆
+使用Object.assign()和一个对象({})创建原始的浅克隆
+```js
+const shallowClone = obj => Object.assign({}, obj)
+/*
+const a = { x: true, y: 1 };
+const b = shallowClone(a);
+a === b -> false
+*/
+```
+
+### cleanObj  移除从 JSON 对象指定的属性之外的任何特性
+使用Object.keys()方法可以遍历给定的 json 对象并删除在给定数组中不是included 的键。另外, 如果给它一个特殊的键 (childIndicator), 它将在里面深入搜索, 并将函数应用于内部对象。
+```js
+const cleanObj = (obj, keysToKeep = [], childIndicator) => {
+    Object.keys(obj).forEach(key => {
+        if (key === childIndicator) {
+            cleanObj(obj[key], keysToKeep, childIndicator);
+        } else if (!keysToKeep.includes(key)) {
+            delete obj[key];
+        }
+    })
+}
+/*
+  const testObj = {a: 1, b: 2, children: {a: 1, b: 2}}
+  cleanObj(testObj, ["a"],"children")
+  console.log(testObj)// { a: 1, children : { a: 1}}
+*/
+```
+### objectFromPairs
+从给定的键值对创建对象。
+
+使用Array.reduce()创建和组合键值对。
+```js
+const objectFromPairs = arr => arr.reduce((a, v) => (a[v[0]] = v[1], a), {});
+// objectFromPairs([['a',1],['b',2]]) -> {a: 1, b: 2}
+```
+### objectToPairs
+从对象创建键值对数组的数组。
+
+使用Object.keys()和Array.map()循环访问对象的键并生成具有键值对的数组。
+```js
+const objectToPairs = obj => Object.keys(obj).map(k => [k, obj[k]]);
+// objectToPairs({a: 1, b: 2}) -> [['a',1],['b',2]])
+```
+
+### truthCheckCollection
+检查谓词 (第二个参数) 是否 truthy 集合的所有元素 (第一个参数)。
+
+使用Array.every()检查每个传递的对象是否具有指定的属性, 以及是否返回 truthy 值。
+```js
+truthCheckCollection = (collection, pre) => (collection.every(obj => obj[pre]));
+// truthCheckCollection([{"user": "Tinky-Winky", "sex": "male"}, {"user": "Dipsy", "sex": "male"}], "sex") -> true
+```
+
 ## 浏览器
 ### buttomVisible 如果页的底部可见, 则返回true, 否则为false
 使用scrollY、scrollHeight和clientHeight来确定页面底部是否可见。
