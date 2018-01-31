@@ -46,11 +46,11 @@ import axios from 'axios'
     transformRequest: [],  // 只适合PUT, POST和PATCH  转换数据
     transformResponse: [], // 对请求回来的数据进行进一步处理
     validateStatus: function(){},
-    cancelToken: 
+    cancelToken:
   }
   ```
 
-  知识点：  'content-type': 'application/x-www-from-urlencoded' 
+  知识点：  'content-type': 'application/x-www-from-urlencoded'
 
 ## 取消请求
  - 创建取消请求令牌
@@ -98,6 +98,11 @@ import axios from 'axios'
   . 拦截响应
   ```js
   axios.interceptors.response.use()
+
+  axios.interceptors.response.use(function (response) {
+      console.log('response init.')
+      return response
+  })
   ```
 
 - 取消拦截
@@ -106,7 +111,7 @@ import axios from 'axios'
 ```
 
 ## 在vue中使用
- - 安装 
+ - 安装
   ```
   npm install axios vue-axios --save
   ```
