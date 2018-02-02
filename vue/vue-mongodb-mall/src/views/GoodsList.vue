@@ -9,7 +9,7 @@
           <div class="filter-nav">
             <span class="sortby">Sort by:</span>
             <a href="javascript:void(0)" class="default cur">Default</a>
-            <a href="javascript:void(0)" class="price">Price <svg class="icon icon-arrow-short"><use xlink:href="#icon-arrow-short"></use></svg></a>
+            <a href="javascript:void(0)" class="price" v-bind:class="{'sort-up':sortFlag}" @click="sortGoods()">Price <svg class="icon icon-arrow-short"><use xlink:href="#icon-arrow-short"></use></svg></a>
             <a href="javascript:void(0)" class="filterby stopPop" @click="showFilterPop">Filter by</a>
           </div>
           <div class="accessory-result">
@@ -34,13 +34,19 @@
                     </div>
                     <div class="main">
                       <div class="name">{{item.productName}}</div>
-                      <div class="price">{{item.prodcutPrice}}</div>
+                      <div class="price">{{item.salePrice}}</div>
                       <div class="btn-area">
                         <a href="javascript:;" class="btn btn--m">加入购物车</a>
                       </div>
                     </div>
                   </li>
                 </ul>
+                <div class="view-more-normal"
+                   v-infinite-scroll="loadMore"
+                   infinite-scroll-disabled="busy"
+                   infinite-scroll-distance="20">
+                <img src="./../assets/loading-spinning-bubbles.svg" v-show="loading">
+              </div>
               </div>
             </div>
           </div>
@@ -79,18 +85,47 @@ import axios from 'axios'
               ],
               priceChecked: 'all',
               filterBy: false,
-              overLayFlag: false
+              overLayFlag: false,
+              sortFlag: true,  //排序
+              page: 1,
+              pageSize: 4,
+              busy: true,
+              loading: false
             }
         },
         mounted () {
           this.getGoodsList()
         },
         methods: {
-          getGoodsList () {
-            axios.get('/goods').then((res) => {
-              console.log(res)
-              if (res.data.status === '0') {
-                this.goodsList = res.data.result.list
+          // 获取列表数据
+          getGoodsList (flag) {
+            var param = {
+              page: this.page,
+              pageSize: this.pageSize,
+              sort: this.sortFlag ? 1 : -1,
+              priceLevel: this.priceChecked
+            }
+            this.loading = true
+            axios.get('/goods', {
+              params: param
+            }).then((res) => {
+              this.loading = false
+              let _data = res.data
+              if (_data.status === '0') {
+                if(flag){
+                  this.goodsList = this.goodsList.concat(_data.result.list)
+                  // 如果没有值了，禁用滚动加载
+                  if(_data.result.count === 0){
+                    this.busy = true
+                  }else{
+                    this.busy = false
+                  }
+                }else{
+                  this.goodsList = _data.result.list
+                  this.busy = false
+                }
+              } else {
+                this.goodsList = []
               }
             })
           },
@@ -98,13 +133,30 @@ import axios from 'axios'
             this.filterBy = true,
             this.overLayFlag = true
           },
+          // 价格排序
           setPriceFiler (index) {
             this.priceChecked = index
             this.closePop()
+            this.page = 1
+            this.getGoodsList()
           },
           closePop () {
             this.filterBy = false,
             this.overLayFlag = false
+          },
+          // 排序
+          sortGoods () {
+            this.sortFlag = !this.sortFlag;
+            this.page = 1;
+            this.getGoodsList()
+          },
+          // 滚动加载
+          loadMore () {
+            this.busy = true
+            setTimeout(() => {
+              this.page++
+              this.getGoodsList(true)
+            }, 500)
           }
         },
         components: {
