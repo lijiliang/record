@@ -53,6 +53,26 @@
         </div>
       </div>
       <div class="md-overlay" v-show="overLayFlag" @click="closePop"></div>
+      <modal :mdShow="mdShow" @close="closeModal">
+        <p slot="message">
+          请先登录,否则无法加入到购物车中!
+        </p>
+        <div slot="btnGroup">
+          <a class="btn btn--m" href="javascript:;" @click="mdShow = false">关闭</a>
+        </div>
+      </modal>
+      <modal :mdShow="mdShowCart" @close="closeModal">
+        <p slot="message">
+          <svg class="icon-status-ok">
+            <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-status-ok"></use>
+          </svg>
+          <span>加入购物车成功!</span>
+        </p>
+        <div slot="btnGroup">
+          <a class="btn btn--m" href="javascript:;" @click="mdShowCart = false">继续购物</a>
+          <router-link to="/cart" class="btn btn--m" href="javascript:;">查看购物车</router-link>
+        </div>
+      </modal>
       <nav-footer></nav-footer>
     </div>
 </template>
@@ -60,6 +80,7 @@
 import NavHeader from '@/components/NavHeader'
 import NavFooter from '@/components/NavFooter'
 import NavBread from '@/components/NavBread'
+import Modal from '@/components/Modal'
 import axios from 'axios'
     export default{
         data(){
@@ -90,7 +111,9 @@ import axios from 'axios'
               page: 1,
               pageSize: 4,
               busy: true,
-              loading: false
+              loading: false,
+              mdShow: false, // 是否显示模态框
+              mdShowCart: false
             }
         },
         mounted () {
@@ -165,17 +188,24 @@ import axios from 'axios'
             }).then((res) => {
               let _res = res.data
               if(_res.status == 0){
-                alert('加入成功')
+                // alert('加入成功')
+                this.mdShowCart = true
               }else{
-                alert('msg: ' + _res.message)
+                this.mdShow = true
+                // alert('msg: ' + _res.message)
               }
             })
+          },
+          closeModal () {
+            this.mdShow = false
+            this.mdShowCart = false
           }
         },
         components: {
           NavHeader,
           NavBread,
-          NavFooter
+          NavFooter,
+          Modal
         }
     }
 </script>
