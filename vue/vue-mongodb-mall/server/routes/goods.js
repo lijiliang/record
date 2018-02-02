@@ -22,7 +22,7 @@ mongoose.connection.on('disconnected', function(){
 })
 
 // 查询商品列表
-router.get('/', function (req, res, next) {
+router.get('/list', function (req, res, next) {
   // res.send('hello,good')
   let sort = parseInt(req.param('sort'));
   let page = parseInt(req.param('page'));

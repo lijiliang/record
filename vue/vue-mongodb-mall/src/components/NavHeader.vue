@@ -85,7 +85,19 @@ export default {
       resName:  ''
     }
   },
+  mounted() {
+    this.checkLogin()
+  },
   methods: {
+    // 检查用户是否登录
+    checkLogin (){
+      axios.get('/users/checkLogin').then((response) => {
+        let res = response.data
+        if(res.status == '0'){
+          this.resName = res.result
+        }
+      })
+    },
     // 登录
     login () {
       if(!this.userName || !this.userPwd){

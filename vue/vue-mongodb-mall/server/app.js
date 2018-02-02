@@ -26,6 +26,25 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+// 登录拦截
+app.use(function(req, res, next){
+  // 如果已经登录，则直接拦截
+  if(req.cookies.userId){
+    next()
+  }else{
+    // 如果是登录、登出、列表页就直接放过  req.path == '/goods/list'  => req.originalUrl.indexOf('/goods/list') > -1
+    if(req.originalUrl == '/users/login' || req.originalUrl == '/users/logout' || req.path == '/goods/list'){
+      next()
+    }else{
+      res.json({
+        status: '10001',
+        msg: '当前未登录',
+        result: ''
+      })
+    }
+  }
+})
+
 app.use('/', index);
 app.use('/users', users);
 app.use('/goods', goods);
