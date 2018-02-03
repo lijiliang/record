@@ -13,6 +13,7 @@ router.post('/login', function(req, res, next){
     userName: req.body.userName,
     userPwd: req.body.userPwd
   }
+  // 查询用户是否在数据库中
   User.findOne(param, function(err, doc){
     if(err){
       res.json({
@@ -83,6 +84,76 @@ router.get('/checkLogin', function(req, res, next){
       result: ''
     })
   }
+})
+
+// 查询当前用户的购物车列表
+router.get('/cartList', function(req, res, next){
+  let userId = req.cookies.userId
+  User.findOne({userId: userId}, function(err, doc){
+    if(err){
+      res.json({
+        status: '1',
+        msg: err.message,
+        result: ''
+      })
+    }else{
+      if(doc){
+        res.json({
+          status: '0',
+          msg: '',
+          result: doc.cartList
+        })
+      }
+    }
+  })
+})
+
+// 购物车删除
+router.post('/cartDel', function(req, res, next){
+  let userId = req.cookies.userId;
+  let productId = req.body.productId;
+  User.update({userId:userId},  {$pull: {'cartList': {'productId': productId}}}, function(err, doc){
+    if(err){
+      res.json({
+        status: '1',
+        msg: err.message,
+        result: ''
+      })
+    }else{
+      res.json({
+        status: '0',
+        msg: '',
+        result: 'success'
+      })
+    }
+  })
+})
+
+// 修改购物车数据
+router.post('/cartEdit', function(req, res, next){
+  let userId = req.cookies.userId;
+  let productId = req.body.productId;
+  let productNum = req.body.productNum;
+  let checked = req.body.checked;
+  // mongodb单独更新某条数据
+  User.update({userId: userId, "cartList.productId": productId}, {
+    "cartList.$.productNum": productNum,
+    "cartList.$.checked": checked
+  }, function(err, doc){
+    if(err){
+      res.json({
+        status: '1',
+        msg: err.message,
+        result: ''
+      })
+    }else{
+      res.json({
+        status: '0',
+        mgs: '',
+        result: 'success'
+      })
+    }
+  })
 })
 
 module.exports = router;
