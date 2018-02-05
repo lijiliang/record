@@ -76,7 +76,7 @@
                   </div>
                 </div>
                 <div class="cart-tab-2">
-                  <div class="item-price">{{item.salePrice}}</div>
+                  <div class="item-price">{{item.salePrice|currency('￥')}}</div>
                 </div>
                 <div class="cart-tab-3">
                   <div class="item-quantity">
@@ -90,7 +90,7 @@
                   </div>
                 </div>
                 <div class="cart-tab-4">
-                  <div class="item-price-total">{{item.salePrice * item.productNum}}</div>
+                  <div class="item-price-total">{{(item.salePrice * item.productNum)|currency('￥')}}</div>
                 </div>
                 <div class="cart-tab-5">
                   <div class="cart-item-opration">
@@ -109,8 +109,8 @@
           <div class="cart-foot-inner">
             <div class="cart-foot-l">
               <div class="item-all-check">
-                <a href="javascipt:;">
-                  <span class="checkbox-btn item-check-btn">
+                <a href="javascipt:;" @click="toggleCheckAll()">
+                  <span class="checkbox-btn item-check-btn" v-bind:class="{'check':checkedAllFlag}">
                       <svg class="icon icon-ok"><use xlink:href="#icon-ok"/></svg>
                   </span>
                   <span>Select all</span>
@@ -119,7 +119,7 @@
             </div>
             <div class="cart-foot-r">
               <div class="item-total">
-                Item total: <span class="total-price">500</span>
+                Item total: <span class="total-price">{{totalPrice|currency('￥')}}</span>
               </div>
               <div class="btn-wrap">
                 <a class="btn btn--red">Checkout</a>
@@ -171,17 +171,50 @@ import NavFooter from '@/components/NavFooter'
 import NavBread from '@/components/NavBread'
 import Modal from '@/components/Modal'
 import axios from 'axios'
+// import {currency} from '@/util/currency'
     export default{
         data(){
             return{
               cartList: [],
               productId: '',
-              modalConfirm: false
+              modalConfirm: false,
+              // checkedAllFlag: false
             }
         },
         mounted(){
           this.init()
         },
+        // 局部过滤器
+        // filters:{
+        //   currency:currency
+        // },
+        // 计算属性
+        computed: {
+          checkedAllFlag () {
+            // 如果选中的数据与购物车的总数相等，即为全选
+            return this.checkedCount == this.cartList.length
+          },
+          // 计算选中的数量
+          checkedCount(){
+            let i = 0
+            this.cartList.forEach((item)=>{
+              if(item.checked == '1'){
+                i++
+              }
+            })
+            return i
+          },
+          // 总价
+          totalPrice(){
+            let count = 0
+            this.cartList.forEach((item)=>{
+              if(item.checked == '1'){
+                count += parseFloat(item.salePrice) * parseInt(item.productNum)
+              }
+            })
+            return count
+          }
+        }, 
         components: {
           NavHeader,
           NavBread,
@@ -239,6 +272,19 @@ import axios from 'axios'
               if(res.status == '0'){
                 console.log('更新成功')
               }
+            })
+          },
+          // 选中或取消全部
+          toggleCheckAll(){
+            // this.checkedAllFlag = !this.checkedAllFlag
+            let flag = !this.checkedAllFlag
+            this.cartList.forEach(item => {
+              item.checked = flag
+            })
+            axios.post('/users/editCheckAll', {
+              checkAll: flag
+            }).then((res) => {
+              console.log('更新成功')
             })
           }
         }

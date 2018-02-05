@@ -156,4 +156,40 @@ router.post('/cartEdit', function(req, res, next){
   })
 })
 
+// 购物车全部选中或取消
+router.post('/editCheckAll', function(req, res, next){
+  let userId = req.cookies.userId;
+  let checkAll = req.body.checkAll ? '1' : '0';
+  User.findOne({userId: userId}, function(err, userDoc){
+    if(err){
+      res.json({
+        status: '1',
+        msg: err.message,
+        result: ''
+      })
+    }else{
+      if(userDoc){
+        userDoc.cartList.forEach(function(item){
+          item.checked = checkAll
+        })
+        userDoc.save(function(err1, savedoc){
+          if(err1){
+            res.json({
+              status: '1',
+              msg: err1.message,
+              result: ''
+            })
+          }else{
+            res.json({
+              status: '0',
+              mgs: '',
+              result: 'success'
+            })
+          }
+        })
+      }
+    }
+  })
+})
+
 module.exports = router;
