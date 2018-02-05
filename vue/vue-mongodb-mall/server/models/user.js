@@ -4,8 +4,8 @@ var userSchema = new mongoose.Schema({
   "userId": String,
   "userName": String,
   "userPwd": String,
-  "orderList": Array,
-  "cartList": [
+  "orderList": Array,  //订单列表
+  "cartList": [  // 购物车列表
     {
       "productId": String,
       "productName": String,
@@ -15,7 +15,7 @@ var userSchema = new mongoose.Schema({
       "productNum": String
     }
   ],
-  "addressList": [
+  "addressList": [  // 地址列表
     {
       "addressId" : String, 
       "userName" : String, 

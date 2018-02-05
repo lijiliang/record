@@ -1,6 +1,7 @@
 var express = require('express');
 var router = express.Router();
 var User = require('./../models/user')
+require('./../util/util')
 
 /* GET users listing. */
 router.get('/', function(req, res, next) {
@@ -282,4 +283,123 @@ router.post('/delAddress', function(req, res, next){
   })
 })
 
+// 提交订单
+router.post('/payMent', function(req, res, next){
+  let userId = req.cookies.userId
+  let addressId = req.body.addressId
+  let orderTotal = req.body.orderTotal
+  // 拿到用户信息 -> 获取用户订单列表 -> 获取配送地址列表 -> 创建订单号 -> 创建订单时间 -> 拼接数据push
+  User.findOne({userId: userId}, function(err, doc){
+    if(err){
+      res.json({
+        status: '1',
+        msg: err.messgae,
+        result: ''
+      })
+    }else{
+      let address = {}
+      let goodsList = []
+      // 获取当前用户的地址信息
+      doc.addressList.forEach((item)=>{
+        if(addressId==item.addressId){
+          address = item
+        }
+      })
+
+      // 获取用户购物车的商品
+      doc.cartList.forEach((item)=>{
+        if(item.checked == '1'){
+          goodsList.push(item)
+        }
+      })
+
+      let platform = '866'  // 平台信息
+      let r1 = Math.floor(Math.random()*10)
+      let r2 = Math.floor(Math.random()*10)
+
+      let sysDate = new Date().Format('yyyyMMddhhmmss')
+      let createDate = new Date().Format('yyyy-MM-dd hh:mm:ss')
+      var orderId = platform+r1+sysDate+r2; // 订单号
+      // 拼接数据
+      let order = {
+        orderId: orderId,
+        orderTotal: orderTotal,
+        addressInfo: address,
+        goodsList: goodsList,
+        orderStatus: '1',
+        createDate: createDate
+      }
+
+      doc.orderList.push(order)
+
+      // 保存
+      doc.save(function(err1, doc1){
+        if(err){
+          res.json({
+            status: '1',
+            msg: err.messgae,
+            result: ''
+          })
+        }else{
+          res.json({
+            status: '0',
+            msg: '',
+            result: {
+              orderId: order.orderId,
+              orderTotal: order.orderTotal
+            }
+          })
+        }
+      })
+
+    }
+  })
+})
+
+// 根据订单id查询订单信息
+router.get('/orderDetail', function(req, res, next){
+  let userId = req.cookies.userId;
+  let orderId = req.param('orderId')
+  User.findOne({userId:userId}, function(err, userInfo){
+    if(err){
+      res.json({
+        status: '1',
+        msg: err.message,
+        result: ''
+      })
+    }else{
+      let orderList = userInfo.orderList
+      if(orderList.length > 0){
+        var orderTotal = 0
+        orderList.forEach((item) => {
+          if(item.orderId == orderId){
+            orderTotal = item.orderTotal
+          }
+        })
+        if(orderTotal > 0){
+          res.json({
+            status: '0',
+            msg: '',
+            result: {
+              orderId: orderId,
+              orderTotal: orderTotal
+            }
+          })
+        }else{
+          res.json({
+            status: '12002',
+            msg: '无此订单',
+            result: ''
+          })
+        }
+      }else{
+        res.json({
+          status: '12001',
+          msg: '无此订单',
+          result: ''
+        })
+      }
+    }
+  })
+})
 module.exports = router;
