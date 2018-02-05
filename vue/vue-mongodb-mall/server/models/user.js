@@ -15,7 +15,16 @@ var userSchema = new mongoose.Schema({
       "productNum": String
     }
   ],
-  "addressList": Array
+  "addressList": [
+    {
+      "addressId" : String, 
+      "userName" : String, 
+      "streetName" : String, 
+      "postCode" : Number, 
+      "tel" : String, 
+      "isDefault" : Boolean
+    }
+  ]
 })
 
 module.exports = mongoose.model('User', userSchema, 'users')  // 第三个参数关联数据库的集合名字，如果不加话，就是第一个参数加's'就是集合的名字

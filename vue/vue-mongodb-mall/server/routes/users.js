@@ -146,7 +146,7 @@ router.post('/cartEdit', function(req, res, next){
         msg: err.message,
         result: ''
       })
-    }else{
+    }else{ 
       res.json({
         status: '0',
         mgs: '',
@@ -188,6 +188,96 @@ router.post('/editCheckAll', function(req, res, next){
           }
         })
       }
+    }
+  })
+})
+
+// 获取地址列表
+router.get('/addressList', function(req, res, next){
+  let userId = req.cookies.userId
+  User.findOne({userId: userId}, function(err, doc){
+    if(err){
+      res.json({
+        status: '1',
+        msg: err.message,
+        result: ''
+      })
+    }else{
+      if(doc){
+        res.json({
+          status: '0',
+          msg: '',
+          result: doc.addressList
+        })
+      }
+    }
+  })
+})
+
+// 设置默认地址
+router.post('/addressSetDefault', function(req, res, next){
+  let userId = req.cookies.userId
+  let addressId = req.body.addressId
+  if(!addressId){
+    res.json({
+      status: '10003',
+      msg: 'addressId is null',
+      result: ''
+    })
+  }else{
+    User.findOne({userId: userId}, function(err, doc){
+      if(err){
+        res.json({
+          status: '1',
+          msg: err.message,
+          result: ''
+        })
+      }else{
+        let addressList = doc.addressList
+        addressList.forEach((item) => {
+          if(item.addressId == addressId){
+            item.isDefault = true
+          }else{
+            item.isDefault = false
+          }
+        })
+        doc.save(function(err1, doc1){
+          if(err){
+            res.json({
+              status: '1',
+              msg: err.message,
+              result: ''
+            })
+          }else{
+            res.json({
+              status: '0',
+              msg: '',
+              result: 'suc'
+            })
+          }
+        })
+      }
+    })
+  }
+})
+
+// 删除地址
+router.post('/delAddress', function(req, res, next){
+  let userId = req.cookies.userId
+  let addressId = req.body.addressId
+  User.update({userId: userId}, {$pull: {addressList: {'addressId': addressId}}}, function(err, doc){
+    if(err){
+      res.json({
+        status: '1',
+        msg: err.message,
+        result: ''
+      })
+    }else{
+      res.json({
+        status: '0',
+        msg: '',
+        result: 'suc'
+      })
     }
   })
 })

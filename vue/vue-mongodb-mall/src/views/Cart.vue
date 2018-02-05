@@ -122,7 +122,7 @@
                 Item total: <span class="total-price">{{totalPrice|currency('￥')}}</span>
               </div>
               <div class="btn-wrap">
-                <a class="btn btn--red">Checkout</a>
+                <a class="btn btn--red" :class="{'btn-dis': checkedCount=='0'}" @click="checkOut">Checkout</a>
               </div>
             </div>
           </div>
@@ -284,8 +284,18 @@ import axios from 'axios'
             axios.post('/users/editCheckAll', {
               checkAll: flag
             }).then((res) => {
-              console.log('更新成功')
+              if(res.status=='0'){
+                console.log("update suc");
+              }
             })
+          },
+          // 地址跳转
+          checkOut(){
+            if(this.checkedCount > 0){
+              this.$router.push({
+                path: '/address'
+              })
+            }
           }
         }
     }
