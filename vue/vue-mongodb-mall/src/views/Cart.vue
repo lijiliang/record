@@ -94,7 +94,7 @@
                 </div>
                 <div class="cart-tab-5">
                   <div class="cart-item-opration">
-                    <a href="javascript:;" class="item-edit-btn" @click="delCartConfirm(item.productId)">
+                    <a href="javascript:;" class="item-edit-btn" @click="delCartConfirm(item)">
                       <svg class="icon icon-del">
                         <use xlink:href="#icon-del"></use>
                       </svg>
@@ -178,6 +178,7 @@ import axios from 'axios'
               cartList: [],
               productId: '',
               modalConfirm: false,
+              delItem: {}
               // checkedAllFlag: false
             }
         },
@@ -230,9 +231,11 @@ import axios from 'axios'
               }
             })
           },
-          delCartConfirm(productId){
+          delCartConfirm(item){
             this.modalConfirm = true
-            this.productId = productId
+
+            this.productId = item.productId
+            this.delItem = item
           },
           // 删除数据
           delCart(){
@@ -243,6 +246,8 @@ import axios from 'axios'
               if(res.status == '0'){
                 this.modalConfirm = false
                 this.init()
+
+                this.$store.commit('updateCartCount', -this.delItem.productNum)
               }
             })
           },
@@ -270,7 +275,14 @@ import axios from 'axios'
             }).then(response => {
               let res = response.data
               if(res.status == '0'){
-                console.log('更新成功')
+                let num = 0
+                if(flag == 'add'){
+                  num = 1
+                }else if(flag == 'minus'){
+                  num = -1
+                }
+                this.$store.commit('updateCartCount', num)
+                // console.log('更新成功')
               }
             })
           },

@@ -26,19 +26,21 @@ Vue.config.productionTip = false;
 
 const store = new Vuex.Store({
   state: {
-    nickName:'',
-    cartCount:0
+    cartCount: 0,
+    nickName: ''
   },
   mutations: {
-    //更新用户信息
-    updateUserInfo(state, nickName) {
-      state.nickName = nickName;
+    updateUserInfo(state, nickName){
+      state.nickName = nickName
     },
-    updateCartCount(state,cartCount){
-      state.cartCount += cartCount;
+    updateCartCount(state, cartCount){
+      state.cartCount += cartCount
+    },
+    initCartCount(state, cartCount){
+      state.cartCount = cartCount
     }
   }
-});
+})
 /* eslint-disable no-new */
 new Vue({
   el: '#app',

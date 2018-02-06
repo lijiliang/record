@@ -50,7 +50,7 @@ let store = new Vuex.Store({
   },
   // 通过 mutation 改变状态 同步的
   mutations: {
-    addIncrement (state, playload) {
+    addIncrement (state, playload) {   // 在页面调用的方法: this.$store.commit('mutations', {n:10})
       state.count += playload.n
     },
     deIncrement (state) {
@@ -74,7 +74,7 @@ let store = new Vuex.Store({
         dispatch('textAction', {test: '测试'})
       })
     },
-    textAction (context, obj) {
+    textAction (context, obj) {   // 在页面上调用: this.$store.dispatch(textAction, {})
       console.log('我被触发了', obj)
     }
   },
