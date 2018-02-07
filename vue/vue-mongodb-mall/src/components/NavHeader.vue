@@ -22,8 +22,7 @@
       </svg>
         <div class="navbar">
           <div class="navbar-left-container">
-            <a href="/">
-              <img class="navbar-brand-logo" src="static/logo.png"></a>
+            <a href="/">logo</a>
           </div>
           <div class="navbar-right-container" style="display: flex;">
             <div class="navbar-menu-container">
@@ -156,4 +155,13 @@ export default {
   }
 }
 </script>
+<style>
+.navbar-left-container{
+  font-size: 40px;
+}
+.navbar-left-container a{
+    color: #d1434a!important;
+  }
+</style>
+
 

@@ -14,6 +14,7 @@ router.post('/login', function(req, res, next){
     userName: req.body.userName,
     userPwd: req.body.userPwd
   }
+  
   // 查询用户是否在数据库中
   User.findOne(param, function(err, doc){
     if(err){
@@ -43,6 +44,40 @@ router.post('/login', function(req, res, next){
           }
         })
       }else{
+        // 没有此用户，自动注册
+        // User.find({}, function(finderr, findAll){
+        //   if(err){
+        //     res.json({
+        //       status: '1',
+        //       msg: finderr.message
+        //     })
+        //   }else{
+        //     var _userId = {
+        //       userId: parseInt(findAll[findAll.length - 1].userId) + 1
+        //     }
+        //     var userObj = Object.assign({},param, _userId )
+        //     var adduser = new User(userObj)
+        //     adduser.save(function(err1, doc2){
+        //       if(err1){
+        //         res.json({
+        //           status: '1',
+        //           msg: err1.message
+        //         })
+        //       }else{
+        //         res.json({
+        //           status: '0',
+        //           msg: '',
+        //           result: {
+        //             userName: doc2.userName
+        //           }
+        //         })
+        //       }
+        //     })
+        //   }
+        // })
+        // console.log(param)
+        
+
         res.json({
           status: '1',
           msg: '帐号及密码错误',

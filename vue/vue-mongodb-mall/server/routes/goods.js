@@ -72,7 +72,7 @@ router.get('/list', function (req, res, next) {
 // 加入购物车
 // 整体逻辑：拿用户信息表里面的数据，判断数据是否已经在购物车列表。如果数据存在，就数据进行数量自增操作，否则就添加一条数据
 router.post('/addCart', function(req, res, next) {
-  var userId = '100000077';   // 默认登录用户id
+  var userId = req.cookies.userId;   // 默认登录用户id
   var productId = req.body.productId;  // 商品Id
   var User = require('../models/user')
   
