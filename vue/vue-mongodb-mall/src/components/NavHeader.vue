@@ -28,6 +28,7 @@
             <div class="navbar-menu-container">
               <!--<a href="/" class="navbar-link">我的账户</a>-->
               <span class="navbar-link">{{nickName}}</span>
+              <a href="javascript:void(0)" class="navbar-link" @click="regModalFlag=true" v-if="!nickName">Registe</a>              
               <a href="javascript:void(0)" class="navbar-link" @click="loginModalFlag=true" v-if="!nickName">Login</a>
               <a href="javascript:void(0)" class="navbar-link" @click="logout()" v-if="nickName">Logout</a>
               <div class="navbar-cart-container">
@@ -41,6 +42,36 @@
             </div>
           </div>
         </div>
+        <!-- 注册 -->
+         <div class="md-modal modal-msg md-modal-transition" v-bind:class="{'md-show':regModalFlag}">
+          <div class="md-modal-inner">
+            <div class="md-top">
+              <div class="md-title">Registe in</div>
+              <button class="md-close" @click="regModalFlag=false">Close</button>
+            </div>
+            <div class="md-content">
+              <div class="confirm-tips">
+                <div class="error-wrap">
+                  <span class="error error-show" v-show="errorTip">请输入用户名或者密码</span>
+                </div>
+                <ul>
+                  <li class="regi_form_input">
+                    <i class="icon IconPeople"></i>
+                    <input type="text" tabindex="1" name="loginname" v-model="regUserName" class="regi_login_input regi_login_input_left" placeholder="User Name" data-type="loginname">
+                  </li>
+                  <li class="regi_form_input noMargin">
+                    <i class="icon IconPwd"></i>
+                    <input type="password" tabindex="2"  name="password" v-model="regUserPwd" class="regi_login_input regi_login_input_left login-input-no input_text" placeholder="Password" @keyup.enter="login">
+                  </li>
+                </ul>
+              </div>
+              <div class="login-wrap">
+                <a href="javascript:;" class="btn-login" @click="registe">注册</a>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- 登录 -->
         <div class="md-modal modal-msg md-modal-transition" v-bind:class="{'md-show':loginModalFlag}">
           <div class="md-modal-inner">
             <div class="md-top">
@@ -69,6 +100,7 @@
             </div>
           </div>
         </div>
+        <div class="md-overlay" v-if="regModalFlag" @click="regModalFlag=false"></div>
         <div class="md-overlay" v-if="loginModalFlag" @click="loginModalFlag=false"></div>
       </header>
 </template>
@@ -80,6 +112,9 @@ export default {
     return {
       userName: '',
       userPwd: '',
+      regUserName: '', // 注册用户名
+      regUserPwd: '', 
+      regModalFlag: false,
       loginModalFlag: false,
       errorTip: false,
       // nickName:  ''
@@ -106,6 +141,26 @@ export default {
           // this.nickName = res.result
           this.$store.commit('updateUserInfo', res.result)
           this.getCartCount()
+        }
+      })
+    },
+    // 注册
+    registe (){
+      if(!this.regUserName || !this.regUserPwd){
+        this.errorTip = true
+        return
+      }
+      axios.post('/users/registe', {
+        userName: this.regUserName,
+        userPwd: this.regUserPwd
+      }).then((res) => {
+        let _res = res.data
+        if(_res.status == '0'){
+          this.errorTip = false
+          this.regModalFlag = false
+          alert('注册成功！')
+        }else{
+          alert(_res.msg)
         }
       })
     },

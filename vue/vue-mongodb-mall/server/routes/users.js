@@ -44,40 +44,6 @@ router.post('/login', function(req, res, next){
           }
         })
       }else{
-        // 没有此用户，自动注册
-        // User.find({}, function(finderr, findAll){
-        //   if(err){
-        //     res.json({
-        //       status: '1',
-        //       msg: finderr.message
-        //     })
-        //   }else{
-        //     var _userId = {
-        //       userId: parseInt(findAll[findAll.length - 1].userId) + 1
-        //     }
-        //     var userObj = Object.assign({},param, _userId )
-        //     var adduser = new User(userObj)
-        //     adduser.save(function(err1, doc2){
-        //       if(err1){
-        //         res.json({
-        //           status: '1',
-        //           msg: err1.message
-        //         })
-        //       }else{
-        //         res.json({
-        //           status: '0',
-        //           msg: '',
-        //           result: {
-        //             userName: doc2.userName
-        //           }
-        //         })
-        //       }
-        //     })
-        //   }
-        // })
-        // console.log(param)
-        
-
         res.json({
           status: '1',
           msg: '帐号及密码错误',
@@ -86,6 +52,67 @@ router.post('/login', function(req, res, next){
     }
   })
 })
+
+// 注册
+router.post("/registe", function (req,res,next) {
+  var param = {
+    userName:req.body.userName,
+    userPwd:req.body.userPwd
+  }
+  // 先检测用户是否已经被注册
+  User.findOne({userName: param.userName}, function(err1, doc1){
+    if(err1){
+      res.json({
+        status: "1",
+        msg: err2.message,
+        result: ''
+      })
+    }else{
+      if(doc1){
+        res.json({
+          status: "10009",
+          msg: '用户已被注册',
+          result: ''
+        })
+      }else{
+        User.find({}, function(err, findAll){
+          if(err){
+            res.json({
+              status: "1",
+              msg: err.message,
+              result: ''
+            })
+          }else{ 
+            // 添加用户
+            var _userId = {
+              userId: parseInt(findAll[findAll.length - 1].userId) + 1
+            }
+            var userObj = Object.assign({},param, _userId )
+            var addUser = new User(userObj)
+            addUser.save(function(err2, doc2){
+              if(err1){
+                res.json({
+                  status: "1",
+                  msg: err2.message,
+                  result: ''
+                })
+              }else{
+                res.json({
+                  status: '0',
+                  msg: '',
+                  result: {
+                    userName: doc2.userName
+                  }
+                })
+              }
+            })
+          }
+        })
+      }
+    }
+  })
+  
+});
 
 // 登出
 router.post('/logout', function(req, res, next){
@@ -318,6 +345,63 @@ router.post('/delAddress', function(req, res, next){
   })
 })
 
+// 添加地址
+router.post('/addAddress', function(req, res, next){
+  let userId = req.cookies.userId;
+  let userName = req.body.userName;
+  let streetName = req.body.streetName;
+  let postCode = req.body.postCode;
+  let tel = req.body.tel;
+  let isDefault = req.body.isDefault;
+
+  User.findOne({userId:userId}, function(err, doc){
+    if(err){
+      res.json({
+        status: '1',
+        msg: err.message,
+        result: ''
+      })
+    }else{
+      let addressId = '1000001'
+      let addressList = doc.addressList
+      if(addressList.length >= 1){
+        addressId = (parseInt(addressList[addressList.length - 1].addressId) + 1) + ''
+      }
+      
+      let addressItem = {
+        addressId: addressId,
+        userName: userName,
+        streetName: streetName,
+        postCode: postCode,
+        tel: tel,
+        isDefault: isDefault
+      }
+      if(addressItem.isDefault){
+        addressList.forEach(item=>{
+          item.isDefault = false
+        })
+      }
+      addressList.push(addressItem)
+      doc.save(function(err1, doc1){
+        if(err1){
+          res.json({
+            status: '1',
+            msg: err1.message,
+            result: ''
+          })
+        }else{
+          res.json({
+            status: '0',
+            msg: '',
+            result: 'success'
+          })
+        }
+      })
+    }
+  })
+
+})
+
 // 提交订单
 router.post('/payMent', function(req, res, next){
   let userId = req.cookies.userId
@@ -465,3 +549,4 @@ router.get('/getCartCount', function(req, res, next){
   }
 })
 module.exports = router;
+       

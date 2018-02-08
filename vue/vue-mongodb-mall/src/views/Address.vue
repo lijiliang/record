@@ -76,7 +76,7 @@
                     </div>
                     <div class="addr-opration addr-default" v-if="item.isDefault">Default address</div>
                   </li>
-                  <li class="addr-new">
+                  <li class="addr-new" @click="addModalFlag=true">
                     <div class="add-new-inner">
                       <i class="icon-add">
                         <svg class="icon icon-add"><use xlink:href="#icon-add"></use></svg>
@@ -131,6 +131,52 @@
       </div>
     </modal>
       <nav-footer></nav-footer>
+
+      <!-- 添加地址 -->
+         <div class="md-modal modal-msg md-modal-transition" v-bind:class="{'md-show':addModalFlag}">
+          <div class="md-modal-inner">
+            <div class="md-top">
+              <div class="md-title">add address</div>
+              <button class="md-close" @click="addModalFlag=false">Close</button>
+            </div>
+            <div class="md-content">
+              <div class="confirm-tips">
+                <!-- <div class="error-wrap">
+                  <span class="error error-show" v-show="errorTip">请输入用户名或者密码</span>
+                </div> -->
+                <ul>
+                  <li class="regi_form_input">
+                    <i class="icon IconPeople"></i>
+                    <input type="text" tabindex="1" name="userName" v-model="userName" class="regi_login_input regi_login_input_left" placeholder="userName">
+                  </li>
+                  <li class="regi_form_input noMargin">
+                    <i class="icon IconPeople"></i>
+                    <input type="text" tabindex="2"  name="streetName" v-model="streetName" class="regi_login_input regi_login_input_left login-input-no input_text" placeholder="streetName">
+                  </li>
+                  <li class="regi_form_input noMargin">
+                    <i class="icon IconPeople"></i>
+                    <input type="number" tabindex="2"  name="postCode" v-model="postCode" class="regi_login_input regi_login_input_left login-input-no input_text" placeholder="postCode">
+                  </li>
+                  <li class="regi_form_input noMargin">
+                    <i class="icon IconPeople"></i>
+                    <input type="text" tabindex="2"  name="tel" v-model="tel" class="regi_login_input regi_login_input_left login-input-no input_text" placeholder="tel">
+                  </li>
+                  <li class="regi_form_input noMargin">
+                    <input type="radio" id="one" value="true" v-model="isDefault">
+                    <label for="one">true</label>
+                    <input type="radio" id="two" value="false" v-model="isDefault">
+                    <label for="two">false</label>
+                  </li>
+                </ul>
+              </div>
+              <div class="login-wrap">
+                <a href="javascript:;" class="btn-login" @click="addAddress">OK</a>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="md-overlay" v-if="addModalFlag" @click="addModalFlag=false"></div>
+
     </div>
 </template>
 <style>
@@ -151,7 +197,13 @@ import axios from 'axios'
             limit: 3,
             addressId: '',
             selectedAddrId: '',
-            modalConfirm: false
+            modalConfirm: false,
+            addModalFlag: false,
+            userName: '',
+            streetName: '',
+            postCode: '',
+            tel: '',
+            isDefault: false
           }
       },
       components: {
@@ -216,6 +268,22 @@ import axios from 'axios'
             let res = response.data
             if(res.status == '0'){
               this.closeModal()
+              this.init()
+            }
+          })
+        },
+        // 添加地址
+        addAddress(){
+          axios.post('/users/addAddress', {
+            userName: this.userName,
+            streetName: this.streetName,
+            postCode: parseInt(this.postCode),
+            tel: this.tel,
+            isDefault: this.isDefault
+          }).then((response) => {
+            let res = response.data
+            if(res.status == '0'){
+              this.addModalFlag = false
               this.init()
             }
           })

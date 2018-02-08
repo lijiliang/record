@@ -33,7 +33,7 @@ app.use(function(req, res, next){
     next()
   }else{
     // 如果是登录、登出、列表页就直接放过  req.path == '/goods/list'  => req.originalUrl.indexOf('/goods/list') > -1
-    if(req.originalUrl == '/users/login' || req.originalUrl == '/users/logout' || req.path == '/goods/list'){
+    if(req.originalUrl == '/users/registe' || req.originalUrl == '/users/login' || req.originalUrl == '/users/logout' || req.path == '/goods/list'){
       next()
     }else{
       res.json({
