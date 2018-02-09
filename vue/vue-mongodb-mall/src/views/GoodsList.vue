@@ -7,16 +7,16 @@
       <div class="accessory-result-page accessory-page">
         <div class="container">
           <div class="filter-nav">
-            <span class="sortby">Sort by:</span>
-            <a href="javascript:void(0)" class="default cur">Default</a>
-            <a href="javascript:void(0)" class="price" v-bind:class="{'sort-up':sortFlag}" @click="sortGoods()">Price <svg class="icon icon-arrow-short"><use xlink:href="#icon-arrow-short"></use></svg></a>
-            <a href="javascript:void(0)" class="filterby stopPop" @click="showFilterPop">Filter by</a>
+            <span class="sortby">{{$t('message.SortBy')}}:</span>
+            <a href="javascript:void(0)" class="default cur">{{$t('message.Default')}}</a>
+            <a href="javascript:void(0)" class="price" v-bind:class="{'sort-up':sortFlag}" @click="sortGoods()">{{$t('message.Price')}} <svg class="icon icon-arrow-short"><use xlink:href="#icon-arrow-short"></use></svg></a>
+            <a href="javascript:void(0)" class="filterby stopPop" @click="showFilterPop">{{$t('message.FilterBy')}}</a>
           </div>
           <div class="accessory-result">
             <!-- filter -->
             <div class="filter stopPop" id="filter" :class="{'filterby-show':filterBy}">
               <dl class="filter-price">
-                <dt>Price:</dt>
+                <dt>{{$t('message.Price')}}:</dt>
                 <dd><a href="javascript:void(0)" :class="{'cur':priceChecked == 'all'}" @click="setPriceFiler('all')">All</a></dd>
                 <dd v-for="(item, index) in priceFilter">
                   <a href="javascript:void(0)" :class="{'cur':priceChecked == index}" @click="setPriceFiler(index)">{{item.startPrice}} - {{item.endPrice}}</a>

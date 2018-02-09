@@ -7,6 +7,9 @@ import axios from 'axios'
 import Vuex from 'vuex'
 import VueLazyload from 'vue-lazyload'
 import infiniteScroll from  'vue-infinite-scroll'
+import VueI18n from 'vue-i18n'
+import en from './locale/en'
+import zh from './locale/zh'
 import {currency} from './util/currency'
 
 import './assets/css/base.css'
@@ -19,6 +22,25 @@ Vue.use(Vuex);
 Vue.use(VueLazyload, {
   loading: 'static/loading-svg/loading-bars.svg',
   try: 3 // default 1
+})
+Vue.use(VueI18n)
+const messages = {
+  en: {
+    message: {
+      hello: 'hello world',
+      ...en
+    }
+  },
+  zh: {
+    message: {
+      hello: '欢迎',
+      ...zh
+    }
+  }
+}
+const i18n = new VueI18n({
+  locale: 'en',
+  messages
 })
 
 Vue.filter("currency",currency);
@@ -72,7 +94,8 @@ new Vue({
       });
     }
   },
+  // render: h => h(App),
   template: '<App/>',
-  //render: h => h(App),
-  components: { App }
+  components: { App },
+  i18n
 });//.$mount('#app')

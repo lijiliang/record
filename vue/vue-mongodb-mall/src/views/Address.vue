@@ -46,16 +46,16 @@
             <!-- process step -->
             <div class="check-step">
               <ul>
-                <li class="cur"><span>Confirm</span> address</li>
-                <li><span>View your</span> order</li>
-                <li><span>Make</span> payment</li>
-                <li><span>Order</span> confirmation</li>
+                <li class="cur"><span>{{$t('message.Confirm')}}</span> {{$t('message.Address')}} </li>
+                <li><span>{{$t('message.ViewYour')}}</span>{{$t('message.Order')}} </li>
+                <li><span>{{$t('message.Make')}}</span> {{$t('message.payment')}} </li>
+                <li><span>{{$t('message.Order')}}</span> {{$t('message.confirmation')}}</li>
               </ul>
             </div>
 
             <!-- address list -->
             <div class="page-title-normal checkout-title">
-              <h2><span>Shipping address</span></h2>
+              <h2><span>{{$t('message.ShippingAddress')}}</span></h2>
             </div>
             <div class="addr-list-wrap">
               <div class="addr-list">
@@ -72,16 +72,16 @@
                       </a>
                     </div>
                     <div class="addr-opration addr-set-default">
-                      <a href="javascript:;" class="addr-set-default-btn" v-if="!item.isDefault" @click="setDefault(item.addressId)"><i>Set default</i></a>
+                      <a href="javascript:;" class="addr-set-default-btn" v-if="!item.isDefault" @click="setDefault(item.addressId)"><i>{{$t('message.SetDefault')}}</i></a>
                     </div>
-                    <div class="addr-opration addr-default" v-if="item.isDefault">Default address</div>
+                    <div class="addr-opration addr-default" v-if="item.isDefault">{{$t('message.DefaultAddress')}}</div>
                   </li>
                   <li class="addr-new" @click="addModalFlag=true">
                     <div class="add-new-inner">
                       <i class="icon-add">
                         <svg class="icon icon-add"><use xlink:href="#icon-add"></use></svg>
                       </i>
-                      <p>Add new address</p>
+                      <p>{{$t('message.AddNewAddress')}}</p>
                     </div>
                   </li>
                 </ul>
@@ -100,7 +100,7 @@
 
             <!-- shipping method-->
             <div class="page-title-normal checkout-title">
-              <h2><span>Shipping method</span></h2>
+              <h2><span>{{$t('message.ShippingMethod')}}</span></h2>
             </div>
             <div class="shipping-method-wrap">
               <div class="shipping-method">
@@ -116,7 +116,7 @@
               </div>
             </div>
             <div class="next-btn-wrap">
-              <router-link class="btn btn--m btn--red" :to="{path: 'orderConfirm', query: {'addressId': selectedAddrId}}">Next</router-link>
+              <router-link class="btn btn--m btn--red" :to="{path: 'orderConfirm', query: {'addressId': selectedAddrId}}">{{$t('message.Next')}}</router-link>
             </div>
           </div>
         </div>
@@ -136,7 +136,7 @@
          <div class="md-modal modal-msg md-modal-transition" v-bind:class="{'md-show':addModalFlag}">
           <div class="md-modal-inner">
             <div class="md-top">
-              <div class="md-title">add address</div>
+              <div class="md-title">{{$t('message.AddNewAddress')}}</div>
               <button class="md-close" @click="addModalFlag=false">Close</button>
             </div>
             <div class="md-content">
