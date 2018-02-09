@@ -6,7 +6,7 @@ var userSchema = new mongoose.Schema({
   "userPwd": String,
   "orderList": Array,  //订单列表
   "cartList": [  // 购物车列表
-    {
+    { 
       "productId": String,
       "productName": String,
       "salePrice": String,
