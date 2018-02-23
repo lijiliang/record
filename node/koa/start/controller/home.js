@@ -2,25 +2,26 @@ const HomeServers = require('../servers/home')
 
 module.exports = {
   index: async(ctx, next) => {
-    ctx.response.body = `<h1>index page</h1>`
+    await ctx.render('home/index', {
+      title: '首页'
+    })
   },
   user: async(ctx, next)=>{
-    ctx.response.body = 
-    `
-      <form action="/user/register" method="post">
-        <input name="name" type="text" placeholder="请输入用户名：benson"/> 
-        <br/>
-        <input name="password" type="text" placeholder="请输入密码：123456"/>
-        <br/> 
-        <button>GoGoGo</button>
-      </form>
-    `
+    await ctx.render('home/login', {
+      title: '登录页',
+      btnName: 'GOGOGO'
+    })
   },
   register: async(ctx, next)=>{
     // 通过ctx.request.body获取post提交过来的信息
     console.log(ctx.request.body)
     let {name, password} = ctx.request.body
-    let data = await HomeServers.register(name, password)
-    ctx.response.body = data
+    let res = await HomeServers.register(name, password)
+    if(res.status == "-1"){
+      await ctx.render("home/login", res.data)
+    }else{
+      ctx.state.title = "个人中心"
+      await ctx.render("home/success", res.data)
+    }
   }
 }
