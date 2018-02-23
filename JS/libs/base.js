@@ -17,7 +17,18 @@ function isObject(obj){
   return getObjType(obj) == 'object'
 }
 
+/**
+ * [generateID 生成唯一ID]
+ * @param {String} prefix 生成ID前缀
+ * @return {String} 返回生成的ID
+ */
+function generateID(prefix){
+    var idPrefix = prefix ? prefix + '-' : '';
+    return idPrefix + Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
+}
+
 module.exports = {
     getObjType: getObjType,
-    isObject: isObject
+    isObject: isObject,
+    generateID: generateID
 }
