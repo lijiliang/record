@@ -8,6 +8,8 @@ module.exports = () => {
   }
   return async (ctx, next) => {
     ctx.sendjson = render.bind(ctx)
+    // 调用ctx上的log方法下的error方法打印日志
+    // ctx.log.error('something wrong')
     await next()
   }
 }
