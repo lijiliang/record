@@ -13,11 +13,11 @@ module.exports = (options) => {
   let coontentLogger = {}
   // 提取默认公用参数对象
   const defaultInfo = {
-    env: 'dev',
-    dir: 'logs',
-    appLogLevel: 'info',
-    projectName: 'start',
-    serverIp: '0.0.0.0'
+    env: 'dev',  // 指定当前环境，当为开发环境时，在控制台也输出，方便调试
+    dir: 'logs', // 指定日志存放的目录
+    appLogLevel: 'info', // 日志级别
+    projectName: 'start', // 项目名，记录日期中的项目信息
+    serverIp: '0.0.0.0'   // 服务器ip地址
   }
   // 将传入的配置项与当前配置项合并
   const opts = Object.assign({}, defaultInfo, options)
@@ -26,6 +26,7 @@ module.exports = (options) => {
   const commonInfo = { projectName, serverIp }
 
   const appenders = {
+    // 日志按天进行切割
     cheese: {
       type: 'dateFile', // 日志类型 
       filename: `${dir}/task`,  // 输出的文件名
