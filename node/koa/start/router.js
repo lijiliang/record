@@ -4,6 +4,8 @@ const HomeController = require('./controller/home')
 module.exports = (app) => {
   router.get('/', HomeController.index)
   
+  router.get('/json', HomeController.json)
+
   router.get('/user', HomeController.user)
   
   // 增加响应表单请求的路由
