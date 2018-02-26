@@ -1,4 +1,4 @@
-const HomeServers = require('../servers/home')
+const HomeService = require('../service/home')
 
 module.exports = {
   json: async(ctx, next) => {
@@ -25,7 +25,7 @@ module.exports = {
     // 通过ctx.request.body获取post提交过来的信息
     // console.log(ctx.request.body)
     let {name, password} = ctx.request.body
-    let res = await HomeServers.register(name, password)
+    let res = await HomeService.register(name, password)
     if(res.status == "-1"){
       await ctx.render("home/login", res.data)
     }else{
