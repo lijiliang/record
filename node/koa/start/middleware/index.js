@@ -8,8 +8,12 @@ const miSend = require('./mi-send')
 const miLog = require('./mi-log')
 const miHttpError = require('./mi-http-error')
 const miRule = require('./mi-rule')
+const miHtmlMini = require('./mi-html-minifier')
 
 module.exports = (app) => {
+  // 压缩html
+  app.use(miHtmlMini())
+  
   // 请求错误中间件
   app.use(miHttpError({
     errorPageFolder: path.resolve(__dirname, '../errorPage')  //自定义错误文件目录
