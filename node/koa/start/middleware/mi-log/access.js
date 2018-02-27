@@ -11,8 +11,9 @@ module.exports = (ctx, message, commonInfo) => {
     host, // 发送请求的客户端的host
     headers // 请求中的headers
   } = ctx.request
-  ctx.set('Cache-Control', 'no-cache')
-  console.log(ctx.response.get('Cache-Control'))
+  // ctx.set('Cache-Control', 'no-cache')
+  // console.log(ctx.response.get('Cache-Control'))
+  // console.log(ctx.request)
   const client = {
     method,
     url,
