@@ -1,4 +1,3 @@
-# js基础之字符串
 <!-- TOC -->
 
 - [前言](#前言)
@@ -313,3 +312,8 @@ str.match(/\d/g)       // ["1", "2", "3", "4", "5"]
 
 ##### ${}
 模板字符串
+
+## 参考
+- [MDN 的 JavaScript 标准库 String 部分](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/String)
+- 《JavaScript高级程序设计（第3版）》
+- 《ECMAScript 6 入门》
