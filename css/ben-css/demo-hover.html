@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>demo</title>
+    <link rel="stylesheet" href="reset.css">
+    <link rel="stylesheet" href="ben-css-hover.css">
+    <style>
+        h1{
+            font-size: 24px;
+            max-width: 1200px;
+            margin: 20px auto;
+        }
+        .hover-box{
+            max-width: 1200px;
+            margin: 20px auto;
+        }
+        .hover-box p{
+            line-height: 50px;
+        }
+        .hover-box span{
+            cursor: pointer;
+            height: 40px;
+            line-height: 40px;
+            text-align: center;
+            display: inline-block;
+            color: #333;
+            background: #ccc;
+            min-width: 80px;
+            padding: 0 10px;
+            margin: 10px;
+        }
+
+    </style>
+</head>
+<body>
+<h1>hover过渡，动画效果</h1>
+<div class="hover-box">
+    <p>几个组合效果</p>
+    <span class="ben-arrow-b-move ben-shadow">arrow-b</span>
+    <span class="ben-radius ben-shadow">radius</span>
+    <span class="ben-fade-m-out ben-shadow">fade-m-out</span>
+</div>
+<div class="hover-box">
+    <p>鼠标效果 简单动画(hover effect)</p>
+    <span class="ben-rectangle">rectangle</span>
+    <span class="ben-radius">radius</span>
+    <span class="ben-border">border</span>
+    <span class="ben-big">big</span>
+    <span class="ben-small">small</span>
+    <span class="ben-border-in">border-in</span>
+    <span class="ben-shadow">shadow</span>
+    <span class="ben-shadow-in">shadow-in</span>
+    <span class="ben-shadow-write">shadow-write</span>
+    <span class="ben-shadow-big">shadow-big</span>
+    <span class="ben-fade-out">fade-out</span>
+    <span class="ben-fade-in">fade-in</span>
+    <span class="ben-t">up</span>
+    <span class="ben-b">bottom</span>
+    <span class="ben-l">left</span>
+    <span class="ben-r">right</span>
+    <span class="ben-grow-rotate-l">grow-rotate-l</span>
+    <span class="ben-grow-rotate-r">grow-rotate-r</span>
+    <span class="ben-rotate5">rotate5</span>
+    <span class="ben-rotate15">rotate15</span>
+    <span class="ben-rotate30">rotate30</span>
+    <span class="ben-rotate60">rotate60</span>
+    <span class="ben-rotate90">rotate90</span>
+    <span class="ben-rotate180">rotate180</span>
+    <span class="ben-rotate360">rotate360</span>
+    <span class="ben-rotate-5">rotate-5</span>
+    <span class="ben-rotate-15">rotate-15</span>
+    <span class="ben-rotate-30">rotate-30</span>
+    <span class="ben-rotate-60">rotate-60</span>
+    <span class="ben-rotate-90">rotate-90</span>
+    <span class="ben-rotate-180">rotate-180</span>
+    <span class="ben-skew-l">skew-l</span>
+    <span class="ben-skew-r">skew-r</span>
+    <span class="ben-skew-l-t">skew-l-t</span>
+    <span class="ben-skew-r-t">skew-r-t</span>
+    <span class="ben-skew-l-b">skew-l-b</span>
+    <span class="ben-skew-r-b">skew-r-b</span>
+</div>
+<div class="hover-box">
+    <p>鼠标颜色效果(主要利用:after  :before实现)</p>
+    <span class="ben-fade">fade</span>
+    <span class="ben-fade-t">fade-t</span>
+    <span class="ben-fade-b">fade-b</span>
+    <span class="ben-fade-l">fade-l</span>
+    <span class="ben-fade-r">fade-r</span>
+    <span class="ben-bounce-t">bounce-t</span>
+    <span class="ben-bounce-b">bounce-b</span>
+    <span class="ben-bounce-l">bounce-l</span>
+    <span class="ben-bounce-r">bounce-r</span>
+	<span class="ben-fade-c-out">fade-c-out</span>
+    <span class="ben-fade-c-in">fade-c-in</span>
+    <span class="ben-fade-m-out">fade-m-out</span>
+    <span class="ben-fade-m-in">fade-m-in</span>
+    <span class="ben-overline-l">overline-l</span>
+    <span class="ben-overline-r">overline-r</span>
+    <span class="ben-underline-l">underline-l</span>
+    <span class="ben-underline-r">underline-r</span>
+    <span class="ben-underline-c">underline-c</span>
+    <span class="ben-underline-c-out">underline-c-out</span>
+    <span class="ben-overline-c">overline-c</span>
+    <span class="ben-overline-c-out">overline-c-out</span>
+</div>
+<div class="hover-box">
+    <p>鼠标效果 较复杂动画(hover effect)</p>
+    <span class="ben-shake-time">shake-time</span>
+    <span class="ben-bounce">bounce</span>
+    <span class="ben-wobble">wobble</span>
+    <span class="ben-swing">swing</span>
+    <span class="ben-shake">shake</span>
+    <span class="ben-flash">flash</span>
+    <span class="ben-wobble-c">wobble-c</span>
+    <span class="ben-wobble-t">wobble-t</span>
+    <span class="ben-wobble-b">wobble-b</span>
+</div>
+<div class="hover-box">
+    <p>鼠标效果 较复杂动画-无限执行(hover effect)</p>
+    <span class="ben-pulse">pulse</span>
+    <span class="ben-pulse-shrink">pulse-shrink</span>
+    <span class="ben-swing  ben-infinite">swing-infinite</span>
+    <span class="ben-shake-time ben-infinite">shake-time-infinite</span>
+    <span class="ben-shake ben-infinite">shake-infinite</span>
+    <span class="ben-flash ben-infinite">flash-infinite</span>
+</div>
+<div class="hover-box">
+    <p>鼠标效果 箭头效果</p>
+    <span class="ben-arrow-l">arrow-l</span>
+    <span class="ben-arrow-r">arrow-r</span>
+    <span class="ben-arrow-t">arrow-t</span>
+    <span class="ben-arrow-b">arrow-b</span>
+    <span class="ben-arrow-l-move">arrow-l</span>
+    <span class="ben-arrow-r-move">arrow-r</span>
+    <span class="ben-arrow-t-move">arrow-t</span>
+    <span class="ben-arrow-b-move">arrow-b</span>
+</div>
+</body>
+</html>

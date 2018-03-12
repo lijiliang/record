@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>demo</title>
+    <link rel="stylesheet" href="reset.css">
+    <link rel="stylesheet" href="ben-css-animate.css">
+    <style>
+        .big {
+            width: 500px;
+            height: 500px;
+            border: 1px solid #ccc;
+            margin: 100px auto 0 auto;
+        }
+
+        #demo {
+            width: 200px;
+            height: 100px;
+            margin: 200px auto;
+            background: #09f;
+        }
+
+        .btn-box {
+            margin: 0 auto 100px auto;
+            max-width: 1200px;
+            font-size: 0;
+        }
+
+        .btn-box a {
+            font-size: 16px;
+            display: inline-block;
+            height: 40px;
+            line-height: 40px;
+            padding: 0 6px;
+            color: #333;
+            background: #ccc;
+            margin: 0 0 10px 10px;
+        }
+        .btn-box .cur{
+        	background: #09f;
+        	color: #fff;
+        }
+        .an-type{
+        	width: 500px;
+            height: 100px;
+            margin: 0 auto;
+        }
+        .an-type a{
+        	font-size: 16px;
+            display: inline-block;
+            height: 40px;
+            line-height: 40px;
+            padding: 0 6px;
+            color: #333;
+            background: #ccc;
+            margin: 0 10px 10px 0;
+        }
+        .an-type .cur{
+        	background: #09f;
+        	color: #fff;
+        }
+    </style>
+</head>
+<body>
+<div class="big">
+    <div class="" id="demo"></div>
+</div>
+<div class="an-type">
+	<a href="javascripr:;" data-class="ben-infinite" id="infinite">无限执行</a>
+    <a href="javascripr:;" data-class="ben-alternate" id="alternate">反向动画</a>
+    <a href="javascripr:;" id="stop">停止</a>
+</div>
+<div class="btn-box">
+    <a href="javascripr:;" data-class="ben-bounce" class="an-a">bounce</a>
+    <a href="javascripr:;" data-class="ben-bounce-in-b" class="an-a">bounce-in-b</a>
+    <a href="javascripr:;" data-class="ben-bounce-in-l" class="an-a">bounce-in-l</a>
+    <a href="javascripr:;" data-class="ben-bounce-in-t" class="an-a">bounce-in-t</a>
+    <a href="javascripr:;" data-class="ben-bounce-in-r" class="an-a">bounce-in-r</a>
+    <a href="javascripr:;" data-class="ben-bounce-out-b" class="an-a">bounce-out-b</a>
+    <a href="javascripr:;" data-class="ben-bounce-out-l" class="an-a">bounce-out-l</a>
+    <a href="javascripr:;" data-class="ben-bounce-out-t" class="an-a">bounce-out-t</a>
+    <a href="javascripr:;" data-class="ben-bounce-out-r" class="an-a">bounce-out-r</a>
+    <br/>
+    <a href="javascripr:;" data-class="ben-wobble" class="an-a">wobble</a>
+    <a href="javascripr:;" data-class="ben-wobble-t" class="an-a">wobble-t</a>
+    <a href="javascripr:;" data-class="ben-wobble-b" class="an-a">wobble-b</a>
+    <br/>
+    <a href="javascripr:;" data-class="ben-fade-in" class="an-a">fade-in</a>
+    <a href="javascripr:;" data-class="ben-fade-in-t" class="an-a">fade-in-t</a>
+    <a href="javascripr:;" data-class="ben-fade-in-b" class="an-a">fade-in-b</a>
+    <a href="javascripr:;" data-class="ben-fade-in-l" class="an-a">fade-in-l</a>
+    <a href="javascripr:;" data-class="ben-fade-in-r" class="an-a">fade-in-r</a>
+    <a href="javascripr:;" data-class="ben-fade-out" class="an-a">fade-out</a>
+    <a href="javascripr:;" data-class="ben-fade-out-t" class="an-a">fade-out-t</a>
+    <a href="javascripr:;" data-class="ben-fade-out-b" class="an-a">fade-out-b</a>
+    <a href="javascripr:;" data-class="ben-fade-out-l" class="an-a">fade-out-l</a>
+    <a href="javascripr:;" data-class="ben-fade-out-r" class="an-a">fade-out-r</a>
+    <br/>
+    <a href="javascripr:;" data-class="ben-rotate-in" class="an-a">rotate-in</a>
+    <a href="javascripr:;" data-class="ben-rotate-in-rb" class="an-a">rotate-in-rb</a>
+    <a href="javascripr:;" data-class="ben-rotate-in-rt" class="an-a">rotate-in-rt</a>
+    <a href="javascripr:;" data-class="ben-rotate-in-lb" class="an-a">rotate-in-lb</a>
+    <a href="javascripr:;" data-class="ben-rotate-in-lt" class="an-a">rotate-in-lt</a>
+    <a href="javascripr:;" data-class="ben-rotate-out" class="an-a">rotate-out</a>
+    <a href="javascripr:;" data-class="ben-rotate-out-rb" class="an-a">rotate-out-rb</a>
+    <a href="javascripr:;" data-class="ben-rotate-out-rt" class="an-a">rotate-out-rt</a>
+    <a href="javascripr:;" data-class="ben-rotate-out-lb" class="an-a">rotate-out-lb</a>
+    <a href="javascripr:;" data-class="ben-rotate-out-lt" class="an-a">rotate-out-lt</a>
+    <br/>
+    <a href="javascripr:;" data-class="ben-flip-in-x" class="an-a">flip-in-x</a>
+    <a href="javascripr:;" data-class="ben-flip-in-y" class="an-a">flip-in-y</a>
+    <a href="javascripr:;" data-class="ben-flip-out-x" class="an-a">flip-out-x</a>
+    <a href="javascripr:;" data-class="ben-flip-out-y" class="an-a">flip-out-y</a>
+    <br/>
+    <a href="javascripr:;" data-class="ben-light-speed-in" class="an-a">light-speed-in</a>
+    <a href="javascripr:;" data-class="ben-light-speed-out" class="an-a">light-speed-out</a>
+    <br/>
+    <a href="javascripr:;" data-class="ben-shake-time" class="an-a">shake-time</a>
+    <a href="javascripr:;" data-class="ben-flash" class="an-a">flash</a>
+    <a href="javascripr:;" data-class="ben-rubber-band" class="an-a">rubber-band</a>
+    <a href="javascripr:;" data-class="ben-rubber-band-fast" class="an-a">rubber-band-fast</a>
+    <a href="javascripr:;" data-class="ben-swing" class="an-a">swing</a>
+    <a href="javascripr:;" data-class="ben-shake" class="an-a">shake</a>
+    <a href="javascripr:;" data-class="ben-pulse-shrink" class="an-a">pulse-shrink</a>
+    <a href="javascripr:;" data-class="ben-pulse" class="an-a">pulse</a>
+</div>
+</body>
+<script src="ben-do.js"></script>
+<script type="text/javascript">
+    window.onload = function () {
+        var oDivDemo = document.getElementById("demo"),
+        oDivBox = document.getElementsByClassName("btn-box")[0],
+        oAan=oDivBox.getElementsByTagName("a"),
+        oInfinite=document.getElementById("infinite"),_infinite=false,
+        oAlternate=document.getElementById("alternate"),_alternate=false,
+        oStop=document.getElementById("stop");
+        oStop.addEventListener("click",function(){
+        	oDivDemo.className="";
+        	_infinite=false;
+        	_alternate=false;
+        	benDo.removeClass(oInfinite,"cur");
+        	benDo.removeClass(oAlternate,"cur");
+        	benDo.removeClass(oAan,"cur");
+        })
+        oInfinite.addEventListener("click",function(){
+        	_infinite=!_infinite;
+        	if(_infinite){
+        		benDo.addClass(oInfinite,"cur")
+        		benDo.addClass(oDivDemo,"ben-infinite");
+        	}
+        	else{
+        		benDo.removeClass(oInfinite,"cur")
+        		benDo.removeClass(oDivDemo,"ben-infinite");
+        	}
+        })
+        oAlternate.addEventListener("click",function(){
+        	_alternate=!_alternate;
+        	if(_alternate){
+        		benDo.addClass(oAlternate,"cur")
+        		benDo.addClass(oDivDemo,"ben-alternate");
+        	}
+        	else{
+        		benDo.removeClass(oAlternate,"cur")
+        		benDo.removeClass(oDivDemo,"ben-alternate");
+        	}
+        })
+        oDivBox.addEventListener("click", function (e) {
+            var e = e || window.event;
+            var target = e.target || e.srcElement, _class = "";
+            if (target.nodeName.toLowerCase() === 'a') {
+            	benDo.addClass(target,"cur");
+            	benDo.removeClass(benDo.siblings(target,"a"),"cur")
+                _class =target.getAttribute("data-class");
+                oDivDemo.className = "";
+                setTimeout(function () {
+                	benDo.addClass(oDivDemo,_class);
+                	if(_infinite){
+		        		benDo.addClass(oDivDemo,"ben-infinite");
+		        	}
+		        	else{
+		        		benDo.removeClass(oDivDemo,"ben-infinite");
+		        	}
+		        	if(_alternate){
+		        		benDo.addClass(oDivDemo,"ben-alternate");
+		        	}
+		        	else{
+		        		benDo.removeClass(oDivDemo,"ben-alternate");
+		        	}
+                }, 50)
+            }
+        })
+    }
+</script>
+</html>
