@@ -1,0 +1,17 @@
+{
+  "name": "mckoa2",
+  "version": "1.0.0",
+  "description": "",
+  "main": "cb-promise.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "nodemon -w src --exec \"babel-node src --presets env\""
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "nodemon": "^1.17.1",
+    "babel-cli": "^6.26.0",
+    "babel-preset-env": "^1.6.1"
+  }
+}
