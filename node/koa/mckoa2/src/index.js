@@ -31,3 +31,16 @@ import {
 
 console.log(name, getName(), age)
 console.log(name3, getName3(), age3)
+
+
+import { promisify } from 'util'
+import { readFile } from 'fs'
+import { resolve as r } from 'path'
+
+async function init () {
+  let data = await promisify(readFile)(r(__dirname, '../package.json'))
+
+  data = JSON.parse(data)
+  console.log(data.name)
+}
+init()
