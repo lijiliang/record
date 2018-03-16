@@ -7,7 +7,7 @@ const app = new Koa()
 //   ctx.type = 'text/html; charset=utf-8'
 //   ctx.body = 'hi Benson'
 // })
-app.keys = ['Hi Benben']
+app.keys = ['Hi Benson']
 app.use(logger())
 app.use(session(app))
 
@@ -39,3 +39,30 @@ function tail(i){
   console.log('修改前', i) 
   return tail(i + 1)
 }
+
+class Point2D{
+  constructor(x, y){
+    this.x = x
+    this.y = y
+  }
+  toString() {
+    return `(${this.x}, ${this.y})`
+  }
+}
+
+// 继承
+class Point3D extends Point2D{
+  constructor(x, y, z){
+    super(x, y)
+    this.z = z
+  }
+  toString() {
+    return `${this.x}, ${this.y}, ${this.z}`
+  }
+}
+
+let point2d = new Point2D(10,2)
+console.log(point2d.toString())
+
+let point3d = new Point3D(10,2,8)
+console.log(point3d.toString())
