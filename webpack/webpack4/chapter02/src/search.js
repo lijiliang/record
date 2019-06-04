@@ -13,7 +13,7 @@ class Search extends React.Component {
         <img src={ logo }></img>
         <img src={loading} />
       </div>
-      搜索文字 ~~~
+      搜索文字 ~~~1122
       <span>span</span>
     </div>
   }
