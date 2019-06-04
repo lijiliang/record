@@ -3,6 +3,7 @@
 const path = require('path')
 const webpack = require('webpack');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
   mode: 'development', // development
@@ -32,7 +33,17 @@ module.exports = {
         use: [
             'style-loader',
             'css-loader',
-            'less-loader'
+            'less-loader',
+            {
+              loader: 'postcss-loader',
+              options: {
+                plugins: () => [
+                  require('autoprefixer')({
+                    // browsers: ['last 2 version', '>1%', 'ios 7']
+                  })
+                ]
+              }
+            }
         ]
       },
       {
@@ -54,7 +65,17 @@ module.exports = {
   },
   plugins: [
     new CleanWebpackPlugin(),
-    new webpack.HotModuleReplacementPlugin() // 热更新
+    new webpack.HotModuleReplacementPlugin(), // 热更新
+    new HtmlWebpackPlugin({
+      template: path.join(__dirname, 'src/index.html'),
+      filename: 'index.html',
+      chunks: ['index']
+    }),
+    new HtmlWebpackPlugin({
+      template: path.join(__dirname, 'src/search.html'),
+      filename: 'search.html',
+      chunks: ['search']
+    })  
   ],
   // 热更新
   devServer: {
