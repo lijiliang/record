@@ -2,16 +2,26 @@
 
 importScripts('https://g.alicdn.com/kg/workbox/3.3.0/workbox-sw.js');
 
+
 // workbox.precaching([
 //   // 注册成功后要立即缓存的资源列表
 // ])
 
+// try {
+// 	importScripts("./lib/workbox/4.3.1/workbox-sw.js");
+// 	console.log(`try to load workbox library from self server`);
+// } catch (error) {
+// 	importScripts(
+// 		"https://storage.googleapis.com/workbox-cdn/releases/4.3.1/workbox-sw.js"
+// 	);
+// 	console.log(`try to load workbox library from google-cdn`);
+// }
+
 if(workbox) {
-  console.log(`Yay! workbox is loaded 🎉`);
+  console.log(`Yay! workbox is loaded 🎉`); 
 
   workbox.setConfig({
     debug: false,
-    modulePathPrefix: 'https://g.alicdn.com/kg/workbox/3.3.0/'
   });
   workbox.skipWaiting();
   workbox.clientsClaim();
@@ -29,7 +39,7 @@ if(workbox) {
       cacheName: 'kyani:static',
       plugins: [
         new workbox.expiration.Plugin({
-          maxEntries: 60, // 最大的缓存数，超过之后则走 URL 策略清除最老最少使用缓存
+          maxEntries: 60, // 最大的缓存数，超过之后则走 LRU 策略清除最老最少使用缓存
           maxAgeSeconds: 60, // 这只最长缓存时间为 60s
         })
       ]
@@ -43,7 +53,7 @@ if(workbox) {
         cacheName: 'kyani:img',
         plugins: [
           new workbox.expiration.Plugin({
-            maxEntries: 60, // 最大的缓存数，超过之后则走 URL 策略清除最老最少使用缓存
+            maxEntries: 60, // 最大的缓存数，超过之后则走 LRU 策略清除最老最少使用缓存
             maxAgeSeconds: 60, // 这只最长缓存时间为 60s
           })
         ]
