@@ -22,10 +22,12 @@ test('测试对象内容相等', () => {
 */
 test('测试 undefined, null', () => {
   const n = null;
+  const un = undefined;
   expect(n).toBeNull();
   expect(n).toBeDefined();
   expect(n).toBeFalsy()
   expect(n).not.toBeTruthy()
+  expect(un).toBeUndefined()
 })
 
 test('测试zero', () => {
@@ -33,7 +35,7 @@ test('测试zero', () => {
   expect(z).not.toBeNull()
   expect(z).toBeDefined()
   expect(z).not.toBeUndefined();
-  expect(z).not.toBeTruthy();
+  expect(z).not.toBeTruthy(); // 是否不为真
   expect(z).toBeFalsy()
 })
 
@@ -60,7 +62,7 @@ test('测试字符串', () => {
 // 数组
 test('测试数组', () => {
   const list = ['des', 'name', 'title']
-  expect(list).toContain('des')
+  expect(list).toContain('des') // 数组list里面包含des
   expect(new Set(list)).toContain('des')
 })
 
@@ -73,5 +75,6 @@ test('测试捕获错误', () => {
   expect(compileCode).toThrow(Error)
   expect(compileCode).toThrow('you are using the wrong JDK')
   expect(compileCode).toThrow(/JDK/)
+  // expect(compileCode).not.toThrow()  // 测试 没有异常
 
 })
