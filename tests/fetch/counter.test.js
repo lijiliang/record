@@ -29,9 +29,17 @@ afterAll(() => {
 describe('测试增加相关的代码', () => {
 
   // 在内层的describe也可以添加钩子函数
+  // 钩子函数的作用域
   beforeEach(() => {
     console.log('beforeEach test add')
   })
+
+  // test后面加only是忽略其它测试用例执行，只测试这个文件下的这个测试用例
+  // test.only('测试 Counter 中的 addOne 方法', () => {
+  //   console.log('测试 Counter 中的 addOne 方法')
+  //   counter.addOne()
+  //   expect(counter.number).toBe(1)
+  // })
 
   test('测试 Counter 中的 addOne 方法', () => {
     console.log('测试 Counter 中的 addOne 方法')
