@@ -5,3 +5,7 @@ export const fetchData = () => {
 }
 
 // data: "(function() { return '123'})()"
+
+export const getNumber = () => {
+  return 123
+}
