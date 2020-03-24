@@ -1,0 +1,19 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`测试 geterateAnotherConfig 函数 1`] = `
+Object {
+  "domin": "www.zhengfuwu.com",
+  "port": 8080,
+  "server": "localhost",
+  "time": Any<Date>,
+}
+`;
+
+exports[`测试 geterateConfig 函数 1`] = `
+Object {
+  "domin": "www.zhengfuwu.com",
+  "port": 8080,
+  "server": "localhost",
+  "time": "2020",
+}
+`;
