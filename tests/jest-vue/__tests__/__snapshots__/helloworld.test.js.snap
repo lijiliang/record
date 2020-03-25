@@ -3,5 +3,6 @@
 exports[` HelloWorld.vue 组件快照 1`] = `
 <div class="hello">
   <h1>Benson Li</h1>
+  test
 </div>
 `;
