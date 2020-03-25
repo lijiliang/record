@@ -1,0 +1,9 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Header 样式发生改变，做提示 1`] = `
+<header>
+  <section>
+    <form action="javascript:postaction()" id="form"><label for="title">ToDoList</label> <input type="text" id="title" name="title" placeholder="添加ToDo" required="required" autocomplete="off" data-test="input"></form>
+  </section>
+</header>
+`;
