@@ -1,20 +1,20 @@
 <template>
   <div>
     <Header @add="addUndoItem"/>
-    <ul>
-      <li v-for="item in undoList" :key="item">{{item}}</li>
-    </ul>
+    <UndoList :list="undoList" @delete="handleItemDelete"/>
   </div>
 </template>
 
 <script>
 import Header from './components/Header'
+import UndoList from './components/UndoList'
 export default {
   name: 'TodoList',
   props: {
   },
   components: {
-    Header
+    Header,
+    UndoList
   },
   data () {
     return {
@@ -24,6 +24,9 @@ export default {
   methods: {
     addUndoItem (inputValue) {
       this.undoList.push(inputValue)
+    },
+    handleItemDelete (index) {
+      this.undoList.splice(index, 1)
     }
   }
 }
