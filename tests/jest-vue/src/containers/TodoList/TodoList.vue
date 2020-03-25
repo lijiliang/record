@@ -1,13 +1,18 @@
 <template>
   <div>
+    <Header />
     <h1>TodoList</h1>
   </div>
 </template>
 
 <script>
+import Header from './components/Header'
 export default {
   name: 'TodoList',
   props: {
+  },
+  components: {
+    Header
   }
 }
 </script>
