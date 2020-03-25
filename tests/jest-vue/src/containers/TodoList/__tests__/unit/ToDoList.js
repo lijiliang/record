@@ -31,10 +31,19 @@ describe('TodoList组件', () => {
   it('ToDoList 中 addUndoItem 被执行后，内容会加一项', () => {
     const wrapper = shallowMount(ToDoList)
     wrapper.setData({
-      undoList: [1,2,3]
+      undoList: [
+        { status: 'div', value: 1},
+        { status: 'div', value: 2},
+        { status: 'div', value: 3},
+      ]
     })
     wrapper.vm.addUndoItem(4)
-    expect(wrapper.vm.$data.undoList).toEqual([1, 2, 3, 4])
+    expect(wrapper.vm.$data.undoList).toEqual([
+      { status: 'div', value: 1},
+      { status: 'div', value: 2},
+      { status: 'div', value: 3},
+      { status: 'div', value: 4},
+    ])
   })
 
   it('ToDoList 调用 UndoList，应该传递 list 参数', () => {
@@ -48,9 +57,16 @@ describe('TodoList组件', () => {
   it('ToDoList 中 handleItemDelete方法被调用， UndoList列表内容会减少一个', () => {
     const wrapper = shallowMount(ToDoList)
     wrapper.setData({
-      undoList: [1,2,3]
+      undoList: [
+        { status: 'div', value: 1},
+        { status: 'div', value: 2},
+        { status: 'div', value: 3},
+      ]
     })
     wrapper.vm.handleItemDelete(1)
-    expect(wrapper.vm.$data.undoList).toEqual([1, 3])
+    expect(wrapper.vm.$data.undoList).toEqual([
+      { status: 'div', value: 1},
+      { status: 'div', value: 3},
+    ])
   })
 })

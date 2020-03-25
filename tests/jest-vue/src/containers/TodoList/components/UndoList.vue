@@ -2,7 +2,11 @@
   <section>
     <h2 onclick="save()">正在进行 <span id="todocount" data-test="count">{{list.length}}</span></h2>
     <ol id="todolist" class="demo-box">
-      <li v-for="(item, index) in list" :key="index" data-test="item"><input type="checkbox"><p id="p-1" onclick="edit(1)">{{item}}</p><a href="javascript:remove(1)" data-test="delete-button" @click="() => {handleClick(index)}">-</a></li>
+      <li v-for="(item, index) in list" :key="index" data-test="item">
+        <input type="checkbox">
+        <p id="p-1" onclick="edit(1)">{{item.value}}</p>
+        <a href="javascript:remove(1)" data-test="delete-button" @click="() => {handleClick(index)}">-</a>
+      </li>
     </ol>
     <h2>已经完成 <span id="donecount"></span></h2>
     <ul id="donelist">
