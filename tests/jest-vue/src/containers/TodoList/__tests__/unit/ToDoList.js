@@ -1,6 +1,6 @@
 import { shallowMount } from '@vue/test-utils'
 import ToDoList from '../../ToDoList.vue'
-import Header from '../../components/Header.vue'
+// import Header from '../../components/Header.vue'
 import UndoList from '../../components/UndoList.vue'
 
 it('ToDoList 初始化时，undoList 应该为空', () => {
