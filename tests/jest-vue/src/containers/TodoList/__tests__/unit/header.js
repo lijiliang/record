@@ -42,5 +42,5 @@ it('Header 包含 input 框输入回车，有内容时，向外触发事件，�
   input.setValue('Benson')
   input.trigger('keyup.enter') // 模拟用户输入回车
   expect(wrapper.emitted().add).toBeTruthy() // 向外面触发一个add事件
-  expect(wrapper.vm.$data.inputValue).toBe('') // 清空inputValue
+  expect(wrapper.vm.inputValue).toBe('') // 清空inputValue
 })
