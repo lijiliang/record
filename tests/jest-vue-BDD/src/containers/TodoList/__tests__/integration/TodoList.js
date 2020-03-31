@@ -3,6 +3,12 @@ import TodoList from '../../TodoList'
 import { findTestWrapper } from '../../../../utils/testUtils'
 import store from '../../../../store'
 
+
+
+beforeEach(() => {
+  jest.useFakeTimers()
+})
+
 it(`
   1.用户会在header输入框输入内容
   2.用户会点击回车按钮
@@ -20,4 +26,52 @@ it(`
   // expect(listItems.length).toBe(1)  // 在页面能显示一项内容, 页面有内容显示，不知这里为何取不到数据？
   // expect(listItems.at(0).text()).toContain(content)
 })
+
+// it(`
+//   1.用户进入页面时，请求远程数据
+//   2.列表应该展示远程返回的数据
+// `, () => {
+//   const wrapper = mount(TodoList, {
+//     store
+//   })
+//   wrapper.vm.$nextTick(() => {
+//     let listItems = findTestWrapper(wrapper, 'list-item')
+//     expect(listItems.length).toBe(1)
+//   })
+
+// })
+
+// it(`
+//   1.用户进入页面时，等待 5s
+//   2.列表应该展示远程返回的数据
+// `, (done) => {
+//   const wrapper = mount(TodoList, {
+//     store
+//   })
+//   setTimeout(() => {
+//     let listItems = findTestWrapper(wrapper, 'list-item')
+//     expect(listItems.length).toBe(1)  // 这里能跑通
+//     done()
+//   }, 4500)
+// })
+
+
+it(`
+  1.用户进入页面时，等待 5s
+  2.列表应该展示远程返回的数据
+`, () => {
+  const wrapper = mount(TodoList, {
+    store
+  })
+
+  expect(setTimeout).toHaveBeenCalledTimes(1)   // 测试 setTimeout会被调用一次
+
+  jest.runAllTimers()
+
+  wrapper.vm.$nextTick(() => {
+    const listItems = findTestWrapper(wrapper, 'list-item')
+    // expect(listItems.length).toBe(1)
+  })
+})
+
 

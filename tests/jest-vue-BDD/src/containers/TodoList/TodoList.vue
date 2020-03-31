@@ -14,6 +14,7 @@
 <script>
 import Header from './components/Header'
 import UndoList from './components/UndoList'
+import axios from 'axios'
 export default {
   name: 'TodoList',
   props: {
@@ -26,6 +27,30 @@ export default {
     return {
       undoList: []
     }
+  },
+  mounted() {
+    /*
+    {
+      success: true,
+      data: [{
+        status: 'div',
+        value: 'benson'
+      }]
+    }
+    */
+    // axios.get('/getUndoList.json').then((res) => {
+    //   this.undoList = res.data
+    // }).catch(e => {
+    //   console.log(e)
+    // })
+    setTimeout(() => {
+      axios.get('/getUndoList.json').then((res) => {
+        this.undoList = res.data
+      }).catch(e => {
+        console.log(e)
+      })
+    }, 4000)
+
   },
   methods: {
     addUndoItem (inputValue) {
