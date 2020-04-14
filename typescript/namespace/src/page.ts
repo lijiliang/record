@@ -1,4 +1,5 @@
 ///<reference path='./components.ts' />
+
 // 声明命名空间
 namespace Home {
   export class Page {
