@@ -1,49 +1,14 @@
-// 装饰器 Decorators
-// 装饰器 本身是一个函数
-// 类装饰器接收的参数是构造函数
-// 装饰器通过 @ 符号来使用
-
-// function testDecorators<T extends new (...args: any[]) => {}>(constructor: T) {
-//   return class extends constructor {
-//     name = 'Li';
-//     getName() {
-//       return this.name
-//     }
-//   }
-// }
-
-// @testDecorators
-// class Test {
-//   name: string;
-//   constructor(name: string) {
-//     this.name = name;
-//   }
-// }
-
-// const test = new Test('Benson');
-// // console.log(test)
-// console.log((test as any).getName())
+// 原型、方法名、参数所在的位置 
+function paramDecorator(target: any, method: string, paramIndex: number) {
+  console.log(target, method, paramIndex)
+}
 
 
-function testDecorators() {
-  return function <T extends new (...args: any[]) => {}>(constructor: T) {
-    return class extends constructor {
-      name = 'Li';
-      getName() {
-        return this.name
-      }
-    }
+class Test4 {
+  getInfo(name: string, @paramDecorator age: number) {
+    console.log(name, age)
   }
 }
 
-const Test = testDecorators()(
-  class {
-    name: string;
-    constructor(name: string) {
-      this.name = name
-    }
-  }
-)
-
-const test = new Test('bli')
-console.log(test.getName())
+const test4 = new Test4()
+test4.getInfo('benson', 30)
