@@ -3,11 +3,12 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+var fs_1 = __importDefault(require("fs"));
+var path_1 = __importDefault(require("path"));
 var express_1 = require("express");
 var crowller_1 = __importDefault(require("./utils/crowller"));
 var dellAnalyzer_1 = __importDefault(require("./utils/dellAnalyzer"));
-var fs_1 = __importDefault(require("fs"));
-var path_1 = __importDefault(require("path"));
+var util_1 = require("./utils/util");
 var router = express_1.Router();
 var checkLogin = function (req, res, next) {
     var isLogin = req.session ? req.session.login : undefined;
@@ -15,7 +16,8 @@ var checkLogin = function (req, res, next) {
         next();
     }
     else {
-        res.send('请先登录');
+        // res.send('请先登录')
+        res.json(util_1.getResponseData(null, '请先登录'));
     }
 };
 router.get('/', function (req, res) {
@@ -32,7 +34,8 @@ router.get('/logout', function (req, res) {
     if (req.session) {
         req.session.login = undefined;
     }
-    res.redirect('/');
+    res.json(util_1.getResponseData(true));
+    // res.redirect('/')
 });
 router.post('/login', function (req, res) {
     // if (password === '123') {
@@ -48,15 +51,18 @@ router.post('/login', function (req, res) {
     var isLogin = req.session ? req.session.login : undefined;
     // 已经登录过了
     if (isLogin) {
-        res.send('已经登录过');
+        // res.send('已经登录过')
+        res.json(util_1.getResponseData(false, '已经登录过'));
     }
     else {
         if (password === '123' && req.session) {
             req.session.login = true;
-            res.send('登录成功');
+            // res.send('登录成功')
+            res.json(util_1.getResponseData(true));
         }
         else {
-            res.send('登录失败');
+            // res.send('登录失败')
+            res.json(util_1.getResponseData(false, '登录失败'));
         }
     }
 });
@@ -65,7 +71,8 @@ router.get('/getData', checkLogin, function (req, res) {
     var url = "http://www.dell-lee.com/typescript/demo.html?secret=" + secret;
     var analyzer = dellAnalyzer_1.default.getInstance();
     new crowller_1.default(url, analyzer);
-    res.send('getDate Success');
+    // res.send('getDate Success')
+    res.json(util_1.getResponseData(true));
 });
 router.get('/showData', checkLogin, function (req, res) {
     try {
@@ -74,7 +81,8 @@ router.get('/showData', checkLogin, function (req, res) {
         res.json(JSON.parse(result));
     }
     catch (e) {
-        res.send('尚未爬取到内容');
+        // res.send('尚未爬取到内容')
+        res.json(util_1.getResponseData(false, '尚未爬取到内容'));
     }
 });
 exports.default = router;

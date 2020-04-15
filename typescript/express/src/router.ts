@@ -1,8 +1,9 @@
+import fs from 'fs'
+import path from 'path'
 import { Router, Request, Response, NextFunction } from 'express';
 import Crowller from './utils/crowller'
 import Analyzer from './utils/dellAnalyzer'
-import fs from 'fs'
-import path from 'path'
+import { getResponseData } from './utils/util'
 
 // 问题1： express 库的类型定义文件 .d.ts 文件类型描述不准确
 interface BodyRequest extends Request {
@@ -18,7 +19,8 @@ const checkLogin = (req: Request, res: Response, next: NextFunction) => {
   if (isLogin) {
     next()
   } else {
-    res.send('请先登录')
+    // res.send('请先登录')
+    res.json(getResponseData(null, '请先登录'))
   }
 }
 
@@ -53,7 +55,8 @@ router.get('/logout', (req: Request, res: Response) => {
   if (req.session) {
     req.session.login = undefined
   }
-  res.redirect('/')
+  res.json(getResponseData(true))
+  // res.redirect('/')
 })
 
 router.post('/login', (req: BodyRequest, res: Response) => {
@@ -72,13 +75,16 @@ router.post('/login', (req: BodyRequest, res: Response) => {
   const isLogin = req.session ? req.session.login : undefined
   // 已经登录过了
   if (isLogin) {
-    res.send('已经登录过')
+    // res.send('已经登录过')
+    res.json(getResponseData(false, '已经登录过'))
   } else {
     if (password === '123' && req.session) {
       req.session.login = true
-      res.send('登录成功')
+      // res.send('登录成功')
+      res.json(getResponseData(true))
     } else {
-      res.send('登录失败')
+      // res.send('登录失败')
+      res.json(getResponseData(false, '登录失败'))
     }
   }
 })
@@ -91,7 +97,8 @@ router.get('/getData', checkLogin, (req: BodyRequest, res: Response) => {
   const analyzer = Analyzer.getInstance();
   new Crowller(url, analyzer);
 
-  res.send('getDate Success')
+  // res.send('getDate Success')
+  res.json(getResponseData(true))
 
 })
 
@@ -101,7 +108,8 @@ router.get('/showData', checkLogin, (req: BodyRequest, res: Response) => {
     const result = fs.readFileSync(position, 'utf8')
     res.json(JSON.parse(result))
   } catch (e) {
-    res.send('尚未爬取到内容')
+    // res.send('尚未爬取到内容')
+    res.json(getResponseData(false, '尚未爬取到内容'))
   }
 
 })
