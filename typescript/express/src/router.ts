@@ -1,17 +1,26 @@
-import { Router, Request, Response } from 'express';
+import { Router, Request, Response, NextFunction } from 'express';
 import Crowller from './utils/crowller'
 import Analyzer from './utils/dellAnalyzer'
 import fs from 'fs'
 import path from 'path'
 
 // 问题1： express 库的类型定义文件 .d.ts 文件类型描述不准确
-interface RequestWithbody extends Request {
+interface BodyRequest extends Request {
   body: {
     [key: string]: string | undefined
   }
 }
 
 const router = Router();
+
+const checkLogin = (req: Request, res: Response, next: NextFunction) => {
+  const isLogin = req.session ? req.session.login : undefined
+  if (isLogin) {
+    next()
+  } else {
+    res.send('请先登录')
+  }
+}
 
 router.get('/', (req: Request, res: Response) => {
   const isLogin = req.session ? req.session.login : undefined
@@ -47,7 +56,7 @@ router.get('/logout', (req: Request, res: Response) => {
   res.redirect('/')
 })
 
-router.post('/login', (req: RequestWithbody, res: Response) => {
+router.post('/login', (req: BodyRequest, res: Response) => {
   // if (password === '123') {
   //   const secret = 'secretKey';
   //   const url = `http://www.dell-lee.com/typescript/demo.html?secret=${secret}`;
@@ -74,33 +83,25 @@ router.post('/login', (req: RequestWithbody, res: Response) => {
   }
 })
 
-router.get('/getData', (req: RequestWithbody, res: Response) => {
-  const isLogin = req.session ? req.session.login : undefined
-  if (isLogin) {
-    const secret = 'secretKey';
-    const url = `http://www.dell-lee.com/typescript/demo.html?secret=${secret}`;
+router.get('/getData', checkLogin, (req: BodyRequest, res: Response) => {
 
-    const analyzer = Analyzer.getInstance();
-    new Crowller(url, analyzer);
+  const secret = 'secretKey';
+  const url = `http://www.dell-lee.com/typescript/demo.html?secret=${secret}`;
 
-    res.send('getDate Success')
-  } else {
-    res.send(`请登录后爬取内容`)
-  }
+  const analyzer = Analyzer.getInstance();
+  new Crowller(url, analyzer);
+
+  res.send('getDate Success')
+
 })
 
-router.get('/showData', (req: RequestWithbody, res: Response) => {
-  const isLogin = req.session ? req.session.login : undefined
-  if (isLogin) {
-    try {
-      const position = path.resolve(__dirname, '../data/course.json')
-      const result = fs.readFileSync(position, 'utf8')
-      res.json(JSON.parse(result))
-    } catch (e) {
-      res.send('尚未爬取到内容')
-    }
-  } else {
-    res.send('请登录后查看内容')
+router.get('/showData', checkLogin, (req: BodyRequest, res: Response) => {
+  try {
+    const position = path.resolve(__dirname, '../data/course.json')
+    const result = fs.readFileSync(position, 'utf8')
+    res.json(JSON.parse(result))
+  } catch (e) {
+    res.send('尚未爬取到内容')
   }
 
 })

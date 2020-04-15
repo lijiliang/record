@@ -9,6 +9,15 @@ var dellAnalyzer_1 = __importDefault(require("./utils/dellAnalyzer"));
 var fs_1 = __importDefault(require("fs"));
 var path_1 = __importDefault(require("path"));
 var router = express_1.Router();
+var checkLogin = function (req, res, next) {
+    var isLogin = req.session ? req.session.login : undefined;
+    if (isLogin) {
+        next();
+    }
+    else {
+        res.send('请先登录');
+    }
+};
 router.get('/', function (req, res) {
     var isLogin = req.session ? req.session.login : undefined;
     if (isLogin) {
@@ -51,33 +60,21 @@ router.post('/login', function (req, res) {
         }
     }
 });
-router.get('/getData', function (req, res) {
-    var isLogin = req.session ? req.session.login : undefined;
-    if (isLogin) {
-        var secret = 'secretKey';
-        var url = "http://www.dell-lee.com/typescript/demo.html?secret=" + secret;
-        var analyzer = dellAnalyzer_1.default.getInstance();
-        new crowller_1.default(url, analyzer);
-        res.send('getDate Success');
-    }
-    else {
-        res.send("\u8BF7\u767B\u5F55\u540E\u722C\u53D6\u5185\u5BB9");
-    }
+router.get('/getData', checkLogin, function (req, res) {
+    var secret = 'secretKey';
+    var url = "http://www.dell-lee.com/typescript/demo.html?secret=" + secret;
+    var analyzer = dellAnalyzer_1.default.getInstance();
+    new crowller_1.default(url, analyzer);
+    res.send('getDate Success');
 });
-router.get('/showData', function (req, res) {
-    var isLogin = req.session ? req.session.login : undefined;
-    if (isLogin) {
-        try {
-            var position = path_1.default.resolve(__dirname, '../data/course.json');
-            var result = fs_1.default.readFileSync(position, 'utf8');
-            res.json(JSON.parse(result));
-        }
-        catch (e) {
-            res.send('尚未爬取到内容');
-        }
+router.get('/showData', checkLogin, function (req, res) {
+    try {
+        var position = path_1.default.resolve(__dirname, '../data/course.json');
+        var result = fs_1.default.readFileSync(position, 'utf8');
+        res.json(JSON.parse(result));
     }
-    else {
-        res.send('请登录后查看内容');
+    catch (e) {
+        res.send('尚未爬取到内容');
     }
 });
 exports.default = router;
