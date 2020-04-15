@@ -2,6 +2,13 @@ import { Router, Request, Response } from 'express';
 import Crowller from './crowller'
 import DellAnalyzer from './dellAnalyzer'
 
+// 问题1： express 库的类型定义文件 .d.ts 文件类型描述不准确
+interface RequestWithbody extends Request {
+  body: {
+    [key: string]: string | undefined
+  }
+}
+
 const router = Router();
 
 router.get('/', (req: Request, res: Response) => {
@@ -17,8 +24,9 @@ router.get('/', (req: Request, res: Response) => {
   `);
 })
 
-router.post('/getData', (req: Request, res: Response) => {
-  if (req.body.password === '123') {
+router.post('/getData', (req: RequestWithbody, res: Response) => {
+  const { password } = req.body
+  if (password === '123') {
     const secret = 'secretKey';
     const url = `http://www.dell-lee.com/typescript/demo.html?secret=${secret}`;
 
@@ -27,7 +35,7 @@ router.post('/getData', (req: Request, res: Response) => {
 
     res.send('getDate Success')
   } else {
-    res.send('password Error!')
+    res.send(`${req.teacherName} password Error!`)
   }
 })
 

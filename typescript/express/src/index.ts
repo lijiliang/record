@@ -1,4 +1,4 @@
-import express, { Request, Response } from 'express'
+import express, { Request, Response, NextFunction } from 'express'
 import bodyParser from 'body-parser'
 import router from './router'
 
@@ -7,6 +7,10 @@ import router from './router'
 
 const app = express()
 app.use(bodyParser.urlencoded({ extended: false }))
+app.use((req: Request, res: Response, next: NextFunction) => {
+  req.teacherName = 'Benson';
+  next();
+})
 app.use(router)  // 加载路由
 
 app.listen(7001, () => {
