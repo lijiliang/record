@@ -1,14 +1,25 @@
-// 原型、方法名、参数所在的位置 
-function paramDecorator(target: any, method: string, paramIndex: number) {
-  console.log(target, method, paramIndex)
-}
+// 元数据
+import 'reflect-metadata';
 
-
-class Test4 {
-  getInfo(name: string, @paramDecorator age: number) {
-    console.log(name, age)
+function showData(target: typeof User) {
+  for (let key in target.prototype) {
+    const data = Reflect.getMetadata('data', target.prototype, key)
+    console.log(data)
   }
 }
 
-const test4 = new Test4()
-test4.getInfo('benson', 30)
+function setData(dataKey: string, msg: string) {
+  return function (target: User, key: string) {
+    Reflect.defineMetadata(dataKey, msg, target, key)
+  }
+}
+
+@showData
+class User {
+  @Reflect.metadata('data', 'name')
+  getName() { }
+
+  // @Reflect.metadata('data', 'age')
+  @setData('data', 'age')
+  getAge() { }
+}
