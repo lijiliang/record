@@ -20,7 +20,15 @@ var checkLogin = function (req, res, next) {
         res.json(util_1.getResponseData(null, '请先登录'));
     }
 };
-router.get('/', function () { });
+router.get('/', function (req, res) {
+    var isLogin = req.session ? req.session.login : undefined;
+    if (isLogin) {
+        res.send("\n      <html>\n        <body>\n          <a href=\"/logout\">\u9000\u51FA</a>\n          <a href=\"/getData\">\u722C\u53D6\u5185\u5BB9</a>\n          <a href=\"/showData\">\u5C55\u793A\u5185\u5BB9</a>\n        </body>\n      </html>\n      ");
+    }
+    else {
+        res.send("\n    <html>\n      <body>\n        <form method=\"post\" action=\"/login\">\n          <input type=\"password\" name=\"password\" />\n          <button>\u63D0\u4EA4</button>\n        </form>\n      </body>\n    </html>\n  ");
+    }
+});
 router.get('/logout', function (req, res) {
     // const isLogin = req.session ? req.session.login : undefined
     if (req.session) {
