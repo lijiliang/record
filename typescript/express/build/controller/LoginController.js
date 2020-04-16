@@ -9,14 +9,20 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-var decorator_1 = require("./decorator");
+// import { get, post } from './decorator'
+var decorator_1 = require("../decorator");
 var util_1 = require("../utils/util");
 var LogiController = /** @class */ (function () {
     function LogiController() {
     }
+    LogiController_1 = LogiController;
+    LogiController.isLogin = function (req) {
+        return !!(req.session ? req.session.login : undefined);
+    };
     LogiController.prototype.login = function (req, res) {
         var password = req.body.password;
-        var isLogin = req.session ? req.session.login : undefined;
+        // const isLogin = !!(req.session ? req.session.login : undefined)
+        var isLogin = LogiController_1.isLogin(req);
         // 已经登录过了
         if (isLogin) {
             // res.send('已经登录过')
@@ -42,7 +48,8 @@ var LogiController = /** @class */ (function () {
         res.json(util_1.getResponseData(true));
     };
     LogiController.prototype.home = function (req, res) {
-        var isLogin = req.session ? req.session.login : undefined;
+        // const isLogin = !!(req.session ? req.session.login : undefined)
+        var isLogin = LogiController_1.isLogin(req);
         if (isLogin) {
             res.send("\n      <html>\n        <body>\n          <a href=\"/logout\">\u9000\u51FA</a>\n          <a href=\"/getData\">\u722C\u53D6\u5185\u5BB9</a>\n          <a href=\"/showData\">\u5C55\u793A\u5185\u5BB9</a>\n        </body>\n      </html>\n      ");
         }
@@ -50,6 +57,7 @@ var LogiController = /** @class */ (function () {
             res.send("\n    <html>\n      <body>\n        <form method=\"post\" action=\"/login\">\n          <input type=\"password\" name=\"password\" />\n          <button>\u63D0\u4EA4</button>\n        </form>\n      </body>\n    </html>\n  ");
         }
     };
+    var LogiController_1;
     __decorate([
         decorator_1.post('/login'),
         __metadata("design:type", Function),
@@ -68,8 +76,9 @@ var LogiController = /** @class */ (function () {
         __metadata("design:paramtypes", [Object, Object]),
         __metadata("design:returntype", void 0)
     ], LogiController.prototype, "home", null);
-    LogiController = __decorate([
-        decorator_1.controller
+    LogiController = LogiController_1 = __decorate([
+        decorator_1.controller('/') // 可以加路由前缀 如 '/abc'
     ], LogiController);
     return LogiController;
 }());
+exports.LogiController = LogiController;

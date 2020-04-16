@@ -1,8 +1,8 @@
 import 'reflect-metadata'
-import { Router, RequestHandler } from 'express'
-export const router = Router();
+import { RequestHandler } from 'express'
+import router from '../router'
 
-enum Method {
+enum Methods {
   get = 'get',
   post = 'post',
   put = 'put',
@@ -13,7 +13,7 @@ export function controller(target: any) {
   for (let key in target.prototype) {
     // console.log(Reflect.getMetadata('path', target.prototype, key))  // 打印出元数据
     const path = Reflect.getMetadata('path', target.prototype, key) // 取到元数据
-    const method: Method = Reflect.getMetadata('method', target.prototype, key) // 取到元数据
+    const method: Methods = Reflect.getMetadata('method', target.prototype, key) // 取到元数据
     const handler = target.prototype[key]  // 通过key值获取方法名
     const middleware = Reflect.getMetadata('middleware', target.prototype, key)
     if (path && method && handler) {
@@ -35,7 +35,7 @@ export function use(middleware: RequestHandler) {
 }
 
 // 封装一个工厂函数去自动生成get,post等请求
-function getRequestDecorator(type: string) {
+function getRequestDecorator(type: Methods) {
   return function (path: string) {
     return function (target: any, key: string) {
       Reflect.defineMetadata('path', path, target, key);
@@ -44,10 +44,10 @@ function getRequestDecorator(type: string) {
   }
 }
 
-export const get = getRequestDecorator('get')
-export const post = getRequestDecorator('post')
-export const put = getRequestDecorator('put')
-export const del = getRequestDecorator('delete')
+export const get = getRequestDecorator(Methods.get)
+export const post = getRequestDecorator(Methods.post)
+export const put = getRequestDecorator(Methods.put)
+export const del = getRequestDecorator(Methods.delete)
 
 
 // export function post(path: string) {

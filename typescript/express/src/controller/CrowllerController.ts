@@ -1,7 +1,9 @@
 import fs from 'fs'
 import path from 'path'
 import { Request, Response, NextFunction } from 'express';
-import { controller, get, use } from './decorator'
+// import { controller, get, use } from './decorator'
+// import { get } from './decorator'
+import { controller, use, get } from '../decorator'
 import { getResponseData } from '../utils/util'
 import Crowller from '../utils/crowller'
 import Analyzer from '../utils/dellAnalyzer'
@@ -13,8 +15,8 @@ interface BodyRequest extends Request {
 }
 
 // 判断是否登录的中间件
-const checkLogin = (req: Request, res: Response, next: NextFunction) => {
-  const isLogin = req.session ? req.session.login : undefined
+const checkLogin = (req: Request, res: Response, next: NextFunction): void => {
+  const isLogin = !!(req.session ? req.session.login : undefined)
   if (isLogin) {
     next()
   } else {
@@ -23,11 +25,11 @@ const checkLogin = (req: Request, res: Response, next: NextFunction) => {
   }
 }
 
-@controller
-class CrowllerController {
+@controller('/')
+export class CrowllerController {
   @get('/getData')
   @use(checkLogin)
-  getData(req: BodyRequest, res: Response) {
+  getData(req: BodyRequest, res: Response): void {
     const secret = 'secretKey';
     const url = `http://www.dell-lee.com/typescript/demo.html?secret=${secret}`;
 
@@ -40,7 +42,7 @@ class CrowllerController {
 
   @get('/showData')
   @use(checkLogin)
-  showData(req: BodyRequest, res: Response) {
+  showData(req: BodyRequest, res: Response): void {
     try {
       const position = path.resolve(__dirname, '../../data/course.json')
       const result = fs.readFileSync(position, 'utf8')

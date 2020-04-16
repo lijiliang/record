@@ -1,5 +1,6 @@
 import { Request, Response } from 'express';
-import { controller, get, post } from './decorator'
+// import { get, post } from './decorator'
+import { controller, get, post } from '../decorator'
 import { getResponseData } from '../utils/util'
 
 interface BodyRequest extends Request {
@@ -8,12 +9,18 @@ interface BodyRequest extends Request {
   }
 }
 
-@controller
-class LogiController {
+@controller('/')  // 可以加路由前缀 如 '/abc'
+export class LogiController {
+  static isLogin(req: BodyRequest): boolean {
+    return !!(req.session ? req.session.login : undefined)
+  }
+
   @post('/login')
-  login(req: BodyRequest, res: Response) {
+  login(req: BodyRequest, res: Response): void {
     const { password } = req.body
-    const isLogin = req.session ? req.session.login : undefined
+    // const isLogin = !!(req.session ? req.session.login : undefined)
+    const isLogin = LogiController.isLogin(req)
+
     // 已经登录过了
     if (isLogin) {
       // res.send('已经登录过')
@@ -31,7 +38,7 @@ class LogiController {
   }
 
   @get('/logout')
-  logout(req: BodyRequest, res: Response) {
+  logout(req: BodyRequest, res: Response): void {
     // const isLogin = req.session ? req.session.login : undefined
     if (req.session) {
       req.session.login = undefined
@@ -40,8 +47,9 @@ class LogiController {
   }
 
   @get('/')
-  home(req: BodyRequest, res: Response) {
-    const isLogin = req.session ? req.session.login : undefined
+  home(req: BodyRequest, res: Response): void {
+    // const isLogin = !!(req.session ? req.session.login : undefined)
+    const isLogin = LogiController.isLogin(req)
     if (isLogin) {
       res.send(`
       <html>

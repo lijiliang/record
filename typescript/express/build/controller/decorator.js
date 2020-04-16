@@ -1,15 +1,17 @@
 "use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 require("reflect-metadata");
-var express_1 = require("express");
-exports.router = express_1.Router();
-var Method;
-(function (Method) {
-    Method["get"] = "get";
-    Method["post"] = "post";
-    Method["put"] = "put";
-    Method["delete"] = "delete";
-})(Method || (Method = {}));
+var router_1 = __importDefault(require("../router"));
+var Methods;
+(function (Methods) {
+    Methods["get"] = "get";
+    Methods["post"] = "post";
+    Methods["put"] = "put";
+    Methods["delete"] = "delete";
+})(Methods || (Methods = {}));
 function controller(target) {
     for (var key in target.prototype) {
         // console.log(Reflect.getMetadata('path', target.prototype, key))  // 打印出元数据
@@ -20,10 +22,10 @@ function controller(target) {
         if (path && method && handler) {
             // router.get(path, handler)  // 如果有path元数据，自动生成路由
             if (middleware) {
-                exports.router[method](path, middleware, handler); // 如果有中间件，自动注册中间件
+                router_1.default[method](path, middleware, handler); // 如果有中间件，自动注册中间件
             }
             else {
-                exports.router[method](path, handler);
+                router_1.default[method](path, handler);
             }
         }
     }
@@ -45,10 +47,10 @@ function getRequestDecorator(type) {
         };
     };
 }
-exports.get = getRequestDecorator('get');
-exports.post = getRequestDecorator('post');
-exports.put = getRequestDecorator('put');
-exports.del = getRequestDecorator('delete');
+exports.get = getRequestDecorator(Methods.get);
+exports.post = getRequestDecorator(Methods.post);
+exports.put = getRequestDecorator(Methods.put);
+exports.del = getRequestDecorator(Methods.delete);
 // export function post(path: string) {
 //   return function (target: any, key: string) {
 //     Reflect.defineMetadata('path', path, target, key);

@@ -14,13 +14,15 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 var fs_1 = __importDefault(require("fs"));
 var path_1 = __importDefault(require("path"));
-var decorator_1 = require("./decorator");
+// import { controller, get, use } from './decorator'
+// import { get } from './decorator'
+var decorator_1 = require("../decorator");
 var util_1 = require("../utils/util");
 var crowller_1 = __importDefault(require("../utils/crowller"));
 var dellAnalyzer_1 = __importDefault(require("../utils/dellAnalyzer"));
 // 判断是否登录的中间件
 var checkLogin = function (req, res, next) {
-    var isLogin = req.session ? req.session.login : undefined;
+    var isLogin = !!(req.session ? req.session.login : undefined);
     if (isLogin) {
         next();
     }
@@ -66,7 +68,8 @@ var CrowllerController = /** @class */ (function () {
         __metadata("design:returntype", void 0)
     ], CrowllerController.prototype, "showData", null);
     CrowllerController = __decorate([
-        decorator_1.controller
+        decorator_1.controller('/')
     ], CrowllerController);
     return CrowllerController;
 }());
+exports.CrowllerController = CrowllerController;
