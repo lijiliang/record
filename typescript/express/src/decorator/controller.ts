@@ -15,7 +15,7 @@ export function controller(root: string) {
       const path: string = Reflect.getMetadata('path', target.prototype, key) // 取到元数据
       const method: Methods = Reflect.getMetadata('method', target.prototype, key) // 取到元数据
       // const middleware: RequestHandler = Reflect.getMetadata('middleware', target.prototype, key)
-      const middlewares: RequestHandler[] = Reflect.getMetadata('middlewares', target.prototype, key)
+      const middlewares: RequestHandler[] = Reflect.getMetadata('middlewares', target.prototype, key)  // 多个middleware
       const handler = target.prototype[key]  // 通过key值获取方法名
       if (path && method) {
         // router.get(path, handler)  // 如果有path元数据，自动生成路由

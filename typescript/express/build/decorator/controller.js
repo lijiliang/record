@@ -24,7 +24,7 @@ function controller(root) {
             var path = Reflect.getMetadata('path', target.prototype, key); // 取到元数据
             var method = Reflect.getMetadata('method', target.prototype, key); // 取到元数据
             // const middleware: RequestHandler = Reflect.getMetadata('middleware', target.prototype, key)
-            var middlewares = Reflect.getMetadata('middlewares', target.prototype, key);
+            var middlewares = Reflect.getMetadata('middlewares', target.prototype, key); // 多个middleware
             var handler = target.prototype[key]; // 通过key值获取方法名
             if (path && method) {
                 // router.get(path, handler)  // 如果有path元数据，自动生成路由
