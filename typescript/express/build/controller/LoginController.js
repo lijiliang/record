@@ -15,7 +15,24 @@ var LogiController = /** @class */ (function () {
     function LogiController() {
     }
     LogiController.prototype.login = function (req, res) {
-        res.send('login is runing');
+        var password = req.body.password;
+        var isLogin = req.session ? req.session.login : undefined;
+        // 已经登录过了
+        if (isLogin) {
+            // res.send('已经登录过')
+            res.json(util_1.getResponseData(false, '已经登录过'));
+        }
+        else {
+            if (password === '123' && req.session) {
+                req.session.login = true;
+                // res.send('登录成功')
+                res.json(util_1.getResponseData(true));
+            }
+            else {
+                // res.send('登录失败')
+                res.json(util_1.getResponseData(false, '登录失败'));
+            }
+        }
     };
     LogiController.prototype.logout = function (req, res) {
         // const isLogin = req.session ? req.session.login : undefined
@@ -34,7 +51,7 @@ var LogiController = /** @class */ (function () {
         }
     };
     __decorate([
-        decorator_1.get('/login'),
+        decorator_1.post('/login'),
         __metadata("design:type", Function),
         __metadata("design:paramtypes", [Object, Object]),
         __metadata("design:returntype", void 0)

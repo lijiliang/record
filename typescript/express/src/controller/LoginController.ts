@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import { controller, get } from './decorator'
+import { controller, get, post } from './decorator'
 import { getResponseData } from '../utils/util'
 
 interface BodyRequest extends Request {
@@ -10,9 +10,24 @@ interface BodyRequest extends Request {
 
 @controller
 class LogiController {
-  @get('/login')
+  @post('/login')
   login(req: BodyRequest, res: Response) {
-    res.send('login is runing')
+    const { password } = req.body
+    const isLogin = req.session ? req.session.login : undefined
+    // 已经登录过了
+    if (isLogin) {
+      // res.send('已经登录过')
+      res.json(getResponseData(false, '已经登录过'))
+    } else {
+      if (password === '123' && req.session) {
+        req.session.login = true
+        // res.send('登录成功')
+        res.json(getResponseData(true))
+      } else {
+        // res.send('登录失败')
+        res.json(getResponseData(false, '登录失败'))
+      }
+    }
   }
 
   @get('/logout')
