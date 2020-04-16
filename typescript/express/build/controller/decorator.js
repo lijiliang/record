@@ -16,13 +16,26 @@ function controller(target) {
         var path = Reflect.getMetadata('path', target.prototype, key); // 取到元数据
         var method = Reflect.getMetadata('method', target.prototype, key); // 取到元数据
         var handler = target.prototype[key]; // 通过key值获取方法名
+        var middleware = Reflect.getMetadata('middleware', target.prototype, key);
         if (path && method && handler) {
             // router.get(path, handler)  // 如果有path元数据，自动生成路由
-            exports.router[method](path, handler);
+            if (middleware) {
+                exports.router[method](path, middleware, handler); // 如果有中间件，自动注册中间件
+            }
+            else {
+                exports.router[method](path, handler);
+            }
         }
     }
 }
 exports.controller = controller;
+// 中间件装饰器
+function use(middleware) {
+    return function (target, key) {
+        Reflect.defineMetadata('middleware', middleware, target, key); // 定义元数据
+    };
+}
+exports.use = use;
 // 封装一个工厂函数去自动生成get,post等请求
 function getRequestDecorator(type) {
     return function (path) {

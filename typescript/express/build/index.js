@@ -7,6 +7,7 @@ var express_1 = __importDefault(require("express"));
 var body_parser_1 = __importDefault(require("body-parser"));
 var cookie_session_1 = __importDefault(require("cookie-session"));
 require("./controller/LoginController"); // 引入自动执行
+require("./controller/CrowllerController"); // 引入自动执行
 var decorator_1 = require("./controller/decorator");
 // 问题1： express 库的类型定义文件 .d.ts 文件类型描述不准确
 // 问题2： 当我使用中间件的时候，对req 或者 res 做了修改之后呢，实际上类型并不能改变

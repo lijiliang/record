@@ -2,6 +2,7 @@ import express, { Request, Response, NextFunction } from 'express'
 import bodyParser from 'body-parser'
 import cookieSession from 'cookie-session'
 import './controller/LoginController'  // 引入自动执行
+import './controller/CrowllerController'  // 引入自动执行
 import { router } from './controller/decorator'
 
 // 问题1： express 库的类型定义文件 .d.ts 文件类型描述不准确
