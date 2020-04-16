@@ -4,7 +4,9 @@ require("reflect-metadata");
 // 中间件装饰器
 function use(middleware) {
     return function (target, key) {
-        Reflect.defineMetadata('middleware', middleware, target, key); // 定义元数据
+        var originMiddlewares = Reflect.getMetadata('middlewares', target, key) || [];
+        originMiddlewares.push(middleware);
+        Reflect.defineMetadata('middlewares', originMiddlewares, target, key); // 定义元数据
     };
 }
 exports.use = use;

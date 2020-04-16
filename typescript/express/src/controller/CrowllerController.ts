@@ -17,6 +17,7 @@ interface BodyRequest extends Request {
 // 判断是否登录的中间件
 const checkLogin = (req: Request, res: Response, next: NextFunction): void => {
   const isLogin = !!(req.session ? req.session.login : undefined)
+  console.log('checkLogin middleware')
   if (isLogin) {
     next()
   } else {
@@ -25,10 +26,16 @@ const checkLogin = (req: Request, res: Response, next: NextFunction): void => {
   }
 }
 
+const test = (req: Request, res: Response, next: NextFunction): void => {
+  console.log('test middleware')
+  next()
+}
+
 @controller('/')
 export class CrowllerController {
   @get('/getData')
   @use(checkLogin)
+  @use(test)
   getData(req: BodyRequest, res: Response): void {
     const secret = 'secretKey';
     const url = `http://www.dell-lee.com/typescript/demo.html?secret=${secret}`;

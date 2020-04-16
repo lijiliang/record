@@ -23,6 +23,7 @@ var dellAnalyzer_1 = __importDefault(require("../utils/dellAnalyzer"));
 // 判断是否登录的中间件
 var checkLogin = function (req, res, next) {
     var isLogin = !!(req.session ? req.session.login : undefined);
+    console.log('checkLogin middleware');
     if (isLogin) {
         next();
     }
@@ -30,6 +31,10 @@ var checkLogin = function (req, res, next) {
         // res.send('请先登录')
         res.json(util_1.getResponseData(null, '请先登录'));
     }
+};
+var test = function (req, res, next) {
+    console.log('test middleware');
+    next();
 };
 var CrowllerController = /** @class */ (function () {
     function CrowllerController() {
@@ -56,6 +61,7 @@ var CrowllerController = /** @class */ (function () {
     __decorate([
         decorator_1.get('/getData'),
         decorator_1.use(checkLogin),
+        decorator_1.use(test),
         __metadata("design:type", Function),
         __metadata("design:paramtypes", [Object, Object]),
         __metadata("design:returntype", void 0)
