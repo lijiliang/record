@@ -19,10 +19,6 @@ var LogiController = /** @class */ (function () {
     LogiController.isLogin = function (req) {
         return !!(req.session ? req.session.login : undefined);
     };
-    LogiController.prototype.isLogin = function (req, res) {
-        var isLogin = LogiController_1.isLogin(req);
-        res.json(util_1.getResponseData(isLogin));
-    };
     LogiController.prototype.login = function (req, res) {
         var password = req.body.password;
         // const isLogin = !!(req.session ? req.session.login : undefined)
@@ -62,12 +58,6 @@ var LogiController = /** @class */ (function () {
         }
     };
     var LogiController_1;
-    __decorate([
-        decorator_1.get('/api/isLogin'),
-        __metadata("design:type", Function),
-        __metadata("design:paramtypes", [Object, Object]),
-        __metadata("design:returntype", void 0)
-    ], LogiController.prototype, "isLogin", null);
     __decorate([
         decorator_1.post('/login'),
         __metadata("design:type", Function),
