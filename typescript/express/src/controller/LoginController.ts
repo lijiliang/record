@@ -21,7 +21,7 @@ export class LogiController {
     res.json(getResponseData(isLogin))
   }
 
-  @post('/login')
+  @post('/api/login')
   login(req: BodyRequest, res: Response): void {
     const { password } = req.body
     // const isLogin = !!(req.session ? req.session.login : undefined)
@@ -30,7 +30,7 @@ export class LogiController {
     // 已经登录过了
     if (isLogin) {
       // res.send('已经登录过')
-      res.json(getResponseData(false, '已经登录过'))
+      res.json(getResponseData(true))
     } else {
       if (password === '123' && req.session) {
         req.session.login = true
@@ -43,7 +43,7 @@ export class LogiController {
     }
   }
 
-  @get('/logout')
+  @get('/api/logout')
   logout(req: BodyRequest, res: Response): void {
     // const isLogin = req.session ? req.session.login : undefined
     if (req.session) {

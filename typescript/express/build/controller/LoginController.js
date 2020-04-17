@@ -30,7 +30,7 @@ var LogiController = /** @class */ (function () {
         // 已经登录过了
         if (isLogin) {
             // res.send('已经登录过')
-            res.json(util_1.getResponseData(false, '已经登录过'));
+            res.json(util_1.getResponseData(true));
         }
         else {
             if (password === '123' && req.session) {
@@ -69,13 +69,13 @@ var LogiController = /** @class */ (function () {
         __metadata("design:returntype", void 0)
     ], LogiController.prototype, "isLogin", null);
     __decorate([
-        decorator_1.post('/login'),
+        decorator_1.post('/api/login'),
         __metadata("design:type", Function),
         __metadata("design:paramtypes", [Object, Object]),
         __metadata("design:returntype", void 0)
     ], LogiController.prototype, "login", null);
     __decorate([
-        decorator_1.get('/logout'),
+        decorator_1.get('/api/logout'),
         __metadata("design:type", Function),
         __metadata("design:paramtypes", [Object, Object]),
         __metadata("design:returntype", void 0)
